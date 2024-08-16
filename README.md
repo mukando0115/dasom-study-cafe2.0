@@ -6,6 +6,7 @@
 => https://nodejs.org/en
 
 # 깃허브 파일 받으신 후(.zip)
+**'Code버튼->Download Zip'**
 
 ## VS Code 열어서 
 **'File->Open Folder->dasom-study-cafe'**
