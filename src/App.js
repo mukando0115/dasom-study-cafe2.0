@@ -17,6 +17,7 @@ import MapPage from "./Map/MapPage";
 import AnnouncementPage from "./Announcement/AnnouncementPage";
 import ReservationPage from "./Reservation/ReservationPage";
 import LoginPage from "./Login/LoginPage";
+import SideBar from "./SideBar/SideBarPage";
 // import SignUpPage from "./SignUp/SignUpPage";
 
 function App() {
@@ -57,15 +58,17 @@ function App() {
                 </Link>
               </li>
               <li>
-                <Button variant="outline-dark m-2 p-0 px-3" size="" className="b-button" style={{ borderRadius: '15px', borderWidth: '2px' }}>
+                <SideBar>
+                </SideBar>               
+                {/* <Button variant="outline-dark m-2 p-0 px-3" size="" className="b-button" style={{ borderRadius: '15px', borderWidth: '2px' }}>
                   <Link to="/login" style={{ textDecoration: 'none' }}>
                   <span>로그인</span>
                   </Link>
-                </Button>
+                </Button> */}
               </li>              
-            </ul>            
-          </nav>          
-        </header>
+            </ul>      
+          </nav>       
+        </header>        
         
         <Routes>
           <Route path="/" element={<MainPage/>}/>
