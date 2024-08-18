@@ -7,7 +7,6 @@ import {
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import { FaUser } from "react-icons/fa";  //icon info => https://react-icons.github.io/react-icons/
 
 import MainPage from "./Main/MainPage"
 import ChargeInfoPage from "./ChargeInfo/ChargeInfoPage";
@@ -26,6 +25,9 @@ function App() {
         <header>
           <nav className="nav-bar">
             <ul>
+              <li>
+                <div className="logo1"></div>
+              </li>
               <li>
                 <Link to="/" className="btn btn-header">
                 <span>홈</span>
