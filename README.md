@@ -19,3 +19,4 @@ dasom-study-cafe>로 끝나야 합니다
 
 ## `npm start` (실행)
 까지 해주시면 됩니당
+언제나 실행할 때에는 `npm start`를 해주세요!
