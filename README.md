@@ -16,6 +16,7 @@
 dasom-study-cafe>로 끝나야 합니다
 
 ## `npm i`  (패키지 설치)
+안 되면 `npm config set legacy-peer-deps true`를 먼저하고 npm i를 해주세요
 
 ## `npm start` (실행)
 까지 해주시면 됩니당
