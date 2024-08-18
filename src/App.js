@@ -7,7 +7,6 @@ import {
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 // import { FaUser } from "react-icons/fa";  //icon info => https://react-icons.github.io/react-icons/
 
 import MainPage from "./Main/MainPage"
@@ -18,7 +17,7 @@ import AnnouncementPage from "./Announcement/AnnouncementPage";
 import ReservationPage from "./Reservation/ReservationPage";
 import LoginPage from "./Login/LoginPage";
 import SideBar from "./SideBar/SideBarPage";
-// import SignUpPage from "./SignUp/SignUpPage";
+import Footer from "./Footer/FooterPage";
 
 function App() {
   return (
@@ -60,16 +59,11 @@ function App() {
               <li>
                 <SideBar>
                 </SideBar>               
-                {/* <Button variant="outline-dark m-2 p-0 px-3" size="" className="b-button" style={{ borderRadius: '15px', borderWidth: '2px' }}>
-                  <Link to="/login" style={{ textDecoration: 'none' }}>
-                  <span>로그인</span>
-                  </Link>
-                </Button> */}
               </li>              
             </ul>      
           </nav>       
-        </header>        
-        
+        </header>
+
         <Routes>
           <Route path="/" element={<MainPage/>}/>
           <Route path="/chargeinfo" element={<ChargeInfoPage/>}/>
@@ -80,6 +74,11 @@ function App() {
           <Route path="/login" element={<LoginPage/>}/>
         </Routes>
       </div>
+
+      <footer>
+        <Footer></Footer>
+      </footer>
+
     </Router>
   );
 }
