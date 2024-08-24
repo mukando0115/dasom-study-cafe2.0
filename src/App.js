@@ -5,8 +5,8 @@ import {
   Link
 } from "react-router-dom";
 
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 import MainPage from "./Main/MainPage"
 import ChargeInfoPage from "./ChargeInfo/ChargeInfoPage";
