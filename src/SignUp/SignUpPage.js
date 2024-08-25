@@ -8,7 +8,7 @@ function SignUpPage(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    console.log('sign')
+
     return (
         <main className="signup-page">
             <p>회원가입 페이지</p>
