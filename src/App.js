@@ -26,7 +26,7 @@ function App() {
           <nav className="nav-bar">
             <ul>
               <li>
-                <Link to="/" className="btn btn-header">
+                <Link to="/">
                 <div className="logo1"></div>
                 </Link>
               </li>
