@@ -4,7 +4,7 @@ import api from '../api/api';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { CForm, CFormFloating, CFormInput, CFormLabel, CFormCheck } from '@coreui/bootstrap-react'
-import { PiSealCheckFill  } from "react-icons/pi";
+import { PiSealCheckFill } from "react-icons/pi";
 
 function LoginPage(props) {
     const [show, setShow] = useState(false);
@@ -65,11 +65,15 @@ function LoginPage(props) {
             </CForm>
 
             {/* 버튼 */}
-            <Button onClick={conTest} className="p-button" variant="mb-3 p-1 px-3" size="" style={{ borderRadius: '13px', borderWidth: '2px' }}>로그인</Button>
-            <Button onClick={function(e){
+            <Button onClick={conTest} className="p-button" variant="mb-3 p-1 px-3" size="" style={{ borderRadius: '13px', borderWidth: '2px' }}>
+                로그인
+            </Button>
+            <Button onClick={(e) => {
                 e.preventDefault();
                 props.onChangePage();
-            }} variant="mb-3 p-1 px-3" size="" className="s-button" style={{ borderRadius: '13px', borderWidth: '2px' }}>회원가입</Button>
+            }} variant="mb-3 p-1 px-3" size="" className="s-button" style={{ borderRadius: '13px', borderWidth: '2px' }}>
+                회원가입
+            </Button>
 
             {/* 로그인 성공 알림창 */}
             <Modal show={show} onHide={handleClose} centered>
