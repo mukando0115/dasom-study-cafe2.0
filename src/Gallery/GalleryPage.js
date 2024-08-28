@@ -1,33 +1,62 @@
-import { CCarousel, CCarouselItem, CImage } from '@coreui/bootstrap-react'
-import img1 from './1인실(Common)_1.png';
-import img2 from './1인실(Common)_2.png';
-import img3 from './1인실(Common)_3.png';
-import img4 from './1인실(Common)_4.png';
+import { CCarousel, CCarouselItem, CImage } from '@coreui/react';
+import image1 from './1인실(Common)_1.png';
+import image2 from './1인실(Common)_2.png';
+import image3 from './1인실(Common)_3.png';
+import image4 from './1인실(Common)_4.png';
+import image5 from './1인실(Private)_1.png';
+import image6 from './1인실(Private)_2.png';
+import image7 from './1인실(Private)_3.png';
+import image8 from './1인실(Private)_4.png';
+import image9 from './1인실(Private)_1.png';
+
 
 function GalleryPage() {
     return (
         <main className="gallery-page">
             <p className="sub-title">Gallery</p>
             <h1 className="main-title">갤러리</h1>
+            
+            <div className="carousel-container">
+                <h2 className="carousel-title">Common 1인실</h2>
+                <CCarousel interval={600} controls transition="crossfade">
+                    <CCarouselItem>
+                        <CImage className="d-block w-100" src={image1} alt="slide 1" />
+                    </CCarouselItem>
+                    <CCarouselItem>
+                        <CImage className="d-block w-100" src={image2} alt="slide 2" />
+                    </CCarouselItem>
+                    <CCarouselItem>
+                        <CImage className="d-block w-100" src={image3} alt="slide 3" />
+                    </CCarouselItem>
+                    <CCarouselItem>
+                        <CImage className="d-block w-100" src={image4} alt="slide 4" />
+                    </CCarouselItem>
+                </CCarousel>
+            </div>
 
-            <h1 style={{textAlign: 'left'}}>1인실</h1>
-            <h1 style={{textAlign: 'left'}}>Common Sit</h1>
-                <CCarousel controls transition="crossfade">
+            <div className="carousel-container">
+                <h2 className="carousel-title">Private 1인실</h2>
+                <CCarousel interval={600} controls transition="crossfade">
                     <CCarouselItem>
-                        <CImage className="d-block w-100" src={img1} alt="slide 1" />
+                        <CImage className="d-block w-100" src={image5} alt="slide 5" />
                     </CCarouselItem>
                     <CCarouselItem>
-                        <CImage className="d-block w-100" src={img2} alt="slide 2" />
+                        <CImage className="d-block w-100" src={image6} alt="slide 6" />
                     </CCarouselItem>
                     <CCarouselItem>
-                        <CImage className="d-block w-100" src={img3} alt="slide 3" />
+                        <CImage className="d-block w-100" src={image7} alt="slide 7" />
                     </CCarouselItem>
                     <CCarouselItem>
-                        <CImage className="d-block w-100" src={img4} alt="slide 4" />
+                        <CImage className="d-block w-100" src={image8} alt="slide 8" />
                     </CCarouselItem>
-                </CCarousel>            
+                </CCarousel>
+            </div>
+            <div className="carousel-container">
+                <h2 className="carousel-title">스터디룸 </h2>
+                <CImage className="d-block w-100" src={image9} alt="slide 9" />
+            </div>
         </main>
-    )
+    );
 }
 
 export default GalleryPage;

@@ -234,6 +234,7 @@ u {
   color: #000000;
   width: 100%;
   height: 10%;
+  margin-bottom: 3%;
 }
 
 .s-button:hover {
@@ -250,4 +251,161 @@ u {
   height: 200px;
   text-align: center;
   padding: 10% 1% 10% 1%;
+}
+
+.date-picker {
+  display: flex;
+  height: 58px;
+  width: 316px;
+  border-radius: 6px;
+  margin-bottom: 4%;
+  padding: 3%;
+  border: 0px;
+}
+
+.p-button-sm {
+  background-color: #00AF50;
+  border-bottom-color: #00AF50;
+  border: 0px;
+  color: #ffffff;
+  width: 30%;
+  height: 10%;
+  margin-bottom: 3%;
+}
+
+.p-button-sm:hover {
+  background-color: #9ed4b6;
+  color: #000000;
+}
+
+
+/* 현우님 css 추가 */
+.gallery-page {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.carousel-container {
+  margin-bottom: 40px; 
+}
+
+.carousel-title {
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.ccarousel-item {
+  position: relative;
+  height: 500px; 
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ccarousel-item img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+
+.gallery-page {
+  padding: 20px;
+  background-color: #f4f4f4; 
+}
+
+.sub-title {
+  font-size: 1.2em;
+  color: #555; 
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.main-title {
+  font-size: 2.5em;
+  color: #333; 
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.carousel-container {
+  margin-bottom: 40px; 
+  background-color: #fff; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.carousel-title {
+  font-size: 1.8em;
+  color: #222; 
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.customoverlay {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #333;
+
+}
+
+.map-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.map-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.sub-title, .main-title {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* 지도와 이미지 사이의 간격 */
+}
+
+.map-container {
+  width: 500px; /* 지도 너비 */
+  height: 500px; /* 지도 높이 */
+}
+
+.image-container {
+  width: 100%; /* 이미지를 화면 가로폭에 맞게 설정 */
+  max-width: 800px; /* 이미지의 최대 너비를 설정 */
+  height: auto; /* 높이는 자동으로 설정 */
+  position: relative; /* 텍스트를 이미지 위에 배치하기 위해 설정 */
+}
+
+img {
+  width: 100%;
+  height: auto; /* 높이는 자동으로 설정 */
+  display: block; /* 이미지의 아래쪽 여백 제거 */
+}
+
+.overlay-text {
+  position: absolute; /* 이미지 위에 텍스트를 배치하기 위해 설정 */
+  top: 50%; /* 수직 중앙에 배치 */
+  left: 50%; /* 수평 중앙에 배치 */
+  transform: translate(-50%, -50%); /* 중앙 정렬 */
+  color: white; /* 텍스트 색상 */
+  font-size: 24px; /* 텍스트 크기 */
+  text-align: center; /* 텍스트 정렬 */
+  background-color: r
 }
