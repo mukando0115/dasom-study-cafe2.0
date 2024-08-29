@@ -105,6 +105,7 @@ function SignUpPage(props) {
                 </CFormFloating>
 
                 {/* 생년월일 입력 */}
+                <CFormFloating className="date-form">
                 <DatePicker
                     locale={ko}
                     className="date-picker"
@@ -119,7 +120,11 @@ function SignUpPage(props) {
                     showMonthDropdown
                     yearDropdownItemNumber={100}
                     scrollableYearDropdown
+                    popperProps={{
+                        strategy: "fixed"
+                      }}
                 />
+                </CFormFloating>
 
             </CForm>
 

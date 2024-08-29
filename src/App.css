@@ -253,6 +253,10 @@ u {
   padding: 10% 1% 10% 1%;
 }
 
+.date-form {
+  z-index: 9999 !important;
+}
+
 .date-picker {
   display: flex;
   height: 58px;
@@ -260,7 +264,7 @@ u {
   border-radius: 6px;
   margin-bottom: 4%;
   padding: 3%;
-  border: 0px;
+  border: 0px;  
 }
 
 .p-button-sm {
