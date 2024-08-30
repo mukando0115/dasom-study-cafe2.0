@@ -58,12 +58,25 @@ function SignUpPage(props) {
         "user_birthDate": selectedDate
     };
 
-    //서버 전송 함수(axios post)
-    const conTest = () => api.post('signUp', data)
-    .then((res) => {
+    //회원가입 데이터 전송 함수(axios post)
+    const reqSignUp = () => api.post('signUp', data)
+    .then(res => {
         handleShow();
         console.log(res, data);
-    }).catch((err) => {
+    }).catch(err => {
+        console.log(err);
+    })
+
+    //아이디 중복체크 전송 함수(axios get)
+    const checkId = () => api.get(`signUp/${id}`)
+    .then(res => {
+        if(res.data === false) {
+            alert("사용 가능한 아이디입니다.")
+        }
+        else {
+            alert("사용 불가능한 아이디입니다.")
+        }
+    }).catch(err => {
         console.log(err);
     })
 
@@ -77,7 +90,7 @@ function SignUpPage(props) {
                 <CFormFloating className="mb-3">
                     <CFormInput type="id" id="floatingId" value={id} onChange={getId} placeholder="abcd1234" />
                     <CFormLabel htmlFor="floatingId">아이디입력 (6 - 20자)</CFormLabel>
-                    <CButton className="p-button-sm mt-2" type="button">중복 확인</CButton>                
+                    <CButton onClick={checkId} className="p-button-sm mt-2" type="button">중복 확인</CButton>       
                 </CFormFloating>
 
                 {/* 비밀번호 입력*/}
@@ -129,7 +142,7 @@ function SignUpPage(props) {
             </CForm>
 
             {/* 버튼 */}
-            <Button onClick={conTest} variant="mb-3 p-1 px-3" size="" className="s-button" style={{ borderRadius: '15px', borderWidth: '2px' }}>
+            <Button onClick={reqSignUp} variant="mb-3 p-1 px-3" size="" className="s-button" style={{ borderRadius: '15px', borderWidth: '2px' }}>
                 회원가입
             </Button>
             <Button onClick={(e) => {
