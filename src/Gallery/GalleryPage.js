@@ -17,7 +17,8 @@ function GalleryPage() {
             <h1 className="main-title">갤러리</h1>
             
             <div className="carousel-container">
-                <h2 className="carousel-title">Common 1인실</h2>
+                <h2 className="carousel-title">1인실</h2>
+                <h2 className="carousel-sub-title">Common Sit</h2>
                 <CCarousel interval={600} controls transition="crossfade">
                     <CCarouselItem>
                         <CImage className="d-block w-100" src={image1} alt="slide 1" />
@@ -35,7 +36,8 @@ function GalleryPage() {
             </div>
 
             <div className="carousel-container">
-                <h2 className="carousel-title">Private 1인실</h2>
+                <h2 className="carousel-title">1인실</h2>
+                <h2 className="carousel-sub-title">Private Sit</h2>
                 <CCarousel interval={600} controls transition="crossfade">
                     <CCarouselItem>
                         <CImage className="d-block w-100" src={image5} alt="slide 5" />
@@ -52,7 +54,8 @@ function GalleryPage() {
                 </CCarousel>
             </div>
             <div className="carousel-container">
-                <h2 className="carousel-title">스터디룸 </h2>
+                <h2 className="carousel-title">다인실</h2>
+                <h2 className="carousel-sub-title">Study Room</h2>
                 <CImage className="d-block w-100" src={image9} alt="slide 9" />
             </div>
         </main>

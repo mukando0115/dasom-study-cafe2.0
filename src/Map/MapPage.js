@@ -66,7 +66,7 @@ function MapPage() {
                 <div
                     id="map"
                     style={{
-                        width: '500px',
+                        width: '700px',
                         height: '500px',
                         marginRight: '20px'
                     }}
