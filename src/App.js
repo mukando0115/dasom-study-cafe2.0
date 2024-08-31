@@ -83,7 +83,13 @@ function App() {
                 </Link>
               </li>
               <li>
-                <Link to="/reservation" className="btn btn-header">
+                <Link to="/reservation" className="btn btn-header" 
+                  onClick={(e) => {
+                    if(!isLoggedIn) {
+                      alert("로그인을 해주세요");
+                      window.location.href = '/'                  
+                    }
+                  }}>
                 <span>예약하기</span>
                 </Link>
               </li>
