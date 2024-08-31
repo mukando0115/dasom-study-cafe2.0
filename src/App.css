@@ -179,7 +179,7 @@ p {
   margin-right: 5%;
 }
 
-u {
+u:not(.underline) {
   /* text-decoration: underline 8px #00AF50; */
   text-decoration: none;
   display: inline;

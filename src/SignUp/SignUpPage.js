@@ -147,7 +147,7 @@ function SignUpPage(props) {
             </Button>
             <Button onClick={(e) => {
                 e.preventDefault();
-                props.onChangePage();
+                props.onChangePage("login");
             }} variant="mb-3 p-1 px-3" size="" className="p-button" style={{ borderRadius: '15px', borderWidth: '2px' }}>
                 이미 계정이 있으신가요? 로그인
             </Button>

@@ -63,7 +63,14 @@ function LoginPage(props) {
 
                 {/* 로그인 정보 저장 & 비밀번호 찾기 */}
                 <CFormCheck inline id="ssoChecked" label="로그인 정보 저장"/>
-                <CFormLabel className="mb-5" style={{float: 'right'}}>비밀번호 찾기</CFormLabel>
+                <CFormLabel className="mb-5" style={{float: 'right'}}>
+                    <a onClick={e => {
+                        e.preventDefault();                
+                        props.onChangePage("forgotUser");
+                    }}
+                    ><u className="underline">비밀번호를 잊으셨나요?</u>
+                    </a>
+                </CFormLabel>
             </CForm>
 
             {/* 버튼 */}
@@ -72,7 +79,7 @@ function LoginPage(props) {
             </Button>
             <Button onClick={(e) => {
                 e.preventDefault();                
-                props.onChangePage();
+                props.onChangePage("signUp");
             }} variant="mb-3 p-1 px-3" size="" className="s-button" style={{ borderRadius: '13px', borderWidth: '2px' }}>
                 회원가입
             </Button>
