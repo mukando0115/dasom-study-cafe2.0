@@ -34,7 +34,9 @@ function LoginPage(props) {
     //서버 전송 함수(axios post)
     const conTest = () => api.post('login', data)
     .then((res) => {
+        localStorage.setItem("id", id);
         handleShow();
+        props.onLogin();
         console.log(res, data);
     }).catch((err) => {
         console.log(err);
@@ -69,7 +71,7 @@ function LoginPage(props) {
                 로그인
             </Button>
             <Button onClick={(e) => {
-                e.preventDefault();
+                e.preventDefault();                
                 props.onChangePage();
             }} variant="mb-3 p-1 px-3" size="" className="s-button" style={{ borderRadius: '13px', borderWidth: '2px' }}>
                 회원가입

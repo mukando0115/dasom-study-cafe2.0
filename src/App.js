@@ -5,6 +5,8 @@ import {
   Link
 } from "react-router-dom";
 
+import React, { useState, useEffect } from "react";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -17,8 +19,33 @@ import ReservationPage from "./Reservation/ReservationPage";
 import LoginPage from "./Login/LoginPage";
 import SideBar from "./SideBar/SideBarPage";
 import Footer from "./Footer/FooterPage";
+import ProfileBar from "./ProfileBar/ProfileBar";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const getId = localStorage.getItem("id");
+
+  useEffect(() => {
+    const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
+    if (storedUserLoggedInInformation === "1") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const loginHandler = (id, password) => {    
+    localStorage.setItem("isLoggedIn", "1");
+
+    // 로그인 되었을 때 State를 true로 업데이트
+    setIsLoggedIn(true);
+  };
+
+  const logoutHandler = () => {
+    console.log('logout', getId);
+    localStorage.removeItem("id");
+    localStorage.removeItem("isLoggedIn");    
+    setIsLoggedIn(false);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -61,11 +88,11 @@ function App() {
                 </Link>
               </li>
               <li>
-                <SideBar>
-                </SideBar>               
+                {!isLoggedIn && <SideBar onLogin={loginHandler} />}
+                {isLoggedIn && <ProfileBar onLogout={logoutHandler} />}
               </li>              
-            </ul>      
-          </nav>       
+            </ul>
+          </nav>
         </header>
 
         <Routes>
