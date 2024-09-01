@@ -61,9 +61,16 @@ function SignUpPage(props) {
     //회원가입 데이터 전송 함수(axios post)
     const reqSignUp = () => api.post('signUp', data)
     .then(res => {
-        handleShow();
+        if(res.data === true) {
+            handleShow();        
+        }
+        else {
+            alert('회원가입에 실패했습니다.');
+        }
         console.log(res, data);
+        
     }).catch(err => {
+        alert("회원가입에 실패했습니다.");
         console.log(err);
     })
 
