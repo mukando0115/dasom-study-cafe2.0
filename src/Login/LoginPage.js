@@ -35,9 +35,9 @@ function LoginPage(props) {
     const conTest = () => api.post('login', data)
     .then((res) => {
         localStorage.setItem("id", id);
+        console.log(res, data);
         handleShow();
         props.onLogin();
-        console.log(res, data);
     }).catch((err) => {
         console.log(err);
     })
