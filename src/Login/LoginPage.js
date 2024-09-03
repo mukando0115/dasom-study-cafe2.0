@@ -34,10 +34,17 @@ function LoginPage(props) {
     //서버 전송 함수(axios post)
     const conTest = () => api.post('login', data)
     .then((res) => {
-        localStorage.setItem("id", id);
-        console.log(res, data);
-        handleShow();
-        props.onLogin();
+        //로그인 성공했을 때
+        if(res.data === true) {            
+            localStorage.setItem("id", id);
+            console.log(res, data);
+            handleShow();
+            props.onLogin();
+        }
+        //로그인 실패했을 때
+        else{
+            alert('로그인에 실패했습니다');
+        }
     }).catch((err) => {
         console.log(err);
     })
