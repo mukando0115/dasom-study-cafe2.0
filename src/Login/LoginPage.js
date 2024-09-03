@@ -38,14 +38,16 @@ function LoginPage(props) {
         if(res.data === true) {            
             localStorage.setItem("id", id);
             console.log(res, data);
-            handleShow();
+            alert('로그인 되었습니다');
+            // handleShow();
             props.onLogin();
         }
         //로그인 실패했을 때
         else{
-            alert('로그인에 실패했습니다');
+            alert(res.data.message);
         }
     }).catch((err) => {
+        alert(err.response.data.message);
         console.log(err);
     })
     

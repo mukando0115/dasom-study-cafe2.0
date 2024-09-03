@@ -72,7 +72,7 @@ function SignUpPage(props) {
         console.log(res, data);
         
     }).catch(err => {
-        alert("회원가입에 실패했습니다.");
+        alert(err.response.data.message);
         console.log(err);
     })
 
@@ -80,10 +80,10 @@ function SignUpPage(props) {
     const checkId = () => api.get(`signUp/${id}`)
     .then(res => {
         if(res.data === false) {
-            alert("사용 가능한 아이디입니다.")
+            alert("사용 가능한 아이디입니다.");
         }
         else {
-            alert("사용 불가능한 아이디입니다.")
+            alert("사용 불가능한 아이디입니다.");
         }
     }).catch(err => {
         console.log(err);
