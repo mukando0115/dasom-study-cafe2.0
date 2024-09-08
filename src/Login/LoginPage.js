@@ -35,7 +35,7 @@ function LoginPage(props) {
     const conTest = () => api.post('login', data)
     .then((res) => {
         //로그인 성공했을 때
-        if(res.data === true) {            
+        if(res.data.success) {            
             localStorage.setItem("id", id);
             console.log(res, data);
             alert('로그인 되었습니다');

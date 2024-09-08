@@ -62,7 +62,7 @@ function SignUpPage(props) {
     const reqSignUp = () => api.post('signUp', data)
     .then(res => {
         //중복 아닐 때
-        if(res.data === false) {
+        if(res.data.success) {
             handleShow();        
         }
         //중복일 때
