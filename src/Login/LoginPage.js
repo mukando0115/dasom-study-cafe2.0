@@ -72,7 +72,7 @@ function LoginPage(props) {
                 </CFormFloating>
 
                 {/* 로그인 정보 저장 & 비밀번호 찾기 */}
-                <CFormCheck inline id="ssoChecked" label="로그인 정보 저장"/>
+                {/* <CFormCheck inline id="ssoChecked" label="로그인 정보 저장"/> */}
                 <CFormLabel className="mb-5" style={{float: 'right'}}>
                     <a onClick={e => {
                         e.preventDefault();                

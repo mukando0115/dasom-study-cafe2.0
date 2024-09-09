@@ -61,11 +61,11 @@ function SignUpPage(props) {
     //회원가입 데이터 전송 함수(axios post)
     const reqSignUp = () => api.post('signUp', data)
     .then(res => {
-        //중복 아닐 때
+        //회원가입 성공했을 때
         if(res.data.success) {
             handleShow();        
         }
-        //중복일 때
+        //실패했을 때
         else {
             alert('회원가입에 실패했습니다.');
         }
@@ -79,9 +79,11 @@ function SignUpPage(props) {
     //아이디 중복체크 전송 함수(axios get)
     const checkId = () => api.get(`signUp/${id}`)
     .then(res => {
+        //사용 가능 아이디일 때
         if(res.data.success) {
             alert("사용 가능한 아이디입니다.");
         }
+        //사용 불가능한 아이디일 때
         else {
             alert("사용 불가능한 아이디입니다.");
         }

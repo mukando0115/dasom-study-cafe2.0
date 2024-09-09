@@ -19,8 +19,8 @@ function ProfileBarPage(props) {
                 title="내 정보"
                 trigger="focus"
             >
-                <CButton className="profile-badge" shape="rounded-pill">
-                    <CAvatar color="success" textColor="white">{localStorage.getItem("name")[0]}</CAvatar>
+                <CButton shape="rounded-pill">
+                    <CAvatar className="profile-badge" color="success" textColor="white">{localStorage.getItem("name")[0]}</CAvatar>
                     {/* <FaUserCircle size={30}>안</FaUserCircle> */}
                 </CButton>
             </CPopover>
