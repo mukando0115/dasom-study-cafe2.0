@@ -9,26 +9,18 @@ import { PiSealCheckFill } from "react-icons/pi";
 function LoginPage(props) {
     const [show, setShow] = useState(false);
 
-    const [id, setId] = useState('');
-    const [pw, setPw] = useState('');
+    const [form, setForm] = useState({
+        id: '',
+        pw: '',
+    });
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    //input태그에서 id값 받아옴
-    const getId = (e) => {
-        setId(e.target.value);
-    }
-
-    //input태그에서 pw값 받아옴
-    const getPw = (e) => {
-        setPw(e.target.value);
-    }
-
     //서버로 보낼 로그인 데이터
     const data = {
-        "id": id,
-        "pw": pw
+        "id": form.id,
+        "pw": form.pw
     };
     
     //서버 전송 함수(axios post)
@@ -36,9 +28,8 @@ function LoginPage(props) {
     .then((res) => {
         //로그인 성공했을 때
         if(res.data.success) {            
-            localStorage.setItem("id", id);
+            localStorage.setItem("id", form.id);
             localStorage.setItem("name", res.data.name);
-            console.log(res, data);
             alert(localStorage.getItem("name"), '로그인 되었습니다');
             // handleShow();
             props.onLogin();
@@ -61,13 +52,23 @@ function LoginPage(props) {
 
                 {/* 아이디 입력*/}
                 <CFormFloating className="mb-3">
-                    <CFormInput type="id" id="floatingId" value={id} onChange={getId} placeholder="abcd1234"/>
+                    <CFormInput 
+                        type="id" 
+                        id="floatingId" 
+                        value={form.id} 
+                        onChange={e => setForm({...form, id: e.target.value})} 
+                        placeholder="abcd1234"/>
                     <CFormLabel htmlFor="floatingId">아이디</CFormLabel>
                 </CFormFloating>
 
                 {/* 비밀번호 입력*/}
                 <CFormFloating className="mb-3">
-                    <CFormInput type="password" id="floatingPassword" value={pw} onChange={getPw} placeholder="password"/>
+                    <CFormInput 
+                        type="password" 
+                        id="floatingPassword" 
+                        value={form.pw} 
+                        onChange={e => setForm({...form, pw: e.target.value})} 
+                        placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">비밀번호</CFormLabel>
                 </CFormFloating>
 
@@ -84,21 +85,27 @@ function LoginPage(props) {
             </CForm>
 
             {/* 버튼 */}
-            <Button onClick={conTest} className="p-button" variant="mb-3 p-1 px-3" size="" style={{ borderRadius: '13px', borderWidth: '2px' }}>
+            <Button 
+                onClick={conTest} 
+                className="p-button" 
+                variant="mb-3 p-1 px-3" 
+                size="" 
+                style={{ borderRadius: '13px', borderWidth: '2px' }}>
                 로그인
             </Button>
             <Button onClick={(e) => {
                 e.preventDefault();                
                 props.onChangePage("signUp");
-            }} variant="mb-3 p-1 px-3" size="" className="s-button" style={{ borderRadius: '13px', borderWidth: '2px' }}>
+            }} 
+                variant="mb-3 p-1 px-3" 
+                size="" 
+                className="s-button" 
+                style={{ borderRadius: '13px', borderWidth: '2px' }}>
                 회원가입
             </Button>
 
             {/* 로그인 성공 알림창 */}
             <Modal show={show} onHide={handleClose} centered>
-                {/* <Modal.Header closeButton>
-                <Modal.Title>로그인 성공</Modal.Title>
-                </Modal.Header> */}
                 <Modal.Body className="modal-body">
                     <PiSealCheckFill size={70}/>
                     <p>로그인 되었습니다.</p>
