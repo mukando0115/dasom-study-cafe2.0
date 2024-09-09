@@ -142,9 +142,6 @@ p {
   width: 100%;
 }
 
-.banner2-img1 {
-}
-
 .banner2 {
   background-image: url(../assets/img/Group\ 19\ 1.png);
   background-repeat :no-repeat;
@@ -299,6 +296,11 @@ u:not(.underline) {
 .p-button-sm:hover {
   background-color: #9ed4b6;
   color: #000000;
+}
+
+.profile-badge {
+  width: 200px;
+  height: 200px;
 }
 
 

@@ -37,8 +37,9 @@ function LoginPage(props) {
         //로그인 성공했을 때
         if(res.data.success) {            
             localStorage.setItem("id", id);
+            localStorage.setItem("name", res.data.name);
             console.log(res, data);
-            alert('로그인 되었습니다');
+            alert(localStorage.getItem("name"), '로그인 되었습니다');
             // handleShow();
             props.onLogin();
         }

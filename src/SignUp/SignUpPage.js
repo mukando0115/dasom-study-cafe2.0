@@ -79,7 +79,7 @@ function SignUpPage(props) {
     //아이디 중복체크 전송 함수(axios get)
     const checkId = () => api.get(`signUp/${id}`)
     .then(res => {
-        if(res.data === false) {
+        if(res.data.success) {
             alert("사용 가능한 아이디입니다.");
         }
         else {

@@ -1,5 +1,5 @@
 import { FaUserCircle } from "react-icons/fa";
-import { CPopover, CButton } from '@coreui/react'
+import { CPopover, CButton, CAvatar } from '@coreui/react'
 
 function ProfileBarPage(props) {
 
@@ -19,7 +19,10 @@ function ProfileBarPage(props) {
                 title="내 정보"
                 trigger="focus"
             >
-                <CButton><FaUserCircle size={30}>안</FaUserCircle></CButton>
+                <CButton className="profile-badge" shape="rounded-pill">
+                    <CAvatar color="success" textColor="white">{localStorage.getItem("name")[0]}</CAvatar>
+                    {/* <FaUserCircle size={30}>안</FaUserCircle> */}
+                </CButton>
             </CPopover>
         </main>
     )
