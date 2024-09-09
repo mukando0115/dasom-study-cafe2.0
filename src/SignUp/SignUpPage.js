@@ -26,13 +26,13 @@ function SignUpPage(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    //서버로 보낼 로그인 데이터
+    //서버로 보낼 회원가입 데이터
     const data = {
-        "user_id": form.id,
-        "user_pw": form.pw,
-        "user_name": form.name,
-        "user_phone": form.phone,
-        "user_birthDate": form.selectedDate
+        "userId": form.id,
+        "userPw": form.pw,
+        "userName": form.name,
+        "userPhone": form.phone,
+        "userBirthDate": form.selectedDate
     };
 
     //회원가입 데이터 전송 함수(axios post)

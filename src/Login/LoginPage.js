@@ -19,8 +19,8 @@ function LoginPage(props) {
 
     //서버로 보낼 로그인 데이터
     const data = {
-        "id": form.id,
-        "pw": form.pw
+        "userId": form.id,
+        "userPw": form.pw
     };
     
     //서버 전송 함수(axios post)
