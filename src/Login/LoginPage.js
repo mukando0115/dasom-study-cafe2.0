@@ -30,7 +30,7 @@ function LoginPage(props) {
         if(res.data.success) {            
             localStorage.setItem("id", form.id);
             localStorage.setItem("name", res.data.name);
-            alert(localStorage.getItem("name"), '로그인 되었습니다');
+            alert(localStorage.getItem("name")+'님 로그인 되었습니다');
             // handleShow();
             props.onLogin();
         }
