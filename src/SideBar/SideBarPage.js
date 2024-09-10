@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 import LoginPage from "../Login/LoginPage";
 import SignUpPage from "../SignUp/SignUpPage";
-import ForgotUserPage from "../ForgotUser/ForgotUserPage";
+import ForgotUserPage from "../ForgotUser/ForgotUserPage3";
 
 const SideBarPage = (props) => {
   const [visible, setVisible] = useState(false);

@@ -1,6 +1,8 @@
 import { CTabs, CTabList, CTab, CTabContent, CTabPanel, CButton } from '@coreui/react'
+import { useState } from 'react';
 
 function ProfileBarPage(props) {
+    const [show, setShow] = useState(1);
     return (
         <main className="forgotuser-page">
             <CTabs activeItemKey={1}>
@@ -20,7 +22,9 @@ function ProfileBarPage(props) {
                         <p>핸드폰 번호 입력('-'제외)</p>
                     </CTabPanel>
 
-                    <CButton className="p-button">확인</CButton>
+                    <CButton 
+                        className="p-button"                        
+                        >확인</CButton>
 
                     <a onClick={e => {
                         e.preventDefault();                

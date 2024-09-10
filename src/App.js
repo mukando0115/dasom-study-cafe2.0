@@ -32,13 +32,14 @@ function App() {
     }
   }, []);
 
+  //로그인 핸들러
   const loginHandler = (id, password) => {    
     localStorage.setItem("isLoggedIn", "1");
-
     // 로그인 되었을 때 State를 true로 업데이트
     setIsLoggedIn(true);
   };
 
+  //로그아웃 핸들러
   const logoutHandler = () => {
     console.log('logout', getId);
     localStorage.removeItem("id");
@@ -88,7 +89,7 @@ function App() {
                   onClick={(e) => {
                     if(!isLoggedIn) {
                       alert("로그인을 해주세요");
-                      window.location.href = '/'                  
+                      window.location.href = '/';
                     }
                   }}>
                 <span>예약하기</span>
