@@ -12,8 +12,6 @@ import {
     CCardBody,
     CForm,
     CFormInput,
-    CButtonGroup,
-    CFormCheck,
 } from '@coreui/react'
 import React, { useState } from "react";
 
@@ -38,11 +36,19 @@ function ReservationPage() {
     };
     //예약권 선택 - 시간 충전권 | 고정석 기간권
     const [ticketType, setTicketType] = useState('');
-    const [ticketMenu, setTicketMenu] = useState('예약권 선택');
+    const [ticketMenu, setTicketMenu] = useState('');
     //좌석 선택 - 1인실 (Common) | 1인실 (Private) | 고정석
     const [sitType, setSitType] = useState('');
     const [sitMenu, setsitMenu] = useState('좌석 선택');
-    const [sitNum, setSitNum] = useState(0);
+    const [sitNum, setSitNum] = useState([]);
+
+    const sitList = (sitNum) => {
+        var list = [];
+        for(var i=1 ; i <= sitNum ; i++) {
+            list.push(<CDropdownItem key={i} id={i} as="button" onClick={(e) => {setForm({...form, sitNum: e.target.id})}}>{i}</CDropdownItem>);
+        }
+        setSitNum(list);
+    }
 
     return (
         <main className="resercation-page">
@@ -57,7 +63,7 @@ function ReservationPage() {
                                 <div>
                                     <h4>예약권 선택</h4>
                                     <CDropdown>
-                                        <CDropdownToggle>{ticketMenu}</CDropdownToggle>
+                                        <CDropdownToggle>{ticketMenu === '' ? '예약권 선택' : ticketMenu}</CDropdownToggle>
                                         <CDropdownMenu>
                                             <CDropdownItem 
                                                 as="button" 
@@ -66,6 +72,7 @@ function ReservationPage() {
                                                     setTicketMenu('시간 충전권')
                                                     setsitMenu('좌석 선택')
                                                     setSitType('')
+                                                    setForm({...form, sitNum: ''})
                                                 }}>시간 충전권
                                             </CDropdownItem>
                                             <CDropdownItem 
@@ -75,6 +82,7 @@ function ReservationPage() {
                                                     setTicketMenu('고정석 기간권')
                                                     setsitMenu('좌석 선택')
                                                     setSitType('')
+                                                    setForm({...form, sitNum: ''})
                                                 }}>고정석 기간권
                                             </CDropdownItem>
                                         </CDropdownMenu>
@@ -92,14 +100,18 @@ function ReservationPage() {
                                                     <CDropdownItem 
                                                         as="button" 
                                                         onClick={(e) => {
+                                                            setForm({...form, sitNum: ''})
                                                             setSitType('common')
                                                             setsitMenu('1인실 (Common)')
+                                                            sitList(sitCount.common)
                                                         }}>1인실 (Common)</CDropdownItem>
                                                     <CDropdownItem 
                                                         as="button" 
                                                         onClick={(e) => {
+                                                            setForm({...form, sitNum: ''})
                                                             setSitType('private')
                                                             setsitMenu('1인실 (Private)')
+                                                            sitList(sitCount.private)
                                                         }}>1인실 (Private)</CDropdownItem>
                                                 </CDropdownMenu>                                                                       
                                             </div>                     
@@ -111,20 +123,24 @@ function ReservationPage() {
                                                     <CDropdownItem 
                                                         as="button"
                                                         onClick={(e) => {
+                                                            setForm({...form, sitNum: ''})
                                                             setSitType('fixed')
                                                             setsitMenu('고정석')
+                                                            sitList(sitCount.fixed)
                                                         }}>고정석</CDropdownItem>
                                                 </CDropdownMenu>
                                             </div>            
                                         }
                                         {/* 좌석 번호 드롭메뉴 */}
                                         <CDropdown>
-                                            <CDropdownToggle>좌석 번호</CDropdownToggle>
-                                            {sitType === 'common' ? <>common</>
-                                            : sitType === 'private' ? <>private</>
-                                            : sitType === 'fixed' ? <>fixed</>
-                                            : <></>
-                                            }
+                                            <CDropdownToggle>{form.sitNum === '' ? '좌석 번호' : form.sitNum}</CDropdownToggle>
+                                            <CDropdownMenu>
+                                                {sitType === 'common' ? <>{sitNum}</>
+                                                : sitType === 'private' ? <>{sitNum}</>
+                                                : sitType === 'fixed' ? <>{sitNum}</>
+                                                : <></>
+                                                }
+                                            </CDropdownMenu>                                            
                                             <CDropdownMenu>
                                             </CDropdownMenu>
                                         </CDropdown>    
@@ -170,13 +186,13 @@ function ReservationPage() {
                                                 <CForm>
                                                 <h2>예약 정보 확인</h2>
                                                 <span>이용권 정보</span>
-                                                <CFormInput type="text" placeholder={ticketMenu} readOnly/>
+                                                <CFormInput type="text" placeholder={ticketMenu !== '' ? ticketMenu : null} readOnly/>
                                                 <span>이용 예정 날짜</span>
                                                 <CFormInput type="text" placeholder="2024.08.27" readOnly/>
                                                 <span>이용 예정 시간</span>
                                                 <CFormInput type="text" placeholder="1:00 PM ~ 3:00 PM" readOnly/>
                                                 <span>좌석 정보</span>
-                                                <CFormInput type="text" placeholder={"1번 | "+sitMenu} readOnly/>
+                                                <CFormInput type="text" placeholder={form.sitNum !== '' ? form.sitNum + "번 | " + sitMenu : null} readOnly/>
                                                 <CButton 
                                                     className="s-button mt-3"
                                                     onClick={(e) => {
