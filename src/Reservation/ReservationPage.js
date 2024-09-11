@@ -49,8 +49,22 @@ function ReservationPage() {
 
     const sitList = (sitNum) => {
         var list = [];
+        // let i = 1;
+        // let count = 0;
+        // if (sitType === 'common') {
+        //     i = 1;
+        //     count = sitNum;
+        // }
+        // else if (sitType === 'fixed') {
+        //     i = sitCount.common + 1;
+        //     count = i + sitNum;
+        // }
+        // else if (sitType === 'private') {
+        //     i = sitCount.common + sitCount.fixed + 1;
+        //     count = i + sitNum;
+        // }
         for(var i=1 ; i <= sitNum ; i++) {
-            list.push(<CDropdownItem key={i} id={i} as="button" onClick={(e) => {setForm({...form, sitNum: e.target.id})}}>{i}</CDropdownItem>);
+            list.push(<CDropdownItem key={i} id={i} as="button" onClick={(e) => {setVisible(false); setForm({...form, sitNum: e.target.id})}}>{i}</CDropdownItem>);
         }
         setSitNum(list);
     }
@@ -64,24 +78,9 @@ function ReservationPage() {
         : form.endTime === null ? alert('종료 시간을 선택해주세요')
         : form.endTime < form.startTime ? alert('종료 시간을 다시 선택해주세요')
         : setVisible(true)
-    }
+    }    
 
-    //서버로 보낼 예약 데이터
-    const data = {
-        "userId": form.userId,
-        "sitNum": form.sitNum,
-        "reserveDate": form.reserveDate.getFullYear()+"-"
-            +((form.reserveDate.getMonth()+1<10) ? "0"+(form.reserveDate.getMonth()+1) : (form.reserveDate.getMonth()+1))+"-"
-            +((form.reserveDate.getDate()<10) ? "0"+(form.reserveDate.getDate()) : (form.reserveDate.getDate())),
-        "startTime": (form.startTime.getHours()<10 ? "0"+form.startTime.getHours() : form.startTime.getHours())
-            +":"
-            + (form.startTime.getMinutes()<10 ? "0"+form.startTime.getMinutes() : form.startTime.getMinutes()),
-        "endTime": (form.endTime.getHours()<10 ? "0"+form.endTime.getHours() : form.endTime.getHours())
-            +":"
-            + (form.endTime.getMinutes()<10 ? "0"+form.endTime.getMinutes() : form.endTime.getMinutes())
-    };
-
-    const reqReservation = () => api.post('reservation', data)
+    const reqReservation = (data) => api.post('reservation', data)
     .then(res => {
         //회원가입 성공했을 때
         if(res.data.success) {
@@ -119,6 +118,7 @@ function ReservationPage() {
                                                     setTicketType('time')
                                                     setTicketMenu('시간 충전권')                                                    
                                                     setSitType('')
+                                                    setsitMenu('')
                                                     setForm({...form, sitNum: ''})
                                                     setVisible(false)
                                                 }}>시간 충전권
@@ -129,6 +129,7 @@ function ReservationPage() {
                                                     setTicketType('term')
                                                     setTicketMenu('고정석 기간권')                                                    
                                                     setSitType('')
+                                                    setsitMenu('')
                                                     setForm({...form, sitNum: ''})
                                                     setVisible(false)
                                                 }}>고정석 기간권
@@ -319,7 +320,21 @@ function ReservationPage() {
                                                     className="p-button"
                                                     onClick={(event) => {
                                                         event.preventDefault()
-                                                        reqReservation()
+                                                        //서버로 보낼 예약 데이터
+                                                        const data = {
+                                                            "userId": form.userId,
+                                                            "sitNum": form.sitNum,
+                                                            "reserveDate": form.reserveDate.getFullYear()+"-"
+                                                                +((form.reserveDate.getMonth()+1<10) ? "0"+(form.reserveDate.getMonth()+1) : (form.reserveDate.getMonth()+1))+"-"
+                                                                +((form.reserveDate.getDate()<10) ? "0"+(form.reserveDate.getDate()) : (form.reserveDate.getDate())),
+                                                            "startTime": (form.startTime.getHours()<10 ? "0"+form.startTime.getHours() : form.startTime.getHours())
+                                                                +":"
+                                                                + (form.startTime.getMinutes()<10 ? "0"+form.startTime.getMinutes() : form.startTime.getMinutes()),
+                                                            "endTime": (form.endTime.getHours()<10 ? "0"+form.endTime.getHours() : form.endTime.getHours())
+                                                                +":"
+                                                                + (form.endTime.getMinutes()<10 ? "0"+form.endTime.getMinutes() : form.endTime.getMinutes())
+                                                        };
+                                                        reqReservation(data)
                                                     }}
                                                     >결제 진행</CButton>
                                                 </CForm>
