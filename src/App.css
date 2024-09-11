@@ -306,6 +306,15 @@ u:not(.underline) {
   padding-top: 15%;
 }
 
+.reserve-form {
+  border: 2px solid;
+  border-radius: 3px;
+  width: 175px;
+  height: 35px;
+  margin: 2%;
+  text-align: center;
+}
+
 
 
 
