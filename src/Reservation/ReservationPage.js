@@ -52,17 +52,14 @@ function ReservationPage() {
         let i = 1;
         let count = 0;
         if (type === 'common') {
-            alert('common')
             i = 1;
             count = num + 1;
         }
         else if (type === 'fixed') {
-            alert('fixed')
             i = sitCount.common + 1;
             count = i + num;
         }
         else if (type === 'private') {
-            alert('private')
             i = sitCount.common + sitCount.fixed + 1;
             count = i + num;
         }
