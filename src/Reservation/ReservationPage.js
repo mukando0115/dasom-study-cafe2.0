@@ -47,23 +47,26 @@ function ReservationPage() {
     const [sitMenu, setsitMenu] = useState('');
     const [sitNum, setSitNum] = useState([]);
 
-    const sitList = (sitNum) => {
+    const sitList = (type, num) => {
         var list = [];
-        // let i = 1;
-        // let count = 0;
-        // if (sitType === 'common') {
-        //     i = 1;
-        //     count = sitNum;
-        // }
-        // else if (sitType === 'fixed') {
-        //     i = sitCount.common + 1;
-        //     count = i + sitNum;
-        // }
-        // else if (sitType === 'private') {
-        //     i = sitCount.common + sitCount.fixed + 1;
-        //     count = i + sitNum;
-        // }
-        for(var i=1 ; i <= sitNum ; i++) {
+        let i = 1;
+        let count = 0;
+        if (type === 'common') {
+            alert('common')
+            i = 1;
+            count = num + 1;
+        }
+        else if (type === 'fixed') {
+            alert('fixed')
+            i = sitCount.common + 1;
+            count = i + num;
+        }
+        else if (type === 'private') {
+            alert('private')
+            i = sitCount.common + sitCount.fixed + 1;
+            count = i + num;
+        }
+        for(i ; i < count ; i++) {
             list.push(<CDropdownItem key={i} id={i} as="button" onClick={(e) => {setVisible(false); setForm({...form, sitNum: e.target.id})}}>{i}</CDropdownItem>);
         }
         setSitNum(list);
@@ -152,7 +155,7 @@ function ReservationPage() {
                                                             setForm({...form, sitNum: ''})
                                                             setSitType('common')
                                                             setsitMenu('1인실 (Common)')
-                                                            sitList(sitCount.common)
+                                                            sitList('common', sitCount.common)
                                                             setVisible(false)
                                                         }}>1인실 (Common)</CDropdownItem>
                                                     <CDropdownItem 
@@ -161,7 +164,7 @@ function ReservationPage() {
                                                             setForm({...form, sitNum: ''})
                                                             setSitType('private')
                                                             setsitMenu('1인실 (Private)')
-                                                            sitList(sitCount.private)
+                                                            sitList('private', sitCount.private)
                                                             setVisible(false)
                                                         }}>1인실 (Private)</CDropdownItem>
                                                 </CDropdownMenu>                                                                       
@@ -177,7 +180,7 @@ function ReservationPage() {
                                                             setForm({...form, sitNum: ''})
                                                             setSitType('fixed')
                                                             setsitMenu('고정석')
-                                                            sitList(sitCount.fixed)
+                                                            sitList('fixed', sitCount.fixed)
                                                             setVisible(false)
                                                         }}>고정석</CDropdownItem>
                                                 </CDropdownMenu>
