@@ -64,7 +64,16 @@ function ReservationPage() {
             count = i + num;
         }
         for(i ; i < count ; i++) {
-            list.push(<CDropdownItem key={i} id={i} as="button" onClick={(e) => {setVisible(false); setForm({...form, sitNum: e.target.id})}}>{i}</CDropdownItem>);
+            list.push(
+            <CDropdownItem 
+            key={i} 
+            id={i} 
+            as="button" 
+            onClick={(e) => {
+                setVisible(false); 
+                setForm({...form, sitNum: e.target.id})
+            }}>{i}
+            </CDropdownItem>);
         }
         setSitNum(list);
     }

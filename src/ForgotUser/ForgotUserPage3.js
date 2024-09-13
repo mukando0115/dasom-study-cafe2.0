@@ -298,7 +298,7 @@ function ProfileBarPage(props) {
             </Button>
             <Button onClick={(findConfirm) => {
                 findConfirm.preventDefault();                
-                props.onChangePage("login");
+                props.onChangePage("signUp");
             }} 
                 variant="mb-3 p-1 px-3" 
                 size="" 
