@@ -10,9 +10,17 @@ import {
     CButton, CForm, CFormFloating, CFormInput, CFormLabel, 
 } from '@coreui/bootstrap-react'
 import { PiSealCheckFill } from "react-icons/pi";
+import { Malert } from '../Modal/Modal';
 
 function SignUpPage(props) {
+    const [text, setText] = useState('');
     const [show, setShow] = useState(false);
+
+    const [valid, setValid] = useState({
+        pw: false,
+        pwCheck: false,
+        phone: false,
+    });
 
     const [form, setForm] = useState({
         id: '',
@@ -40,7 +48,7 @@ function SignUpPage(props) {
     .then(res => {
         //회원가입 성공했을 때
         if(res.data.success) {
-            handleShow();        
+            handleShow();
         }
         //실패했을 때
         else {
@@ -67,6 +75,26 @@ function SignUpPage(props) {
     }).catch(err => {
         console.log(err);
     })
+
+    const handleNumericInput = (e) => {
+        const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"];
+        if (!/^[0-9]$/.test(e.key) && !allowedKeys.includes(e.key)) {
+          e.preventDefault();
+        }
+    };
+
+    const validPassword = (e) => {
+        let validatePattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
+        validatePattern.test(e.target.value) ? setValid({...valid, pw: false}) : setValid({...valid, pw: true}); 
+    };
+
+    const validPasswordCheck = (e) =>{
+        form.pw === e.target.value ? setValid({...valid, pwCheck: false}) : setValid({...valid, pwCheck: true});
+    };
+
+    const validPhone = (e) => {
+        e.target.value.length === 11 ? setValid({...valid, phone: false}) : setValid({...valid, phone: true});
+    }
 
     return (
         <main className="signup-page">
@@ -95,7 +123,12 @@ function SignUpPage(props) {
                         type="password" 
                         id="floatingPassword" 
                         value={form.pw} 
-                        onChange={e => setForm({...form, pw: e.target.value})} 
+                        onChange={(e) => {
+                            setForm({...form, pw: e.target.value});
+                            validPassword(e);                        
+                            }
+                        }
+                        invalid = {valid.pw}
                         placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">비밀번호 입력(문자,숫자,특수문자 포함 8-20자)</CFormLabel>
                 </CFormFloating>
@@ -106,7 +139,12 @@ function SignUpPage(props) {
                         type="password" 
                         id="floatingPassword" 
                         value={form.pwCheck} 
-                        onChange={e => setForm({...form, pwCheck: e.target.value})} 
+                        onChange={(e) => {
+                            setForm({...form, pwCheck: e.target.value});
+                            validPasswordCheck(e);
+                        }}
+                        feedbackInvalid="Please provide a valid zip."
+                        invalid = {valid.pwCheck}
                         placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">비밀번호 재입력</CFormLabel>
                 </CFormFloating>
@@ -128,7 +166,12 @@ function SignUpPage(props) {
                         type="name" 
                         id="floatingPassword" 
                         value={form.phone} 
-                        onChange={e => setForm({...form, phone: e.target.value})} 
+                        onChange={(e) => {
+                            setForm({...form, phone: e.target.value});
+                            validPhone(e);
+                        }} 
+                        onKeyDown={handleNumericInput}
+                        invalid = {valid.phone}
                         placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">휴대폰 번호 입력 (“-” 제외 11자리 입력)</CFormLabel>
                 </CFormFloating>
@@ -175,12 +218,11 @@ function SignUpPage(props) {
                 style={{ borderRadius: '15px', borderWidth: '2px' }}>
                 이미 계정이 있으신가요? 로그인
             </Button>
+
+            <Malert text={text} handleShow={show}/>
         
             {/* 회원가입 성공 알림창 */}
             <Modal show={show} onHide={handleClose} centered>
-                {/* <Modal.Header closeButton>
-                <Modal.Title>로그인 성공</Modal.Title>
-                </Modal.Header> */}
                 <Modal.Body className="modal-body">
                     <PiSealCheckFill size={70}/>
                     <p>회원가입 되었습니다.</p>
