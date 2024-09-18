@@ -61,6 +61,17 @@ function SignUpPage(props) {
         console.log(err);
     })
 
+    //유효성 검증 함수
+    const checkValidation = () => {
+        const validCheck = Object.values(valid).filter(value => value === true).length > 0;
+        if (validCheck === true) {
+            alert('양식을 확인해주세요');
+        }
+        else {
+            reqSignUp();
+        }        
+    };
+
     //아이디 중복체크 전송 함수(axios get)
     const checkId = () => api.get(`signUp/${form.id}`)
     .then(res => {
@@ -202,7 +213,7 @@ function SignUpPage(props) {
 
             {/* 버튼 */}
             <Button 
-                onClick={reqSignUp} 
+                onClick={checkValidation} 
                 variant="mb-3 p-1 px-3" 
                 size="" className="s-button" 
                 style={{ borderRadius: '15px', borderWidth: '2px' }}>
