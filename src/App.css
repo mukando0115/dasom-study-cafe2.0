@@ -315,6 +315,15 @@ u:not(.underline) {
   text-align: center;
 }
 
+.mypage-form {
+  width: 20%;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  position: "relative";
+  margin: 1%
+}
+
 
 
 

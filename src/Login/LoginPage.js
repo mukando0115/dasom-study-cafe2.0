@@ -3,7 +3,7 @@ import api from '../api/api';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { CForm, CFormFloating, CFormInput, CFormLabel, CFormCheck } from '@coreui/bootstrap-react'
+import { CForm, CFormFloating, CFormInput, CFormLabel } from '@coreui/bootstrap-react'
 import { PiSealCheckFill } from "react-icons/pi";
 
 function LoginPage(props) {
@@ -33,6 +33,7 @@ function LoginPage(props) {
             alert(localStorage.getItem("name")+'님 로그인 되었습니다');
             // handleShow();
             props.onLogin();
+            window.location.href = '/';
         }
         //로그인 실패했을 때
         else{

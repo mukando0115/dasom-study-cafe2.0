@@ -8,6 +8,7 @@ function ProfileBarPage(props) {
             console.log('dd');
             alert(localStorage.getItem("id")+'가 로그아웃 되었습니다.')
             props.onLogout();
+            window.location.href = '/';
         }}>로그아웃</CButton>
 
     return (
