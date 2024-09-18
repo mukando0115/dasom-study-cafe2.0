@@ -1,28 +1,42 @@
-import { FaUserCircle } from "react-icons/fa";
-import { CPopover, CButton, CAvatar } from '@coreui/react'
+import { CPopover, CButton, CAvatar, CAlert, CAlertLink } from '@coreui/react'
 
 function ProfileBarPage(props) {
-
-    const logoutButton = <CButton className="p-button" 
-        onClick={() => {
-            console.log('dd');
-            alert(localStorage.getItem("id")+'가 로그아웃 되었습니다.')
-            props.onLogout();
-            window.location.href = '/';
-        }}>로그아웃</CButton>
 
     return (
         <main className="profile-page">            
 
             <CPopover
-                content={logoutButton}
+                // content={logoutButton}
+                content = {
+                    <div>
+                        <CAlert>
+                            <CAlertLink  
+                                href="/mypage">
+                                마이페이지
+                            </CAlertLink>
+                            <hr />
+                            <CAlertLink>
+                                예약확인(아직 없음)
+                            </CAlertLink>
+                        </CAlert>                        
+                        <CButton  
+                            className="p-button"
+                            as="button" 
+                            onClick={() => {
+                                alert(localStorage.getItem("id")+'가 로그아웃 되었습니다.')
+                                props.onLogout();
+                                window.location.href = '/';
+                            }}>로그아웃
+                        </CButton>
+                    </div>
+                }
                 placement="bottom"
                 title="내 정보"
                 trigger="focus"
             >
+                
                 <CButton shape="rounded-pill">
                     <CAvatar className="profile-badge" color="success" textColor="white">{localStorage.getItem("name")[0]}</CAvatar>
-                    {/* <FaUserCircle size={30}>안</FaUserCircle> */}
                 </CButton>
             </CPopover>
         </main>
