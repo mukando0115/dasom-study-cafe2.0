@@ -23,7 +23,7 @@ function ProfileBarPage(props) {
                             className="p-button"
                             as="button" 
                             onClick={() => {
-                                alert(localStorage.getItem("id")+'가 로그아웃 되었습니다.')
+                                alert(localStorage.getItem("name")+'님 로그아웃 되었습니다.')
                                 props.onLogout();
                                 window.location.href = '/';
                             }}>로그아웃

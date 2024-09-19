@@ -10,10 +10,9 @@ import {
     CButton, CForm, CFormFloating, CFormInput, CFormLabel, 
 } from '@coreui/bootstrap-react'
 import { PiSealCheckFill } from "react-icons/pi";
-import { Malert } from '../Modal/Modal';
 
 function SignUpPage(props) {
-    const [text, setText] = useState('');
+    const [validMessage, setValidMessage] = useState('');
     const [show, setShow] = useState(false);
 
     const [valid, setValid] = useState({
@@ -95,8 +94,25 @@ function SignUpPage(props) {
     };
 
     const validPassword = (e) => {
-        let validatePattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
-        validatePattern.test(e.target.value) ? setValid({...valid, pw: false}) : setValid({...valid, pw: true}); 
+        const value = e.target.value;
+        // 각 조건을 변수로 저장
+        const hasLetter = /[a-zA-Z]/.test(value); // 문자가 포함되어 있는지
+        const hasNumber = /\d/.test(value); // 숫자가 포함되어 있는지
+        const hasSpecialChar = /[$@$!%*#?&]/.test(value); // 특수문자가 포함되어 있는지
+
+        // 전체 유효성 검사
+        const validatePattern = hasLetter && hasNumber && hasSpecialChar && value.length >= 8 && value.length <= 20;
+        (validatePattern) ? setValid({...valid, pw: false}) : setValid({...valid, pw: true});
+
+        (!hasLetter && !hasNumber && !hasSpecialChar) ? setValidMessage('문자, 숫자, 특수문자를 포함해주세요')
+        : (!hasLetter && !hasNumber) ? setValidMessage('문자와 숫자를 포함해주세요')
+        : (!hasLetter && !hasSpecialChar) ? setValidMessage('문자와 특수문자를 포함해주세요')
+        : (!hasNumber && !hasSpecialChar) ? setValidMessage('숫자와 특수문자를 포함해주세요')
+        : (!hasLetter) ? setValidMessage('문자를 포함해주세요')
+        : (!hasNumber) ? setValidMessage('숫자를 포함해주세요')
+        : (!hasSpecialChar) ? setValidMessage('특수문자를 포함해주세요')
+        : (value.length < 8 || value.length > 20) ? setValidMessage('8~20자여야 합니다')
+        : setValidMessage('');
     };
 
     const validPasswordCheck = (e) =>{
@@ -142,6 +158,7 @@ function SignUpPage(props) {
                         invalid = {valid.pw}
                         placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">비밀번호 입력(문자,숫자,특수문자 포함 8-20자)</CFormLabel>
+                    <p style={{color: "yellow", fontSize: "13px"}}>{validMessage}</p>
                 </CFormFloating>
 
                 {/* 비밀번호 재입력*/}
@@ -154,7 +171,6 @@ function SignUpPage(props) {
                             setForm({...form, pwCheck: e.target.value});
                             validPasswordCheck(e);
                         }}
-                        feedbackInvalid="Please provide a valid zip."
                         invalid = {valid.pwCheck}
                         placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">비밀번호 재입력</CFormLabel>
@@ -229,8 +245,6 @@ function SignUpPage(props) {
                 style={{ borderRadius: '15px', borderWidth: '2px' }}>
                 이미 계정이 있으신가요? 로그인
             </Button>
-
-            <Malert text={text} handleShow={show}/>
         
             {/* 회원가입 성공 알림창 */}
             <Modal show={show} onHide={handleClose} centered>
