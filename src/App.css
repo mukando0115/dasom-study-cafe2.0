@@ -315,17 +315,33 @@ u:not(.underline) {
   text-align: center;
 }
 
-.mypage-form {
-  width: 20%;
+.mypage-entry-form {
+  width: 40%;
   display: inline-block;
   vertical-align: middle;
   text-align: center;
   position: "relative";
-  margin: 1%
+  margin: 2%
 }
 
 .my-page {
-  height: 700px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  width: 70%;
+  margin-top: 2%;
+  height: 1000px;
+}
+
+.mypage-form {
+  margin-top: 2%;
+  display: inline-block;
+  text-align: left;
+  width: 30%;
+}
+
+.password-change-form {
+  margin-top: 12%;
 }
 
 

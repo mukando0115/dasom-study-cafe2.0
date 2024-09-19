@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CForm, CFormFloating, CFormInput, CFormLabel } from '@coreui/bootstrap-react';
+import { CForm, CFormFloating, CFormInput, CFormLabel, CCollapse } from '@coreui/bootstrap-react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import api from '../api/api';
@@ -94,7 +94,7 @@ function MyPage() {
             <h1 className="main-title">마이페이지</h1>
 
             {(check === false && isLoggedIn) &&
-                <CForm className="mypage-form">
+                <CForm className="mypage-entry-form">
                     <CFormFloating className="mb-3">
                         <CFormInput
                             type="password"
@@ -117,34 +117,41 @@ function MyPage() {
             }
 
             {(check === true && isLoggedIn) &&
-                <div>
+                <div className="mypage-form">
                     <h2>회원 정보</h2>
-                    {userData && (
-                        <div>
-                            <p>이름: {userData.name}</p>
-                            <p>
-                                아이디: {userData.user_id}
-                                <Button
-                                    variant="outline-secondary"
-                                    size="sm"
-                                    className="ms-3"
-                                    onClick={() => setShowPasswordChange(!showPasswordChange)}
-                                >
-                                    비밀번호 변경
-                                </Button>
-                            </p>
-                            <p>전화번호: {userData.phone}</p>
-                            <p>생년월일: {new Date(userData.birth).toLocaleDateString()}</p>
-                            <p>가입일시: {new Date(userData.created_at).toLocaleString()}</p>
-                        </div>
-                    )}
-
+                    <hr/>
+                    <div>
+                        {userData && (
+                            <div>
+                                <p>이름: {userData.name}</p>
+                                <p>
+                                    아이디: {userData.user_id}
+                                    <Button
+                                        variant="outline-secondary"
+                                        size="sm"
+                                        className="ms-3"
+                                        onClick={() => setShowPasswordChange(!showPasswordChange)}
+                                    >
+                                        비밀번호 변경
+                                    </Button>
+                                </p>
+                                <p>전화번호: {userData.phone.slice(0,3)+'-'+userData.phone.slice(3,7)+'-'+userData.phone.slice(7)}</p>
+                                <p>생년월일: {new Date(userData.birth).getFullYear()+'년 '
+                                    +String(new Date(userData.birth).getMonth() + 1).padStart(2, '0')+'월 '
+                                    +String(new Date(userData.birth).getDate()).padStart(2, '0')+'일'}</p>
+                                <p>가입일시: {new Date(userData.created_at).getFullYear()+'년 '
+                                    +String(new Date(userData.created_at).getMonth() + 1).padStart(2, '0')+'월 '
+                                    +String(new Date(userData.created_at).getDate()).padStart(2, '0')+'일 '
+                                    +new Date(userData.created_at).toLocaleString().slice(-12)}</p>
+                            </div>
+                        )}                        
+                    </div>
                     {/* 비밀번호 변경 입력 폼 */}
-                    {showPasswordChange && (
+                    <CCollapse visible={showPasswordChange}>
                         <div className="password-change-form">
                             <h3>비밀번호 변경</h3>
-                            <div style={{ display: 'flex', gap: '10px' }}> {/* Flex 컨테이너 */}
-                                <CFormFloating className="mb-3" style={{ flex: 1 }}>
+                            <div style={{ gap: '10px', display: 'inline-block', width: '100%' }}> {/* Flex 컨테이너 */}
+                                <CFormFloating className="mb-3" style={{ flex: 1}}>
                                     <CFormInput
                                         type="password"
                                         value={currentPassword}
@@ -173,16 +180,16 @@ function MyPage() {
                                     />
                                     <CFormLabel>비밀번호 확인</CFormLabel>
                                 </CFormFloating>
-                            </div>
 
-                            <Button
-                                variant="primary"
-                                onClick={handlePasswordChange}
-                            >
-                                비밀번호 변경
-                            </Button>
+                                <Button
+                                    className="p-button"
+                                    onClick={handlePasswordChange}
+                                >
+                                    비밀번호 변경
+                                </Button>
+                            </div>                                
                         </div>
-                    )}
+                    </CCollapse>           
                 </div>
             }
         </main>
