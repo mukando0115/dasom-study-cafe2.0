@@ -37,7 +37,8 @@ function LoginPage(props) {
         }
         //로그인 실패했을 때
         else{
-            alert(res.data.message);
+            // alert(res.data.message);
+            alert('아이디 혹은 비밀번호가 일치하지 않습니다.')
         }
     }).catch((err) => {
         alert(err.response.data.message);

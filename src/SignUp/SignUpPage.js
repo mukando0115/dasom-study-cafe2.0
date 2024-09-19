@@ -72,7 +72,7 @@ function SignUpPage(props) {
     };
 
     //아이디 중복체크 전송 함수(axios get)
-    const checkId = () => api.get(`signUp/${form.id}`)
+    const checkId = () => api.get(`signUp/checkId/${form.id}`)
     .then(res => {
         //사용 가능 아이디일 때
         if(res.data.success) {

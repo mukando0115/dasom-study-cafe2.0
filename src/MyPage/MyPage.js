@@ -26,7 +26,7 @@ function MyPage() {
         "userPw": pw
     };
 
-    const conTest = () => api.post('/api/mypages/mypagePw', data)
+    const conTest = () => api.post('mypages/mypagePw', data)
         .then((res) => {
             if (res.data.success) {
                 setCheck(true);
@@ -142,7 +142,7 @@ function MyPage() {
                                 <p>가입일시: {new Date(userData.created_at).getFullYear()+'년 '
                                     +String(new Date(userData.created_at).getMonth() + 1).padStart(2, '0')+'월 '
                                     +String(new Date(userData.created_at).getDate()).padStart(2, '0')+'일 '
-                                    +new Date(userData.created_at).toLocaleString().slice(-12)}</p>
+                                    +new Date(userData.created_at).toLocaleString().slice(-11)}</p>
                             </div>
                         )}                        
                     </div>
