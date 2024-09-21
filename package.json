@@ -50,5 +50,5 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-datepicker": "^7.0.0"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000/api"
 }

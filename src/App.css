@@ -311,7 +311,7 @@ u:not(.underline) {
   border-radius: 3px;
   width: 175px;
   height: 35px;
-  margin: 2%;
+  margin-right: 2%;
   text-align: center;
 }
 
@@ -343,6 +343,28 @@ u:not(.underline) {
 .password-change-form {
   margin-top: 12%;
 }
+
+.reservation-form {
+  text-align: left;
+  margin-bottom: 9%;
+}
+
+.scrollable {
+  max-height: 200px; /* 원하는 최대 높이 */
+  overflow-y: auto; /* 스크롤 기능 활성화 */
+}
+
+.scrollable::-webkit-scrollbar {
+  display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+
+.scrollable {
+  -ms-overflow-style: none; /* Internet Explorer 및 Edge에서 스크롤바 숨기기 */
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+}
+
+
+
 
 
 

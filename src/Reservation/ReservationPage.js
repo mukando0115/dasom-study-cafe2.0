@@ -17,13 +17,22 @@ import React, { useState } from "react";
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/locale/ko";
 import api from '../api/api';
-// import setHours from "date-fns/setHours";
-// import setMinutes from "date-fns/setMinutes";
+import image1 from './Seatingchart.png';
+import { setHours, setMinutes } from 'date-fns';
 
 function ReservationPage() {
+    const hours = Array.from({ length: 12 }, (_, index) => index + 1);
+    const minutes = Array.from({ length: 6 }, (_, index) => index * 10);
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const userId = localStorage.getItem("id");
     const [visible, setVisible] = useState(false);
+
+    //선택 시간 정보
+    const [selectTime, setSelectTime] = useState({
+        amPm: null,
+        hour: null,
+        minute: null,
+    })
 
     //예약 정보
     const [form, setForm] = useState({
@@ -115,7 +124,7 @@ function ReservationPage() {
                 <div>
                     <CContainer className="reservation-form">
                         <CRow lg={{ cols: 2, gutter: 3}}>
-                            <CCol>
+                            <CCol lg={4}>
                                 <div>
                                     <p>예약권 선택</p>
                                     <CDropdown className="reserve-form">
@@ -196,7 +205,7 @@ function ReservationPage() {
                                     {/* 좌석 번호 드롭메뉴 */}
                                     <CDropdown className="reserve-form">
                                         <CDropdownToggle>{form.sitNum === '' ? '좌석 번호' : form.sitNum}</CDropdownToggle>
-                                        <CDropdownMenu>
+                                        <CDropdownMenu style={{maxHeight: '200px', overflowY: 'auto'}}>
                                             {sitType === 'common' ? <>{sitNum}</>
                                             : sitType === 'private' ? <>{sitNum}</>
                                             : sitType === 'fixed' ? <>{sitNum}</>
@@ -233,7 +242,76 @@ function ReservationPage() {
                                 </div>
                                 <hr/>
                                 <div>
-                                    <p>사용 시작 시간 선택</p>
+                                    <p>사용 시작 시간 선택</p>                                
+                                    <CDropdown className="reserve-form" autoClose='outside'>
+                                        <CDropdownToggle>
+                                            {`${(selectTime.hour === null) ? '' : selectTime.hour}
+                                                :${(selectTime.minute === null) ? '' : selectTime.minute}
+                                                 ${(selectTime.amPm === null) ? '' : selectTime.amPm}`}
+                                        </CDropdownToggle>
+                                        <CDropdownMenu style={{ maxHeight: '250px', position: 'absolute', zIndex: 1000}}>
+                                        <CRow lg={{ cols: 3, gutter: 1}}>
+                                            <CCol className="scrollable" style={{ maxHeight: '200px'}}>
+                                                {hours.map((number) => (
+                                                    <CDropdownItem
+                                                        key={number}
+                                                        onClick={() => setSelectTime({ ...selectTime, hour: number })}
+                                                        active={number === selectTime.hour} //선택된 시간만 활성화
+                                                    >
+                                                        {number}
+                                                    </CDropdownItem>
+                                                ))}
+                                            </CCol>
+                                            <CCol style={{ maxHeight: '200px' }}>
+                                                {minutes.map((number) => (
+                                                    <CDropdownItem
+                                                        key={number}
+                                                        onClick={() => 
+                                                            setSelectTime({ 
+                                                                ...selectTime, 
+                                                                minute: (number < 10 ) ? `0${number}` : number })}
+                                                        active={
+                                                            (number < 10) 
+                                                            ? `0${number}` === selectTime.minute
+                                                            : number === selectTime.minute} //선택된 시간만 활성화
+                                                    >
+                                                        {number < 10 ? `0${number}` : number}
+                                                    </CDropdownItem>
+                                                ))}
+                                            </CCol>
+                                            <CCol style={{ maxHeight: '200px' }}>
+                                                <CDropdownItem 
+                                                    as="button"
+                                                    onClick={() => setSelectTime({ ...selectTime, amPm: 'AM' })}
+                                                    active={selectTime.amPm === 'AM'} // AM 선택 시 활성화
+                                                >
+                                                    AM
+                                                </CDropdownItem>
+                                                <CDropdownItem 
+                                                    as="button"
+                                                    onClick={() => setSelectTime({ ...selectTime, amPm: 'PM' })}
+                                                    active={selectTime.amPm === 'PM'} // PM 선택 시 활성화
+                                                >
+                                                    PM
+                                                </CDropdownItem>
+                                            </CCol>                                          
+                                        </CRow>
+                                        </CDropdownMenu>
+                                    </CDropdown>
+                                    {/* <DatePicker
+                                        className="reserve-form"
+                                        selected={form.startTime}
+                                        onChange={(date) => {
+                                            setForm({...form, startTime: date})
+                                            setVisible(false)
+                                        }}
+                                        timeFormat="hh:mm"
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        timeIntervals={10}
+                                        timeCaption="Time"
+                                        dateFormat="hh:mm"
+                                    />
                                     <DatePicker
                                         className="reserve-form"
                                         selected={form.startTime}
@@ -241,12 +319,13 @@ function ReservationPage() {
                                             setForm({...form, startTime: date})
                                             setVisible(false)
                                         }}
+                                        timeFormat="hh:mm"
                                         showTimeSelect
                                         showTimeSelectOnly
                                         timeIntervals={10}
                                         timeCaption="Time"
-                                        dateFormat="hh:mm aa"
-                                    />
+                                        dateFormat="hh:mm"
+                                    /> */}
                                     <p>사용 종료 시간 선택</p>
                                     <DatePicker
                                         className="reserve-form"
@@ -276,8 +355,11 @@ function ReservationPage() {
                                 </div>
                             </CCol>
 
-                            <CCol>
-                                <div>
+                            <CCol lg={8}>
+                                <div className="seating-chart">
+                                    <img src={image1} alt="좌석 배치도" />
+                                </div>
+                                    {/* <div>
                                     <CCollapse visible={visible} horizontal>
                                         <CCard style={{ width: '300px' }}>
                                             <CCardBody>
@@ -350,7 +432,7 @@ function ReservationPage() {
                                             </CCardBody>
                                         </CCard>
                                     </CCollapse>
-                                </div>                                
+                                </div>                                 */}
                             </CCol>
                         </CRow>
                     </CContainer>
