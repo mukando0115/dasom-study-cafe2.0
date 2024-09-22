@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
-import { CForm, CFormFloating, CFormInput, CFormLabel, CCollapse } from '@coreui/bootstrap-react';
+import { CForm, CFormFloating, CFormInput, CFormLabel, CCollapse, CCard, CCardHeader, CCardBody, CCardTitle, CCardText, CCardFooter } from '@coreui/bootstrap-react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import api from '../api/api';
+import { FcHighPriority } from "react-icons/fc";
+import { CButton } from '@coreui/react';
 
 function MyPage() {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const userId = localStorage.getItem("id");
     const [pw, setPw] = useState('');
     const [check, setCheck] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [footer, setFooter] = useState(false);
     
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -118,8 +122,55 @@ function MyPage() {
 
             {(check === true && isLoggedIn) &&
                 <div className="mypage-form">
-                    <h2>회원 정보</h2>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', height: '100px' }}>
+                        <h2>회원 정보</h2>
+                        <a 
+                            onClick={() => {
+                                alert('회원탈퇴 클릭됨');
+                                setVisible(true);
+                            }}
+                            style={{color: "red", marginLeft: '10px', cursor: 'pointer' }}
+                        ><FcHighPriority/> 회원탈퇴</a>                        
+                    </div>                    
                     <hr/>
+                    { visible 
+                    && <div>
+                            <CCard
+                            textColor='danger'
+                            className={`mb-3 border-top-danger border-top-3`}
+                            style={{ maxWidth: '18rem' }}
+                            >
+                            <CCardHeader>회원탈퇴</CCardHeader>
+                            <CCardBody>
+                                <CCardTitle>정말 탈퇴하시겠습니까?</CCardTitle>
+                                <CCardText>
+                                Some quick example text to build on the card title and make up the bulk of the card's
+                                content. 정말로요???????????????????????????? 절대로 돌이킬 수 없습니다
+                                </CCardText>
+                                { footer
+                                    && <CCardFooter className="mb-4">
+                                            인증번호(OR비밀번호)
+                                            <CFormInput type="text" placeholder='구차하게 굴거지롱' readOnly/>
+                                        </CCardFooter>
+                                }                                
+                                <CButton 
+                                    className='s-button m-1' 
+                                    shape="rounded-0"
+                                    onClick={() => {
+                                        setFooter(true);
+                                }}>확인</CButton>
+                                <CButton 
+                                    className='p-button m-1' 
+                                    shape="rounded-0" 
+                                    onClick={() => {
+                                    setVisible(false);
+                                    setFooter(false);
+                                }}>취소</CButton>
+                            </CCardBody>
+                            </CCard>
+                        </div>
+                    }
+                    
                     <div>
                         {userData && (
                             <div>

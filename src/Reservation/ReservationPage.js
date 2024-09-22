@@ -507,15 +507,8 @@ function ReservationPage() {
                                                 const data = {
                                                     "userId": form.userId,
                                                     "sitNum": form.sitNum,
-                                                    "reserveDate": form.reserveDate.getFullYear()+"-"
-                                                        +((form.reserveDate.getMonth()+1<10) ? "0"+(form.reserveDate.getMonth()+1) : (form.reserveDate.getMonth()+1))+"-"
-                                                        +((form.reserveDate.getDate()<10) ? "0"+(form.reserveDate.getDate()) : (form.reserveDate.getDate())),
-                                                    "startTime": (form.startTime.getHours()<10 ? "0"+form.startTime.getHours() : form.startTime.getHours())
-                                                        +":"
-                                                        + (form.startTime.getMinutes()<10 ? "0"+form.startTime.getMinutes() : form.startTime.getMinutes()),
-                                                    "endTime": (form.endTime.getHours()<10 ? "0"+form.endTime.getHours() : form.endTime.getHours())
-                                                        +":"
-                                                        + (form.endTime.getMinutes()<10 ? "0"+form.endTime.getMinutes() : form.endTime.getMinutes())
+                                                    "reserveDate": new Date(form.reserveDate.getTime() + 9 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' '),
+                                                    "chargeTime": (sitType === 'fixed') ? null : selectTime.credit
                                                 };
                                                 reqReservation(data)
                                             }}
