@@ -2,17 +2,18 @@ import { useState } from 'react';
 import api from '../api/api';
 
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import { CForm, CFormFloating, CFormInput, CFormLabel } from '@coreui/bootstrap-react'
 import { PiSealCheckFill } from "react-icons/pi";
 
 function LoginPage(props) {
-    const [show, setShow] = useState(false);
-
     const [form, setForm] = useState({
         id: '',
         pw: '',
     });
+
+    //Modal 데이터
+    const [show, setShow] = useState(false);
+    const [msg, setMsg] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -27,10 +28,10 @@ function LoginPage(props) {
     const conTest = () => api.post('login', data)
     .then((res) => {
         //로그인 성공했을 때
-        if(res.data.success) {            
+        if(res.data.success) {        
             localStorage.setItem("id", form.id);
             localStorage.setItem("name", res.data.name);
-            alert(localStorage.getItem("name")+'님 로그인 되었습니다');
+            alert(`${localStorage.getItem("name")}님 로그인 되었습니다`);
             // handleShow();
             props.onLogin();
             window.location.href = '/';
@@ -38,7 +39,7 @@ function LoginPage(props) {
         //로그인 실패했을 때
         else{
             // alert(res.data.message);
-            alert('아이디 혹은 비밀번호가 일치하지 않습니다.')
+            alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
         }
     }).catch((err) => {
         alert(err.response.data.message);
@@ -107,15 +108,7 @@ function LoginPage(props) {
             </Button>
 
             {/* 로그인 성공 알림창 */}
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Body className="modal-body">
-                    <PiSealCheckFill size={70}/>
-                    <p>로그인 되었습니다.</p>
-                </Modal.Body>
-                <Modal.Footer>
-                <Button className="p-button" variant="mb-3 p-1 px-3" onClick={handleClose}>확인</Button>
-                </Modal.Footer>
-            </Modal>
+            {/* <SuccessModal show={show} handleClose={handleClose} text={msg}/> */}
         </main>
     )
 }

@@ -12,8 +12,10 @@ import {
     CCardBody,
     CForm,
     CFormInput,
+    COffcanvas,
+    COffcanvasBody,
 } from '@coreui/react'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/locale/ko";
 import api from '../api/api';
@@ -23,6 +25,29 @@ import { setHours, setMinutes } from 'date-fns';
 function ReservationPage() {
     const hours = Array.from({ length: 12 }, (_, index) => index + 1);
     const minutes = Array.from({ length: 6 }, (_, index) => index * 10);
+    const credits = Array.from([2, 4, 7, 12, 30, 50, 100]);
+    const price = {
+        "common": {
+            2: "3,000",
+            4: "5,000",
+            7: "7,000",
+            12: "10,000",
+            30: "40,000",
+            50: "60,000",
+            100: "80,000",
+        },
+        "private": {
+            2: "12,000",
+            4: "21,000",
+            7: "35,000",
+            12: "54,000",
+            30: "120,000",
+            50: "180,000",
+            100: "300,000",
+        },
+        "fixed": "140,000"
+    };
+
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const userId = localStorage.getItem("id");
     const [visible, setVisible] = useState(false);
@@ -32,22 +57,26 @@ function ReservationPage() {
         amPm: null,
         hour: null,
         minute: null,
+        credit: null,
     })
 
     //예약 정보
     const [form, setForm] = useState({
         userId: userId,
         reserveDate: null,
-        startTime: null,
-        endTime: null,
+        expireDate: null,
+        startTime: null,        
+        chargeTime: null,
         sitNum: '',
     });
+
     //좌석타입 별 개수
     const sitCount = {
         "common": 20,
         "private": 17,
         "fixed": 11,
     };
+
     //예약권 선택 - 시간 충전권 | 고정석 기간권
     const [ticketType, setTicketType] = useState('');
     const [ticketMenu, setTicketMenu] = useState('');
@@ -77,11 +106,11 @@ function ReservationPage() {
             <CDropdownItem 
             key={i} 
             id={i} 
-            as="button" 
+            as="button"
             onClick={(e) => {
                 setVisible(false); 
                 setForm({...form, sitNum: e.target.id})
-            }}>{i}
+            }}>{i+'번'}
             </CDropdownItem>);
         }
         setSitNum(list);
@@ -92,11 +121,40 @@ function ReservationPage() {
         : sitMenu === '' ? alert('좌석을 선택해주세요')
         : form.sitNum === '' ? alert('좌석 번호를 선택해주세요')
         : form.reserveDate === null ? alert('예약일을 선택해주세요')
-        : form.startTime === null ? alert('시작 시간을 선택해주세요')
-        : form.endTime === null ? alert('종료 시간을 선택해주세요')
-        : form.endTime < form.startTime ? alert('종료 시간을 다시 선택해주세요')
-        : setVisible(true)
-    }    
+        : ((sitType !== "fixed") && (selectTime.hour === null || selectTime.minute === null || selectTime.amPm === null)) ? alert('시간을 선택해주세요')
+        : (sitType !== "fixed" && selectTime.credit === null) ? alert('충전 시간을 선택해주세요')
+        : initializePayment()
+    }
+
+    const initializePayment = () => {
+        if (sitType === "common" || sitType === "private") {
+            const hourFix = selectTime.amPm === 'AM' 
+                            ? (parseInt(selectTime.hour, 10) === 12 ? 0 : parseInt(selectTime.hour, 10)) 
+                            : (parseInt(selectTime.hour, 10) + 12);
+            const dateFix = new Date(new Date(form.reserveDate).setHours(hourFix, parseInt(selectTime.minute, 10)));
+            const dateAfter = new Date(dateFix.getTime());
+            dateAfter.setHours(dateAfter.getHours() + selectTime.credit);
+            setForm(form => ({
+                ...form,
+                reserveDate: dateFix,
+                expireDate: dateAfter
+            }));  
+        }
+        else if (sitType === "fixed") {
+            const dateFix = new Date(new Date(form.reserveDate).setHours(0, 0));
+            const dateAfter = new Date(dateFix.setDate(dateFix.getDate() + 35));
+            setForm(form => ({
+                ...form,
+                reserveDate: dateFix,
+                expireDate: dateAfter
+            }));  
+        }
+        else return       
+        setVisible(true) 
+    }
+
+    useEffect(() => {
+      }, [form.reserveDate, form.expireDate]);
 
     const reqReservation = (data) => api.post('reservation', data)
     .then(res => {
@@ -124,6 +182,7 @@ function ReservationPage() {
                 <div>
                     <CContainer className="reservation-form">
                         <CRow lg={{ cols: 2, gutter: 3}}>
+                            {/* 예약 화면 */}
                             <CCol lg={4}>
                                 <div>
                                     <p>예약권 선택</p>
@@ -204,20 +263,20 @@ function ReservationPage() {
                                     </CDropdown>
                                     {/* 좌석 번호 드롭메뉴 */}
                                     <CDropdown className="reserve-form">
-                                        <CDropdownToggle>{form.sitNum === '' ? '좌석 번호' : form.sitNum}</CDropdownToggle>
-                                        <CDropdownMenu style={{maxHeight: '200px', overflowY: 'auto'}}>
+                                        <CDropdownToggle>{form.sitNum === '' ? '좌석 번호' : form.sitNum+'번'}</CDropdownToggle>
+                                        <CDropdownMenu style={{maxHeight: '200px', overflowX: 'auto'}}>
                                             {sitType === 'common' ? <>{sitNum}</>
                                             : sitType === 'private' ? <>{sitNum}</>
                                             : sitType === 'fixed' ? <>{sitNum}</>
                                             : <></>
                                             }
-                                        </CDropdownMenu>                                            
-
+                                        </CDropdownMenu>
                                     </CDropdown> 
                                 </div>
-                                <hr/>                                
+                                <hr/>  
                                 <div>
                                     <p>예약일 선택</p>
+                                    <span style={{marginRight: '2%'}}>
                                     <DatePicker
                                         showIcon
                                         locale={ko}
@@ -239,14 +298,33 @@ function ReservationPage() {
                                             strategy: "fixed"
                                         }}
                                     />
+                                    </span>
+                                    
+                                    {
+                                    (sitType === "fixed" && form.reserveDate !== null)
+                                    && 
+                                        <DatePicker
+                                        showIcon
+                                        locale={ko}
+                                        className="reserve-form"
+                                        dateFormat='yyyy년 MM월 dd일' // 날짜 형태
+                                        disabled
+                                        selected={form.reserveDate !== null && new Date(new Date(form.reserveDate).setDate(new Date(form.reserveDate).getDate() + 35))}                                        
+                                        popperProps={{
+                                            strategy: "fixed"
+                                        }}
+                                    />
+                                }
                                 </div>
                                 <hr/>
-                                <div>
+                                {
+                                    (sitType === "common" || sitType === "private")
+                                    && <div>
                                     <p>사용 시작 시간 선택</p>                                
                                     <CDropdown className="reserve-form" autoClose='outside'>
                                         <CDropdownToggle>
                                             {`${(selectTime.hour === null) ? '' : selectTime.hour}
-                                                :${(selectTime.minute === null) ? '' : selectTime.minute}
+                                            : ${(selectTime.minute === null) ? '' : selectTime.minute}
                                                  ${(selectTime.amPm === null) ? '' : selectTime.amPm}`}
                                         </CDropdownToggle>
                                         <CDropdownMenu style={{ maxHeight: '250px', position: 'absolute', zIndex: 1000}}>
@@ -298,50 +376,30 @@ function ReservationPage() {
                                         </CRow>
                                         </CDropdownMenu>
                                     </CDropdown>
-                                    {/* <DatePicker
-                                        className="reserve-form"
-                                        selected={form.startTime}
-                                        onChange={(date) => {
-                                            setForm({...form, startTime: date})
-                                            setVisible(false)
-                                        }}
-                                        timeFormat="hh:mm"
-                                        showTimeSelect
-                                        showTimeSelectOnly
-                                        timeIntervals={10}
-                                        timeCaption="Time"
-                                        dateFormat="hh:mm"
-                                    />
-                                    <DatePicker
-                                        className="reserve-form"
-                                        selected={form.startTime}
-                                        onChange={(date) => {
-                                            setForm({...form, startTime: date})
-                                            setVisible(false)
-                                        }}
-                                        timeFormat="hh:mm"
-                                        showTimeSelect
-                                        showTimeSelectOnly
-                                        timeIntervals={10}
-                                        timeCaption="Time"
-                                        dateFormat="hh:mm"
-                                    /> */}
-                                    <p>사용 종료 시간 선택</p>
-                                    <DatePicker
-                                        className="reserve-form"
-                                        selected={form.endTime}
-                                        onChange={(date) => {
-                                            setForm({...form, endTime: date})
-                                            setVisible(false)
-                                        }}
-                                        showTimeSelect
-                                        showTimeSelectOnly
-                                        timeIntervals={10}
-                                        timeCaption="Time"
-                                        dateFormat="hh:mm aa"
-                                    />
+                                    
+                                    <CDropdown className="reserve-form">
+                                        <CDropdownToggle>{selectTime.credit === null ? '충전 시간' : selectTime.credit+'시간'}</CDropdownToggle>
+                                        <CDropdownMenu>
+                                            {credits.map((number) => (
+                                                <CDropdownItem                                                
+                                                    key={number}
+                                                    onClick={() => 
+                                                        setSelectTime({ 
+                                                            ...selectTime, 
+                                                            credit: number })}
+                                                    active={
+                                                        number === selectTime.credit} //선택된 시간만 활성화
+                                                >
+                                                    {number+'시간'}
+                                                </CDropdownItem>
+                                            ))
+                                            }
+                                        </CDropdownMenu>
+                                    </CDropdown>
+                                    <hr/>
                                 </div>
-                                <hr/>
+                                }                               
+                                
                                 <div>
                                     <CButton 
                                         className="p-button"
@@ -355,87 +413,119 @@ function ReservationPage() {
                                 </div>
                             </CCol>
 
+                            {/* 좌석배치도 화면 */}
                             <CCol lg={8}>
                                 <div className="seating-chart">
                                     <img src={image1} alt="좌석 배치도" />
-                                </div>
-                                    {/* <div>
-                                    <CCollapse visible={visible} horizontal>
-                                        <CCard style={{ width: '300px' }}>
-                                            <CCardBody>
-                                                <CForm>
-                                                <h2>예약 정보 확인</h2>
+                                </div>                                    
+                            </CCol>
+                        </CRow>                                           
+                    </CContainer>
 
-                                                <span>이용권 정보</span>
-                                                <CFormInput type="text" placeholder={ticketMenu !== '' ? ticketMenu : null} readOnly/>
+                    {/* 결제 정보 화면 */}
+                    {visible === true &&
+                        <COffcanvas className="payment-info" placement="bottom" visible={visible} onHide={() => setVisible(false)} style={{ height : '50%' }}>
+                            <COffcanvasBody>
+                                <h2 className="main-title">결제 정보</h2>
+                                <div style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
+                                    <CForm style={{width:'45%'}}>
+                                        <div className="m-1" style={{display: 'flex'}}>
+                                            <span>이용권 정보</span>
+                                            <CFormInput type="text" placeholder={ticketMenu !== '' ? ticketMenu : null} readOnly/>
+                                        </div>
 
-                                                <span>이용 예정 날짜</span>
-                                                <CFormInput 
-                                                    type="text" 
-                                                    placeholder={
-                                                        form.reserveDate !== null
-                                                        ? form.reserveDate.getFullYear()+"년 "
-                                                        +((form.reserveDate.getMonth()+1<10) ? "0"+(form.reserveDate.getMonth()+1) : (form.reserveDate.getMonth()+1))+"월 "
-                                                        +((form.reserveDate.getDate()<10) ? "0"+(form.reserveDate.getDate()) : (form.reserveDate.getDate()))+"일"
-                                                        : null
-                                                    } 
-                                                    readOnly/>
+                                        <div className="m-1" style={{display: 'flex'}}>
+                                        <span>이용 예정 날짜</span>
+                                        <CFormInput 
+                                            type="text" 
+                                            placeholder={
+                                                (sitType === "fixed")
+                                                ? (form.reserveDate !== null
+                                                    ? `${form.reserveDate.getFullYear()}년 ${String(form.reserveDate.getMonth() + 1).padStart(2, '0')}월 ${String(form.reserveDate.getDate()).padStart(2, '0')}일`
+                                                    +' - '
+                                                    + `${form.expireDate.getFullYear()}년 ${String(form.expireDate.getMonth() + 1).padStart(2, '0')}월 ${String(form.expireDate.getDate()).padStart(2, '0')}일`
+                                                    + ' (35일)'
+                                                    : null)
+                                                : (form.reserveDate !== null
+                                                    ? `${form.reserveDate.getFullYear()}년 ${String(form.reserveDate.getMonth() + 1).padStart(2, '0')}월 ${String(form.reserveDate.getDate()).padStart(2, '0')}일`
+                                                    +' - '
+                                                    + `${form.expireDate.getFullYear()}년 ${String(form.expireDate.getMonth() + 1).padStart(2, '0')}월 ${String(form.expireDate.getDate()).padStart(2, '0')}일`
+                                                    : null)                                  
+                                            }
+                                            readOnly
+                                        />
+                                        </div>
 
-                                                <span>이용 예정 시간</span>
-                                                <CFormInput 
-                                                    type="text" 
-                                                    placeholder={
-                                                        form.startTime !== null && form.endTime !== null
-                                                        ? (form.startTime.getHours()<10 ? "0"+form.startTime.getHours() : form.startTime.getHours())
+                                        {
+                                            (sitType === "common" || sitType === "private")
+                                            && <div div className="m-1" style={{display: 'flex'}}>
+                                            <span>이용 예정 시간</span>
+                                            <CFormInput 
+                                                type="text" 
+                                                placeholder={
+                                                    `${String(form.reserveDate.getHours()).padStart(2, '0')}:${String(form.reserveDate.getMinutes()).padStart(2, '0')}`
+                                                    +' ~ '
+                                                    +`${String(form.expireDate.getHours()).padStart(2, '0')}:${String(form.expireDate.getMinutes()).padStart(2, '0')}`       
+                                                    +` (${selectTime.credit}시간) ` 
+                                                }
+                                                readOnly
+                                            />        
+                                            </div>
+                                        }
+                                          
+
+                                        <div className="m-1" style={{display: 'flex'}}>
+                                        <span>좌석 정보</span>
+                                        <CFormInput type="text" placeholder={form.sitNum !== '' ? form.sitNum + "번 | " + sitMenu : null} readOnly/>
+                                        </div>
+
+                                        <div className="m-1" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                                        <h2 className="sub-title">결제 금액</h2>
+                                        <h2 className="sub-title" style={{textAlign: 'right', marginRight: '1%'}}>
+                                            {
+                                                (sitType === "common") ? price.common[selectTime.credit]
+                                                : (sitType === "private") ? price.private[selectTime.credit]
+                                                : price.fixed
+                                            }
+                                        </h2>
+                                        </div>
+
+                                        <div style={{display: 'flex'}}>
+                                        <CButton 
+                                            className="s-button mt-3 m-1"
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                setVisible(false)
+                                            }}
+                                            >취소
+                                        </CButton>
+                                        <CButton 
+                                            className="p-button mt-3 m-1"
+                                            onClick={(event) => {
+                                                event.preventDefault()
+                                                //서버로 보낼 예약 데이터
+                                                const data = {
+                                                    "userId": form.userId,
+                                                    "sitNum": form.sitNum,
+                                                    "reserveDate": form.reserveDate.getFullYear()+"-"
+                                                        +((form.reserveDate.getMonth()+1<10) ? "0"+(form.reserveDate.getMonth()+1) : (form.reserveDate.getMonth()+1))+"-"
+                                                        +((form.reserveDate.getDate()<10) ? "0"+(form.reserveDate.getDate()) : (form.reserveDate.getDate())),
+                                                    "startTime": (form.startTime.getHours()<10 ? "0"+form.startTime.getHours() : form.startTime.getHours())
                                                         +":"
-                                                        + (form.startTime.getMinutes()<10 ? "0"+form.startTime.getMinutes() : form.startTime.getMinutes())
-                                                        + " ~ " 
-                                                        + (form.endTime.getHours()<10 ? "0"+form.endTime.getHours() : form.endTime.getHours())
+                                                        + (form.startTime.getMinutes()<10 ? "0"+form.startTime.getMinutes() : form.startTime.getMinutes()),
+                                                    "endTime": (form.endTime.getHours()<10 ? "0"+form.endTime.getHours() : form.endTime.getHours())
                                                         +":"
                                                         + (form.endTime.getMinutes()<10 ? "0"+form.endTime.getMinutes() : form.endTime.getMinutes())
-                                                        : null
-                                                    } 
-                                                    readOnly/>
-                                                
-                                                <span>좌석 정보</span>
-                                                <CFormInput type="text" placeholder={form.sitNum !== '' ? form.sitNum + "번 | " + sitMenu : null} readOnly/>
-
-                                                <CButton 
-                                                    className="s-button mt-3"
-                                                    onClick={(e) => {
-                                                        e.preventDefault()
-                                                        setVisible(false)
-                                                    }}
-                                                    >취소</CButton>
-                                                <CButton 
-                                                    className="p-button"
-                                                    onClick={(event) => {
-                                                        event.preventDefault()
-                                                        //서버로 보낼 예약 데이터
-                                                        const data = {
-                                                            "userId": form.userId,
-                                                            "sitNum": form.sitNum,
-                                                            "reserveDate": form.reserveDate.getFullYear()+"-"
-                                                                +((form.reserveDate.getMonth()+1<10) ? "0"+(form.reserveDate.getMonth()+1) : (form.reserveDate.getMonth()+1))+"-"
-                                                                +((form.reserveDate.getDate()<10) ? "0"+(form.reserveDate.getDate()) : (form.reserveDate.getDate())),
-                                                            "startTime": (form.startTime.getHours()<10 ? "0"+form.startTime.getHours() : form.startTime.getHours())
-                                                                +":"
-                                                                + (form.startTime.getMinutes()<10 ? "0"+form.startTime.getMinutes() : form.startTime.getMinutes()),
-                                                            "endTime": (form.endTime.getHours()<10 ? "0"+form.endTime.getHours() : form.endTime.getHours())
-                                                                +":"
-                                                                + (form.endTime.getMinutes()<10 ? "0"+form.endTime.getMinutes() : form.endTime.getMinutes())
-                                                        };
-                                                        reqReservation(data)
-                                                    }}
-                                                    >결제 진행</CButton>
-                                                </CForm>
-                                            </CCardBody>
-                                        </CCard>
-                                    </CCollapse>
-                                </div>                                 */}
-                            </CCol>
-                        </CRow>
-                    </CContainer>
+                                                };
+                                                reqReservation(data)
+                                            }}
+                                        >결제 진행</CButton>  
+                                        </div>                                                                                            
+                                    </CForm>
+                                </div>                                                
+                            </COffcanvasBody>
+                        </COffcanvas>
+                    } 
                 </div>
             </div>
             }

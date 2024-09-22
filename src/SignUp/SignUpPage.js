@@ -2,18 +2,16 @@ import { useState } from 'react';
 import api from '../api/api';
 
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale/ko";
 import { 
     CButton, CForm, CFormFloating, CFormInput, CFormLabel, 
 } from '@coreui/bootstrap-react'
-import { PiSealCheckFill } from "react-icons/pi";
+import SuccessModal from '../Modal/SuccessModal';
 
 function SignUpPage(props) {
-    const [validMessage, setValidMessage] = useState('');
-    const [show, setShow] = useState(false);
+    const [validMessage, setValidMessage] = useState('');    
 
     const [valid, setValid] = useState({
         pw: false,
@@ -29,6 +27,10 @@ function SignUpPage(props) {
         phone: '',
         selectedDate: null,
     });
+
+    //Modal 데이터
+    const [show, setShow] = useState(false);
+    const [msg, setMsg] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -47,6 +49,7 @@ function SignUpPage(props) {
     .then(res => {
         //회원가입 성공했을 때
         if(res.data.success) {
+            setMsg('회원가입 되었습니다.');
             handleShow();
         }
         //실패했을 때
@@ -247,18 +250,7 @@ function SignUpPage(props) {
             </Button>
         
             {/* 회원가입 성공 알림창 */}
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Body className="modal-body">
-                    <PiSealCheckFill size={70}/>
-                    <p>회원가입 되었습니다.</p>
-                </Modal.Body>
-                <Modal.Footer>
-                <Button 
-                    className="p-button" 
-                    variant="mb-3 p-1 px-3" 
-                    onClick={handleClose}>확인</Button>
-                </Modal.Footer>
-            </Modal>
+            <SuccessModal show={show} handleClose={handleClose} text={msg}/>
         </main>
     )
 }

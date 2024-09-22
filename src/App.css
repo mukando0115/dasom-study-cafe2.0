@@ -363,6 +363,13 @@ u:not(.underline) {
   scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
 }
 
+.payment-info span {
+  text-align : left;
+  width: 30%;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
 
 
 
