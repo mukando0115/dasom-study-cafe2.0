@@ -42,7 +42,7 @@ function LoginPage(props) {
             alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
         }
     }).catch((err) => {
-        alert(err.response.data.message);
+        alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
         console.log(err);
     })
     

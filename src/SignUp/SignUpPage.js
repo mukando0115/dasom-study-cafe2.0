@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../api/api';
 
 import Button from 'react-bootstrap/Button';
@@ -9,9 +9,11 @@ import {
     CButton, CForm, CFormFloating, CFormInput, CFormLabel, 
 } from '@coreui/bootstrap-react'
 import SuccessModal from '../Modal/SuccessModal';
+import { FcApproval } from "react-icons/fc";
 
 function SignUpPage(props) {
     const [validMessage, setValidMessage] = useState('');    
+    const [checkedId, setCheckedId] = useState(false);
 
     const [valid, setValid] = useState({
         pw: false,
@@ -41,16 +43,25 @@ function SignUpPage(props) {
         "userPw": form.pw,
         "userName": form.name,
         "userPhone": form.phone,
-        "userBirthDate": form.selectedDate
+        "userBirthDate": (form.selectedDate !== null) ? `${form.selectedDate.getFullYear()}-${String(form.selectedDate.getMonth() + 1).padStart(2, '0')}-${String(form.selectedDate.getDate()).padStart(2, '0')}` : form.selectedDate
     };
+
+    useEffect(() => {
+        setCheckedId(false);
+        // 필요시 클린업 함수 반환
+        return () => {
+        };
+    }, [form.id]);
 
     //회원가입 데이터 전송 함수(axios post)
     const reqSignUp = () => api.post('signUp', data)
     .then(res => {
         //회원가입 성공했을 때
         if(res.data.success) {
-            setMsg('회원가입 되었습니다.');
-            handleShow();
+            // setMsg('회원가입 되었습니다.');
+            // handleShow();
+            alert('회원가입 되었습니다.');
+            props.onChangePage("login");
         }
         //실패했을 때
         else {
@@ -80,6 +91,7 @@ function SignUpPage(props) {
         //사용 가능 아이디일 때
         if(res.data.success) {
             alert("사용 가능한 아이디입니다.");
+            setCheckedId(true);
         }
         //사용 불가능한 아이디일 때
         else {
@@ -141,10 +153,17 @@ function SignUpPage(props) {
                         onChange={e => setForm({...form, id: e.target.value})} 
                         placeholder="abcd1234" />
                     <CFormLabel htmlFor="floatingId">아이디입력 (6 - 20자)</CFormLabel>
-                    <CButton 
-                        onClick={checkId} 
-                        className="p-button-sm mt-2" 
-                        type="button">중복 확인</CButton>       
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <CButton 
+                            onClick={checkId} 
+                            className="p-button-sm mt-2 me-2" 
+                            type="button">중복 확인</CButton>      
+                        {checkedId === true 
+                        && <FcApproval/>                    
+                        } 
+                    </div>
+                    
+                    
                 </CFormFloating>
 
                 {/* 비밀번호 입력*/}
