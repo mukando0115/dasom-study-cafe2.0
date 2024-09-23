@@ -149,8 +149,8 @@ function MyPage() {
                                 </CCardText>
                                 { footer
                                     && <CCardFooter className="mb-4">
-                                            인증번호(OR비밀번호)
-                                            <CFormInput type="text" placeholder='구차하게 굴거지롱' readOnly/>
+                                            비밀번호
+                                            <CFormInput type="text" placeholder='구차하게 굴거지롱'/>
                                         </CCardFooter>
                                 }                                
                                 <CButton 

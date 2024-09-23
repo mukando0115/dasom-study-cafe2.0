@@ -187,6 +187,49 @@ function ReservationPage() {
                             {/* 예약 화면 */}
                             <CCol lg={4}>
                                 <div>
+                                    <p>예약일 선택</p>
+                                    <span style={{marginRight: '2%'}}>
+                                    <DatePicker
+                                        showIcon
+                                        locale={ko}
+                                        className="reserve-form"
+                                        dateFormat='yyyy년 MM월 dd일' // 날짜 형태
+                                        shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+                                        minDate={new Date()}    //오늘 날짜 이후로만 선택 가능
+                                        // maxDate={new Date()} // maxDate 이후 날짜 선택 불가
+                                        selected={form.reserveDate}
+                                        onChange={(date) => {
+                                            setForm({...form, reserveDate: date})
+                                            setVisible(false)
+                                        }}
+                                        showYearDropdown
+                                        showMonthDropdown
+                                        yearDropdownItemNumber={100}
+                                        scrollableYearDropdown
+                                        popperProps={{
+                                            strategy: "fixed"
+                                        }}
+                                    />
+                                    </span>
+                                    
+                                    {
+                                    (sitType === "fixed" && form.reserveDate !== null)
+                                    && 
+                                        <DatePicker
+                                        showIcon
+                                        locale={ko}
+                                        className="reserve-form"
+                                        dateFormat='yyyy년 MM월 dd일' // 날짜 형태
+                                        disabled
+                                        selected={form.reserveDate !== null && new Date(new Date(form.reserveDate).setDate(new Date(form.reserveDate).getDate() + 35))}                                        
+                                        popperProps={{
+                                            strategy: "fixed"
+                                        }}
+                                    />
+                                }
+                                </div>
+                                <hr/>
+                                <div>
                                     <p>예약권 선택</p>
                                     <CDropdown className="reserve-form">
                                         <CDropdownToggle>{ticketMenu === '' ? '예약권 선택' : ticketMenu}</CDropdownToggle>
@@ -276,49 +319,7 @@ function ReservationPage() {
                                     </CDropdown> 
                                 </div>
                                 <hr/>  
-                                <div>
-                                    <p>예약일 선택</p>
-                                    <span style={{marginRight: '2%'}}>
-                                    <DatePicker
-                                        showIcon
-                                        locale={ko}
-                                        className="reserve-form"
-                                        dateFormat='yyyy년 MM월 dd일' // 날짜 형태
-                                        shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
-                                        minDate={new Date()}    //오늘 날짜 이후로만 선택 가능
-                                        // maxDate={new Date()} // maxDate 이후 날짜 선택 불가
-                                        selected={form.reserveDate}
-                                        onChange={(date) => {
-                                            setForm({...form, reserveDate: date})
-                                            setVisible(false)
-                                        }}
-                                        showYearDropdown
-                                        showMonthDropdown
-                                        yearDropdownItemNumber={100}
-                                        scrollableYearDropdown
-                                        popperProps={{
-                                            strategy: "fixed"
-                                        }}
-                                    />
-                                    </span>
-                                    
-                                    {
-                                    (sitType === "fixed" && form.reserveDate !== null)
-                                    && 
-                                        <DatePicker
-                                        showIcon
-                                        locale={ko}
-                                        className="reserve-form"
-                                        dateFormat='yyyy년 MM월 dd일' // 날짜 형태
-                                        disabled
-                                        selected={form.reserveDate !== null && new Date(new Date(form.reserveDate).setDate(new Date(form.reserveDate).getDate() + 35))}                                        
-                                        popperProps={{
-                                            strategy: "fixed"
-                                        }}
-                                    />
-                                }
-                                </div>
-                                <hr/>
+                                
                                 {
                                     (sitType === "common" || sitType === "private")
                                     && <div>
