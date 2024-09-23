@@ -142,7 +142,9 @@ function ReservationPage() {
         }
         else if (sitType === "fixed") {
             const dateFix = new Date(new Date(form.reserveDate).setHours(0, 0));
-            const dateAfter = new Date(dateFix.setDate(dateFix.getDate() + 35));
+            // const dateAfter = new Date(dateFix.setDate(dateFix.getDate() + 35));
+            const dateAfter = new Date(dateFix.getTime());
+            dateAfter.setDate(dateFix.getDate() + 35);
             setForm(form => ({
                 ...form,
                 reserveDate: dateFix,
