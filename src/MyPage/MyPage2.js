@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CForm, CFormFloating, CFormInput, CFormLabel, CCollapse, CCard, CCardHeader, CCardBody, CCardTitle, CCardText, CCardFooter } from '@coreui/bootstrap-react';
+import { CForm, CFormFloating, CFormInput, CFormLabel, CCard, CCardHeader, CCardBody, CCardTitle, CCardText, CCardFooter, CCollapse } from '@coreui/bootstrap-react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import api from '../api/api';
@@ -12,40 +12,72 @@ function MyPage(props) {
     const [pw, setPw] = useState('');
     const [check, setCheck] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [footer, setFooter] = useState(false);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isAgreed, setIsAgreed] = useState(false);
+    const [showPasswordChange, setShowPasswordChange] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    const data = {
-        "userId": userId,
-        "userPw": pw
+    // 비밀번호 변경 핸들러
+    const handlePasswordChange = () => {
+        if (newPassword !== confirmPassword) {
+            alert("새 비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
+        const passwordData = {
+            userId: localStorage.getItem("id"),
+            currentPw: currentPassword,
+            newPw: newPassword
+        };
+
+        api.post('http://localhost:5000/api/pwchange', passwordData)
+            .then(res => {
+                if (res.data.success) {
+                    alert("비밀번호가 변경되었습니다.");
+                    setShowPasswordChange(false);
+                } else {
+                    alert(res.data.message);
+                }
+            })
+            .catch(err => {
+                alert("비밀번호 변경에 실패했습니다.");
+                console.error(err);
+            });
     };
 
-    const conTest = () => api.post('mypages/mypagePw', data)
-        .then((res) => {
-            if (res.data.success) {
-                setCheck(true);
-            } else {
-                alert(res.data.message);
-            }
-        }).catch((err) => {
-            alert(err.response.data.message);
-            console.log(err);
-    });
+    const conTest = () => {
+        const data = { userId, userPw: pw };
+        api.post('mypages/mypagePw', data)
+            .then((res) => {
+                if (res.data.success) {
+                    setCheck(true);
+                } else {
+                    alert(res.data.message);
+                }
+            }).catch((err) => {
+                alert(err.response.data.message);
+                console.log(err);
+            });
+    };
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            conTest(); // 엔터 키가 눌리면 버튼 클릭 함수 호출
+            conTest();
         }
     };
 
     const handleAccountDelete = () => {
-        // 비밀번호 확인 로직 추가
-        const deleteData = { userId, userPw: currentPassword };
+        if (!isAgreed) {
+            alert("동의해주세요");
+            return;
+        }
 
+        const deleteData = { userId };
         api.post('http://localhost:5000/api/delete-account', deleteData)
             .then(res => {
                 if (res.data.success) {
@@ -116,62 +148,122 @@ function MyPage(props) {
                 <div className="mypage-form">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', height: '100px' }}>
                         <h2>회원 정보</h2>
-                        <a 
+                        <a
                             onClick={() => {
-                                setVisible(true);
+                                setShowPasswordChange(false); // 비밀번호 변경 창 닫기
+                                setVisible(!visible); // 회원 탈퇴 창 토글
                             }}
-                            style={{color: "red", marginLeft: '10px', cursor: 'pointer' }}
-                        ><FcHighPriority/> 회원탈퇴</a>                        
-                    </div>                    
-                    <hr/>
-                    { visible 
-                    && <div>
+                            style={{ color: "red", marginLeft: '10px', cursor: 'pointer' }}
+                        ><FcHighPriority /> 회원탈퇴</a>
+                    </div>
+                    <hr />
+                    {visible &&
+                        <div>
                             <CCard
-                            textColor='danger'
-                            className={`mb-3 border-top-danger border-top-3`}
-                            style={{ maxWidth: '18rem' }}
+                                textColor='danger'
+                                className={`mb-3 border-top-danger border-top-3`}
+                                style={{ maxWidth: '18rem' }}
                             >
-                            <CCardHeader>회원탈퇴</CCardHeader>
-                            <CCardBody>
-                                <CCardTitle>정말 탈퇴하시겠습니까?</CCardTitle>
-                                <CCardText>
-                                탈퇴한 뒤에는 아이디 및 데이터를 복구할 수 없으니 신중히 진행하세요.
-                                </CCardText>
-                                <CCardFooter className="mb-4">
-                                    비밀번호
-                                    <CFormInput 
-                                        type="password" 
-                                        placeholder='비밀번호 입력' 
-                                        value={currentPassword} 
-                                        onChange={e => setCurrentPassword(e.target.value)}
-                                    />
-                                </CCardFooter>
-                                <CButton 
-                                    className='s-button m-1' 
-                                    shape="rounded-0"
-                                    onClick={handleAccountDelete}>확인</CButton>
-                                <CButton 
-                                    className='p-button m-1' 
-                                    shape="rounded-0" 
-                                    onClick={() => {
-                                        setVisible(false);
-                                    }}>취소</CButton>
-                            </CCardBody>
+                                <CCardHeader>회원탈퇴</CCardHeader>
+                                <CCardBody>
+                                    <CCardTitle>정말 탈퇴하시겠습니까?</CCardTitle>
+                                    <CCardText>
+                                        탈퇴한 뒤에는 아이디 및 데이터를 복구할 수 없으니 신중히 진행하세요.
+                                    </CCardText>
+                                    <CCardFooter className="mb-4">
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                checked={isAgreed}
+                                                onChange={() => setIsAgreed(!isAgreed)}
+                                            />
+                                            동의합니다.
+                                        </label>
+                                    </CCardFooter>
+                                    <CButton
+                                        className='s-button m-1'
+                                        shape="rounded-0"
+                                        onClick={handleAccountDelete}
+                                    >확인</CButton>
+                                    <CButton
+                                        className='p-button m-1'
+                                        shape="rounded-0"
+                                        onClick={() => setVisible(false)}
+                                    >취소</CButton>
+                                </CCardBody>
                             </CCard>
                         </div>
                     }
-                    
+
                     <div>
                         {userData && (
                             <div>
                                 <p>이름: {userData.name}</p>
                                 <p>아이디: {userData.userId}</p>
-                                <p>전화번호: {userData.phone.slice(0,3)+'-'+userData.phone.slice(3,7)+'-'+userData.phone.slice(7)}</p>
+                                <p>전화번호: {userData.phone.slice(0, 3) + '-' + userData.phone.slice(3, 7) + '-' + userData.phone.slice(7)}</p>
                                 <p>생년월일: {new Date(userData.birth).toLocaleDateString()}</p>
                                 <p>가입일시: {new Date(userData.created_at).toLocaleString()}</p>
+                                <p>
+                                    아이디: {userData.userId}
+                                    <Button
+                                        variant="outline-secondary"
+                                        size="sm"
+                                        className="ms-3"
+                                        onClick={() => {
+                                            setVisible(false); // 회원 탈퇴 창 닫기
+                                            setShowPasswordChange(!showPasswordChange); // 비밀번호 변경 창 토글
+                                        }}
+                                    >
+                                        비밀번호 변경
+                                    </Button>
+                                </p>
                             </div>
-                        )}                        
+                        )}
                     </div>
+
+                    <CCollapse visible={showPasswordChange}>
+                        <div className="password-change-form">
+                            <h3>비밀번호 변경</h3>
+                            <div style={{ gap: '10px', display: 'inline-block', width: '100%' }}>
+                                <CFormFloating className="mb-3" style={{ flex: 1 }}>
+                                    <CFormInput
+                                        type="password"
+                                        value={currentPassword}
+                                        onChange={e => setCurrentPassword(e.target.value)}
+                                        placeholder="현재 비밀번호"
+                                    />
+                                    <CFormLabel>현재 비밀번호</CFormLabel>
+                                </CFormFloating>
+
+                                <CFormFloating className="mb-3" style={{ flex: 1 }}>
+                                    <CFormInput
+                                        type="password"
+                                        value={newPassword}
+                                        onChange={e => setNewPassword(e.target.value)}
+                                        placeholder="새 비밀번호"
+                                    />
+                                    <CFormLabel>새 비밀번호</CFormLabel>
+                                </CFormFloating>
+
+                                <CFormFloating className="mb-3" style={{ flex: 1 }}>
+                                    <CFormInput
+                                        type="password"
+                                        value={confirmPassword}
+                                        onChange={e => setConfirmPassword(e.target.value)}
+                                        placeholder="비밀번호 확인"
+                                    />
+                                    <CFormLabel>비밀번호 확인</CFormLabel>
+                                </CFormFloating>
+
+                                <Button
+                                    className="p-button"
+                                    onClick={handlePasswordChange}
+                                >
+                                    비밀번호 변경
+                                </Button>
+                            </div>
+                        </div>
+                    </CCollapse>
                 </div>
             }
         </main>

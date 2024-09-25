@@ -75,15 +75,15 @@ function App() {
                 <Link to="/gallery" className="btn btn-header">
                 <span>갤러리</span>
                 </Link>
+              </li>              
+              <li>
+                <Link to="/announcement" className="btn btn-header">
+                <span>공지사항</span>
+                </Link>
               </li>
               <li>
                 <Link to="/map" className="btn btn-header">
                 <span>오시는 길</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/announcement" className="btn btn-header">
-                <span>공지사항</span>
                 </Link>
               </li>
               <li>
@@ -117,7 +117,7 @@ function App() {
         </Routes>
       </div>
 
-      <footer>
+      <footer className="App">
         <Footer></Footer>
       </footer>
 

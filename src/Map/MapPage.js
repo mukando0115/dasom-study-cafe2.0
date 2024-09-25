@@ -66,9 +66,9 @@ function MapPage() {
                 <div
                     id="map"
                     style={{
-                        width: '700px',
-                        height: '500px',
-                        marginRight: '20px'
+                        width: '60%',
+                        height: '60%',
+                        aspectRatio: '16 / 9'
                     }}
                 ></div>
                 <MyComponent />

@@ -14,6 +14,7 @@ import { FcApproval } from "react-icons/fc";
 function SignUpPage(props) {
     const [validMessage, setValidMessage] = useState('');    
     const [checkedId, setCheckedId] = useState(false);
+    const [checkedPhone, setCheckedPhone] = useState(false);
 
     const [valid, setValid] = useState({
         pw: false,
@@ -53,6 +54,13 @@ function SignUpPage(props) {
         };
     }, [form.id]);
 
+    useEffect(() => {
+        setCheckedPhone(false);
+        // 필요시 클린업 함수 반환
+        return () => {
+        };
+    }, [form.phone]);
+
     //회원가입 데이터 전송 함수(axios post)
     const reqSignUp = () => api.post('signUp', data)
     .then(res => {
@@ -79,6 +87,12 @@ function SignUpPage(props) {
         const validCheck = Object.values(valid).filter(value => value === true).length > 0;
         if (validCheck === true) {
             alert('양식을 확인해주세요');
+        }
+        else if (checkedId === false) {
+            alert('아이디 중복체크를 해주세요');
+        }
+        else if (checkedPhone === false) {
+            alert('휴대폰 인증을 해주세요')
         }
         else {
             reqSignUp();
@@ -138,11 +152,40 @@ function SignUpPage(props) {
         e.target.value.length === 11 ? setValid({...valid, phone: false}) : setValid({...valid, phone: true});
     }
 
+    //문자인증번호 요청 함수
+    const requestSMSCode = () => api.post('signUp/sendSMSCode', {"userPhone": form.phone})
+    .then (res => {
+        if(res.data.success) {
+            alert('인증번호가 발송되었습니다');
+            setForm(prevForm => ({ ...prevForm, verificationSent: true })); // 인증 번호 전송 후 상태 업데이트
+        } else {
+            alert("인증 번호 전송 실패" + res.data.message);
+        }
+    }).catch(err => {
+        console.log(err);
+    })
+
+    //인증번호 확인 함수
+    const verifyCode = () => api.post('signUp/verifyCode', {userPhone: form.phone, code: form.verificationCode})
+    .then (res => {
+        if(res.data.success){
+            //setVerificationSuccess(true);
+            alert("인증이 완료되었습니다");
+            setCheckedPhone(true);
+            setForm(prevForm => ({ ...prevForm, verificationSent: false }));
+        } else {
+            alert("인증 번호가 일치하지 않습니다");
+        }
+    }).catch(err => {
+        console.log(err);
+    })
+
+
     return (
         <main className="signup-page">
             <div className="login-logo"></div>
 
-            <CForm className="signup-form">
+            <CForm className="signup-form mb-3">
 
                 {/* 아이디 입력 */}
                 <CFormFloating className="mb-3">
@@ -223,7 +266,34 @@ function SignUpPage(props) {
                         invalid = {valid.phone}
                         placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">휴대폰 번호 입력 (“-” 제외 11자리 입력)</CFormLabel>
+                    <CButton 
+                        onClick={requestSMSCode} 
+                        className="p-button-sm mt-2 me-2" 
+                        type="button">인증하기
+                    </CButton>
+                    {checkedPhone === true 
+                        && <FcApproval/>                    
+                        } 
                 </CFormFloating>
+
+               {/* 인증 번호 입력 */}
+               {form.verificationSent && (
+                    <CFormFloating className="mb-3">
+                        <CFormInput 
+                            type="text" 
+                            id="floatingVerificationCode" 
+                            value={form.verificationCode} 
+                            onKeyDown={handleNumericInput}
+                            onChange={e => setForm({ ...form, verificationCode: e.target.value })} 
+                            placeholder="인증 번호" />
+                        <CFormLabel htmlFor="floatingVerificationCode">인증 번호 입력</CFormLabel>
+                        <CButton 
+                            onClick={verifyCode} 
+                            className="p-button-sm mt-2" 
+                            type="button">확인</CButton>
+                    </CFormFloating>
+                )}
+
 
                 {/* 생년월일 입력 */}
                 <CFormFloating className="date-form">
@@ -253,8 +323,7 @@ function SignUpPage(props) {
             <Button 
                 onClick={checkValidation} 
                 variant="mb-3 p-1 px-3" 
-                size="" className="s-button" 
-                style={{ borderRadius: '15px', borderWidth: '2px' }}>
+                size="" className="s-button" >
                 회원가입
             </Button>
             <Button onClick={(e) => {
@@ -263,8 +332,7 @@ function SignUpPage(props) {
             }} 
                 variant="mb-3 p-1 px-3" 
                 size="" 
-                className="p-button" 
-                style={{ borderRadius: '15px', borderWidth: '2px' }}>
+                className="p-button" >
                 이미 계정이 있으신가요? 로그인
             </Button>
         

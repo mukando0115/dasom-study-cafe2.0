@@ -23,7 +23,7 @@ const SideBarPage = (props) => {
 
   return (
     <>
-      <Button onClick={() => setVisible(true)} variant="outline-dark m-2 p-0 px-3" size="" className="b-button" style={{ borderRadius: '15px', borderWidth: '2px' }}>로그인</Button>
+      <Button onClick={() => setVisible(true)} variant="outline-dark m-2 p-0 px-2" size="" className="b-button" style={{ borderRadius: '8px', borderWidth: '2px' }}>로그인</Button>
       <COffcanvas className="side-bar" placement="end" scroll={true} visible={visible} onHide={() => setVisible(false)}>
         <COffcanvasBody>
           {renderPage === "login" ? <LoginPage onChangePage={onChangePage} onLogin={onLogin}/> 

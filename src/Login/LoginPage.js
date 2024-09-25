@@ -47,6 +47,7 @@ function LoginPage(props) {
         else{
             // alert(res.data.message);
             alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
+            console.log(res);
         }
     }).catch((err) => {
         alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
@@ -160,8 +161,7 @@ function LoginPage(props) {
                 onClick={conTest} 
                 className="p-button" 
                 variant="mb-3 p-1 px-3" 
-                size="" 
-                style={{ borderRadius: '13px', borderWidth: '2px' }}>
+                size="" >
                 로그인
             </Button>
             <Button onClick={(e) => {
@@ -170,8 +170,7 @@ function LoginPage(props) {
             }} 
                 variant="mb-3 p-1 px-3" 
                 size="" 
-                className="s-button" 
-                style={{ borderRadius: '13px', borderWidth: '2px' }}>
+                className="s-button" >
                 회원가입
             </Button>
 

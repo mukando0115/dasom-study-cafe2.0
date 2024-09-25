@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  padding: 1% 3% 0 3%;
+  padding: 1% 6% 0 6%;
   max-width: 1920px;  /* 최대 너비를 1920px로 설정 */
   height: auto;       /* 자동 높이 조정 */
 }
@@ -27,6 +27,10 @@
   color: white;
 }
 
+.active {
+  font-weight: bold;  /* 굵은 글씨 */
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -46,14 +50,6 @@ ul {
   list-style: none;
 }
 
-a {
-  text-decoration-line: none;
-/*   text-decoration-line: underline; */
-/*   text-decoration-line: overline; */
-/*   text-decoration-line: line-through; */
-/*   text-decoration-line: underline line-through overline; */
-}
-
 a:visited { color:#000000; text-decoration: none;}
 
 ul li {
@@ -69,24 +65,25 @@ ul li {
 li {
   margin-left: 2%;
   margin-right: 2%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .btn-header {
   font-family: "Pretendard Light";
   src: url("../assets/font/Pretendard-1.3.9/web/static/woff2/Pretendard-Light.woff2") format("woff2"),
       url("../assets/font/Pretendard-1.3.9/web/static/woff/Pretendard-Light.woff") format("woff");  
-  text-shadow: 0 5px 8px rgb(153, 146, 146);
 }
 
-/* .btn-header:hover {
+.btn-header:hover {
   font-family: "Pretendard Medium";
   cursor: "pointer";
-} */
+}
 
 .btn-header:after {
   display:block;
   content: '';
-  border-bottom: solid 1px rgb(153, 146, 146);  
+  border-bottom: solid 2px #00AF50;  
   transform: scaleX(0);  
   transition: transform 0.3s;
 }
@@ -127,55 +124,35 @@ p {
   background-repeat :no-repeat;
 }
 
-.banner1-txt {
-  position: absolute;
-  color: white;
-  text-align: left;
-  top: 80%;
-  left: 20%;
-  transform: translate( -50%, -50%);
-  font-size: x-large;
-  font-family: "Pretendard Regular";
-  src: url("../assets/font/Pretendard-1.3.9/web/static/woff2/Pretendard-Regular.woff2") format("woff2"),
-      url("../assets/font/Pretendard-1.3.9/web/static/woff/Pretendard-Regular.woff") format("woff");
-}
-
 .main-page {
   width: 100%;
 }
 
 .banner2 {
-  background-image: url(../assets/img/Group\ 19\ 1.png);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-image: url(../assets/img/Section\ 2.png);
+  background-size: contain;
   background-repeat :no-repeat;
-  border-top: 1px solid;
   margin-bottom: 5%; 
 }
 
-.banner2-txt {
-  text-align: left;
-  font-family: "Pretendard SemiBold";
-  src: url("../assets/font/Pretendard-1.3.9/web/static/woff2/Pretendard-SemiBold.woff2") format("woff2"),
-      url("../assets/font/Pretendard-1.3.9/web/static/woff/Pretendard-SemiBold.woff") format("woff");
+.banner3 {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-image: url(../assets/img/Section\ 3.png);
+  background-size: contain;
+  background-repeat :no-repeat;
+  margin-bottom: 5%; 
 }
 
-.banner2-txt h2 {
-  margin-top: 10%;
-}
-
-.banner2-txt p {
-  font-size: small;
-}
-
-.footer-page {
-  background-color: #00AF50;
-  height: 30%;
-  color: white;
-  padding: 2% 2.5% 5% 2.5%;
-  font-family: "Pretendard Thin";
-  src: url("../assets/font/Pretendard-1.3.9/web/static/woff2/Pretendard-Thin.woff2") format("woff2"),
-      url("../assets/font/Pretendard-1.3.9/web/static/woff/Pretendard-Thin.woff") format("woff");
-  margin-left: 5%;
-  margin-right: 5%;
+.banner4 {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-image: url(../assets/img/Section\ 4.png);
+  background-size: contain;
+  background-repeat :no-repeat;
+  margin-bottom: 5%; 
 }
 
 u:not(.underline) {
@@ -222,12 +199,11 @@ u:not(.underline) {
 }
 
 .footer-logo {
-  width: 120px;
-  height: 40px;
-  background-image: url(../assets/logo/jpg/logo_horiz_small_eng-01.jpg);
+  width: 100%;
+  aspect-ratio: 16 / 4;
+  background-image: url(../assets/img/Bottom.png);
   background-size: contain;
   background-repeat :no-repeat;
-  margin-bottom: 1%;
 }
 
 /* primary button */
@@ -238,6 +214,8 @@ u:not(.underline) {
   width: 100%;
   height: 10%;
   margin-bottom: 3%;
+  border-radius: '10px'; 
+  border-width: '2px';
 }
 
 .p-button:hover {
@@ -253,6 +231,8 @@ u:not(.underline) {
   width: 100%;
   height: 10%;
   margin-bottom: 3%;
+  border-radius: '10px'; 
+  border-width: '2px';
 }
 
 .s-button:hover {
@@ -261,8 +241,8 @@ u:not(.underline) {
 }
 
 .side-bar {
-  background: rgba(255, 255, 255, 0.40);
-  backdrop-filter: blur(8.800000190734863px);
+  background: rgba(173, 181, 189, 0.50);
+  backdrop-filter: blur(2.800000190734863px);
 }
 
 .modal-body {
@@ -278,7 +258,7 @@ u:not(.underline) {
 .date-picker {
   display: flex;
   height: 58px;
-  width: 316px;
+  width: 330px;
   border-radius: 6px;
   margin-bottom: 4%;
   padding: 3%;
@@ -381,7 +361,6 @@ u:not(.underline) {
 .gallery-page {
   text-align: left;
   padding: 20px;
-  background-color: #f8f9fa;
 }
 
 .carousel-container {
@@ -392,12 +371,21 @@ u:not(.underline) {
   padding: 0 0 0 2%;
   font-size: 24px;
   color: #000000;
+  font-family: "Pretendard Light";
+  src: url("../assets/font/Pretendard-1.3.9/web/static/woff2/Pretendard-Light.woff2") format("woff2"),
+      url("../assets/font/Pretendard-1.3.9/web/static/woff/Pretendard-Light.woff") format("woff");
+  font-weight: bold;
 }
 
 .carousel-sub-title {
   padding: 0 0 0 2%;
   font-size: 24px;
   color: #ADB5BD;
+  font-family: "Pretendard Light";
+  src: url("../assets/font/Pretendard-1.3.9/web/static/woff2/Pretendard-Light.woff2") format("woff2"),
+      url("../assets/font/Pretendard-1.3.9/web/static/woff/Pretendard-Light.woff") format("woff");
+  font-weight: bold;
+  margin-bottom: 2%;
 }
 
 .ccarousel-item {
@@ -412,13 +400,6 @@ u:not(.underline) {
   width: 100%;
   height: auto;
   object-fit: cover;
-}
-
-
-
-.gallery-page {
-  padding: 20px;
-  background-color: #f4f4f4; 
 }
 
 .sub-title {
@@ -446,8 +427,8 @@ u:not(.underline) {
 .carousel-title {
   font-size: 1.8em;
   color: #222; 
-  margin-bottom: 15px;
   text-align: left;
+  font-weight: bold;
 }
 
 .customoverlay {
@@ -520,7 +501,6 @@ img {
   justify-content: center; /* 수직 중앙 정렬 */
   align-items: center; /* 수평 중앙 정렬 */
   text-align: center; /* 텍스트 중앙 정렬 */
-  padding: 40px; /* 전체 여백 */
   background-color: #ffffff; /* 배경색 */
   color: #333333; /* 텍스트 색상 */
   min-height: 100vh; /* 화면의 최소 높이를 전체 뷰포트로 설정 */
