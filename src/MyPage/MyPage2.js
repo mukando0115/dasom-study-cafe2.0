@@ -33,7 +33,14 @@ function MyPage(props) {
         }).catch((err) => {
             alert(err.response.data.message);
             console.log(err);
-        });
+    });
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            conTest(); // 엔터 키가 눌리면 버튼 클릭 함수 호출
+        }
+    };
 
     const handleAccountDelete = () => {
         // 비밀번호 확인 로직 추가
@@ -90,6 +97,7 @@ function MyPage(props) {
                             id="floatingPassword"
                             value={pw}
                             onChange={e => setPw(e.target.value)}
+                            onKeyDown={handleKeyDown}
                             placeholder="password" />
                         <CFormLabel htmlFor="floatingPassword">비밀번호</CFormLabel>
                     </CFormFloating>

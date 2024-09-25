@@ -2,12 +2,12 @@ function MainPage() {
     return (
         <main className="main-page">
             <div className="banner1">
-                <div className="banner1-txt">
+                {/* <div className="banner1-txt">
                     <h1>Healing & <br/>
                         Study
                     </h1>
                     <p>In Dasom StudyCafe</p>
-                </div>
+                </div> */}
             </div>
             <div className="banner2">                
                 <div className="banner2-txt">

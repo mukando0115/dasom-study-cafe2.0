@@ -46,6 +46,7 @@ function App() {
     localStorage.removeItem("id");
     localStorage.removeItem("name");
     localStorage.removeItem("isLoggedIn");    
+    localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
   };
 

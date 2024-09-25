@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../api/api';
 
 import Button from 'react-bootstrap/Button';
 import { CForm, CFormFloating, CFormInput, CFormLabel } from '@coreui/bootstrap-react'
 import { PiSealCheckFill } from "react-icons/pi";
+import loginButton from './btnG_완성형.png';
 
 function LoginPage(props) {
     const [form, setForm] = useState({
@@ -22,6 +23,12 @@ function LoginPage(props) {
     const data = {
         "userId": form.id,
         "userPw": form.pw
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            conTest(); // 엔터 키가 눌리면 버튼 클릭 함수 호출
+        }
     };
     
     //서버 전송 함수(axios post)
@@ -44,7 +51,67 @@ function LoginPage(props) {
     }).catch((err) => {
         alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
         console.log(err);
-    })
+    })    
+
+
+    // ** 네이버 로그인 초기화 부분 추가 시작 **
+    // const handleLoginMessage = (event) => {
+    //     if (event.origin === 'http://localhost:3000') {
+    //         console.log('Received message:', event.data); // 메시지 로그 추가
+    //         const { accessToken } = event.data;
+    //         if (accessToken) {
+    //             localStorage.setItem("accessToken", accessToken);
+    //             alert('네이버 로그인이 완료되었습니다.');
+    //             props.onLogin();
+    //             window.location.href = "/"; // 루트 페이지로 리다이렉션
+    //         } else {
+    //             console.error('Access token is undefined');
+    //         }
+    //     }
+    // };
+    
+    // useEffect(() => {
+    //     window.addEventListener('message', handleLoginMessage);
+    //     return () => {
+    //         window.removeEventListener('message', handleLoginMessage);
+    //     };
+    // }, []);
+
+    const handleLoginClick = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/naverlogin', {
+                method: 'GET',
+                credentials: 'include',
+            });
+            const data = await response.json();
+    
+            if (data.success === true) {
+                const loginWindow = window.open(data.api_url, 'naverLogin', 'width=500,height=600');
+                
+                const handleLoginMessage = (event) => {
+                    if (event.origin === 'http://localhost:3000') {
+                        console.log('Received message:', event.data); // 메시지 로그 추가
+                        console.log('Access Token:', event.data.accessToken); // accessToken 확인
+                        const { accessToken } = event.data;
+                        if (accessToken) {
+                            localStorage.setItem("accessToken", accessToken);
+                            alert('네이버 로그인이 완료되었습니다.');
+                            props.onLogin();
+                            window.location.href = "/"; // 루트 페이지로 리다이렉션
+                        } else {
+                            console.error('Access token is undefined');
+                        }
+                    }
+                };
+    
+                window.addEventListener('message', handleLoginMessage);
+            } else {
+                console.error('로그인 요청 실패:', data);
+            }
+        } catch (error) {
+            console.error('네이버 로그인 요청 중 오류 발생:', error);
+        }
+    };
     
     //화면부
     return (
@@ -71,6 +138,7 @@ function LoginPage(props) {
                         id="floatingPassword" 
                         value={form.pw} 
                         onChange={e => setForm({...form, pw: e.target.value})} 
+                        onKeyDown={handleKeyDown}
                         placeholder="password"/>
                     <CFormLabel htmlFor="floatingPassword">비밀번호</CFormLabel>
                 </CFormFloating>
@@ -107,8 +175,19 @@ function LoginPage(props) {
                 회원가입
             </Button>
 
-            {/* 로그인 성공 알림창 */}
-            {/* <SuccessModal show={show} handleClose={handleClose} text={msg}/> */}
+            {/* 네이버 로그인 버튼 노출 영역 추가 */}
+            <div>
+                <div id="naver_id_login" style={{ display: 'none', marginTop: '20px' }}></div> 
+                <Button 
+                    id="naverLoginButton" 
+                    variant="mb-3 p-1 px-3" 
+                    style={{ borderRadius: '13px', borderWidth: '2px' }} 
+                    onClick={handleLoginClick}
+                >
+                    <img src={loginButton} alt="네이버 로그인 이미지"></img>
+                    네이버 로그인
+                </Button>
+            </div>
         </main>
     )
 }
