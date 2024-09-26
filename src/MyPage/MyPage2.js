@@ -78,7 +78,7 @@ function MyPage(props) {
         }
 
         const deleteData = { userId };
-        api.post('http://localhost:5000/api/delete-account', deleteData)
+        api.post('http://localhost:5000/api/deleteAccount', deleteData)
             .then(res => {
                 if (res.data.success) {
                     alert("회원 탈퇴가 완료되었습니다.");

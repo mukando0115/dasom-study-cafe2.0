@@ -21,6 +21,7 @@ import SideBar from "./SideBar/SideBarPage";
 import Footer from "./Footer/FooterPage";
 import ProfileBar from "./ProfileBar/ProfileBar";
 import MyPage from "./MyPage/MyPage2";
+import ReservationInfo from "./MyPage/ReservationInfo";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -114,6 +115,7 @@ function App() {
           <Route path="/reservation" element={<ReservationPage/>}/>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/mypage" element={<MyPage onLogout={logoutHandler}/>}/>
+          <Route path="/reservationInfo" element={<ReservationInfo/>}/>
         </Routes>
       </div>
 

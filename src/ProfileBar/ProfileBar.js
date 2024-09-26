@@ -15,8 +15,9 @@ function ProfileBarPage(props) {
                                 마이페이지
                             </CAlertLink>
                             <hr />
-                            <CAlertLink>
-                                예약확인(아직 없음)
+                            <CAlertLink
+                                href='/reservationInfo'>
+                                예약확인
                             </CAlertLink>
                         </CAlert>                        
                         <CButton  

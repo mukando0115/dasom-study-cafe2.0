@@ -14,12 +14,14 @@ import {
     CFormInput,
     COffcanvas,
     COffcanvasBody,
+    CImage,
+    CCarousel,
 } from '@coreui/react'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/locale/ko";
 import api from '../api/api';
-import image1 from './Seatingchart.png';
+import image1 from './Frame 117.png';
 import { setHours, setMinutes } from 'date-fns';
 
 function ReservationPage() {
@@ -77,7 +79,7 @@ function ReservationPage() {
         "fixed": 11,
     };
 
-    //예약권 선택 - 시간 충전권 | 고정석 기간권
+    //예약권 선택 - 시간 이용권 | 고정석 기간권
     const [ticketType, setTicketType] = useState('');
     const [ticketMenu, setTicketMenu] = useState('');
     //좌석 선택 - 1인실 (Common) | 1인실 (Private) | 고정석
@@ -175,6 +177,66 @@ function ReservationPage() {
         console.log(err.config.data);
     })
 
+    //좌석 배치도 클릭 이벤트
+    const preventUnexpectedEffects = useCallback((e) => {
+        e.preventDefault()
+        e.stopPropagation()
+    }, []);
+    const galleryRef = useRef();
+    const [isDragging, setDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
+
+    const handleMouseDown = (e) => {
+        preventUnexpectedEffects(e)
+        setDragging(true);
+        setStartX(e.clientX); // 시작 위치
+        setScrollLeft(galleryRef.current.scrollLeft); // 현재 스크롤 위치
+        galleryRef.current.style.cursor = 'grabbing'; // 드래그 중 커서 변경
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        // e.preventDefault();
+        preventUnexpectedEffects(e)
+        const x = e.clientX; // 현재 마우스 위치
+        const distance = x - startX; // 드래그한 거리
+        galleryRef.current.scrollLeft = scrollLeft - distance; // 현재 스크롤 위치에서 드래그 거리만큼 빼기
+    };
+
+    const handleMouseUp = () => {
+        setDragging(false);
+        galleryRef.current.style.cursor = 'grab'; // 드래그 종료 시 커서 변경
+    };
+
+    const handleMouseLeave = () => {
+        setDragging(false);
+        galleryRef.current.style.cursor = 'grab'; // 마우스가 요소를 떠날 때 커서 변경
+    };
+
+    // 터치 이벤트 핸들러
+    const handleTouchStart = (e) => {
+        // preventUnexpectedEffects(e);
+        setDragging(true);
+        setStartX(e.touches[0].clientX); // 시작 위치
+        setScrollLeft(galleryRef.current.scrollLeft); // 현재 스크롤 위치
+        galleryRef.current.style.cursor = 'grabbing'; // 드래그 중 커서 변경
+    };
+
+    const handleTouchMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        // preventUnexpectedEffects(e)
+        const x = e.touches[0].clientX; // 현재 터치 위치
+        const distance = x - startX; // 드래그한 거리
+        galleryRef.current.scrollLeft = scrollLeft - distance; // 현재 스크롤 위치에서 드래그 거리만큼 빼기
+    };
+
+    const handleTouchEnd = () => {
+        setDragging(false);
+        galleryRef.current.style.cursor = 'grab'; // 드래그 종료 시 커서 변경
+    };
+
     return (
         <main className="resercation-page">
             {isLoggedIn === "1" && 
@@ -185,7 +247,7 @@ function ReservationPage() {
                     <CContainer className="reservation-form">
                         <CRow lg={{ cols: 2, gutter: 3}}>
                             {/* 예약 화면 */}
-                            <CCol lg={4}>
+                            <CCol lg={5}>
                                 <div>
                                     <p>예약일 선택</p>
                                     <span style={{marginRight: '2%'}}>
@@ -238,12 +300,12 @@ function ReservationPage() {
                                                 as="button" 
                                                 onClick={(e) => {
                                                     setTicketType('time')
-                                                    setTicketMenu('시간 충전권')                                                    
+                                                    setTicketMenu('시간 이용권')                                                    
                                                     setSitType('')
                                                     setsitMenu('')
                                                     setForm({...form, sitNum: ''})
                                                     setVisible(false)
-                                                }}>시간 충전권
+                                                }}>시간 이용권
                                             </CDropdownItem>
                                             <CDropdownItem 
                                                 as="button"
@@ -264,7 +326,7 @@ function ReservationPage() {
                                     <p>좌석 선택</p>
                                     <CDropdown className="reserve-form">
                                         <CDropdownToggle>{sitMenu === '' ? '좌석 선택' : sitMenu}</CDropdownToggle>
-                                        {/* 시간 충전권 드롭메뉴 */}
+                                        {/* 시간 이용권 드롭메뉴 */}
                                         {ticketType === 'time' &&
                                             <div>
                                                 <CDropdownMenu>                                            
@@ -417,10 +479,41 @@ function ReservationPage() {
                             </CCol>
 
                             {/* 좌석배치도 화면 */}
-                            <CCol lg={8}>
-                                <div className="seating-chart">
-                                    <img src={image1} alt="좌석 배치도" />
-                                </div>                                    
+                            <CCol lg={7}>                            
+                            <div 
+                                className="seating-chart" 
+                                ref={galleryRef} 
+                                onMouseDown={handleMouseDown}
+                                onMouseMove={handleMouseMove}
+                                onMouseUp={handleMouseUp}
+                                onMouseLeave={handleMouseLeave}
+                                onTouchStart={handleTouchStart}
+                                onTouchMove={handleTouchMove}
+                                onTouchEnd={handleTouchEnd}
+                                style={{ 
+                                    display: 'flex', 
+                                    overflowX: 'scroll',
+                                    width: '100%', 
+                                    height: '60%',
+                                    touchAction: 'none',
+                                    alignItems: 'center',
+                                    cursor: 'grab',
+                                    scrollbarWidth: 'none',
+                                }}
+                            >
+                                <img 
+                                    src={image1} 
+                                    style={{ 
+                                        display: 'block', 
+                                        cursor: 'pointer', 
+                                        objectFit: 'contain',
+                                        height: '100%',
+                                        width: 'auto',
+                                        objectFit: 'contain'
+                                    }}
+                                    alt="좌석 배치도"                                     
+                                />
+                            </div>                                 
                             </CCol>
                         </CRow>                                           
                     </CContainer>
