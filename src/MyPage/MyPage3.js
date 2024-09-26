@@ -5,35 +5,91 @@ import {
     CTabList,
     CTab,
     CContainer,
+    CButton,
+    CForm,
+    CFormFloating,
+    CFormInput,
+    CFormLabel,
 } from '@coreui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoExitOutline } from "react-icons/io5";
 
+import MyPageInfo from "./MyPageInfo";
+import DeleteAccount from "./DeleteAccount";
+import ReservationInfo from './ReservationInfo';
+
+import api from '../api/api';
+
 function MyPage(props) {
     //프로필 뱃지 설정 변수
-    const [fontSize, setFontSize] = useState(0);
     const circleRef = useRef(null);
+    const [fontSize, setFontSize] = useState(30);
+    
+    const [check, setCheck] = useState(false);
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const [pw, setPw] = useState('');
+    const userId = localStorage.getItem("id");
+    const [userName, setUserName] = useState(localStorage.getItem("name")[0]); // 초기값 설정
 
     //active 탭 설정 변수
     const [activeTab, setActiveTab] = useState(1);
 
+    //로그아웃 호출 함수
+    function onLogout() {
+        props.onLogout();
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            conTest();
+        }
+    };
+
+    //비밀번호 확인
+    const conTest = () => {
+        const data = { userId, userPw: pw };
+        api.post('mypages/mypagePw', data)
+            .then((res) => {
+                if (res.data.success) {
+                    setCheck(true);
+                    updateFontSize();
+                } else {
+                    alert(res.data.message);
+                }
+            }).catch((err) => {
+                alert(err.response.data.message);
+                console.log(err);
+            });
+    };
+
+    const updateFontSize = () => {
+        const div = document.getElementById('profileCircle');
+        if (div) {
+            const size = div.offsetWidth;
+            setFontSize(`${size * 0.7}px`);
+        }
+    };
+
     //프로필 뱃지 생성
     useEffect(() => {
-        const updateFontSize = () => {
-            if (circleRef.current) {
-                const size = circleRef.current.offsetWidth; // 도형의 크기 (가로)
-                setFontSize(size * 0.7); // 도형 크기의 70%로 폰트 사이즈 설정
-            }
-        };
+        const name = localStorage.getItem("name");
+        if (name) {
+            setUserName(name[0]);
+        }
+    }, []);
 
+    useEffect(() => {       
+
+        // 조건에 관계없이 초기값 업데이트
         updateFontSize();
-        window.addEventListener('resize', updateFontSize); // 창 크기 변경 시 업데이트
+        window.addEventListener('resize', updateFontSize);
 
         return () => {
             window.removeEventListener('resize', updateFontSize);
         };
-    }, []);
-    
+    }, [check]);   
+
 
     const handleTabClick = (tabKey) => {
         setActiveTab(tabKey);
@@ -51,17 +107,44 @@ function MyPage(props) {
 
     return (
         <main className="my-page">
-            <CContainer>
+            {(check === false && isLoggedIn) &&
+            <div className="mypage-entry-form">
+                <p className="sub-title">My page</p>
+                <h1 className="main-title">마이페이지</h1>
+                <CForm>
+                    <CFormFloating className="mb-3">
+                        <CFormInput
+                            type="password"
+                            id="floatingPassword"
+                            value={pw}
+                            onChange={e => setPw(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            placeholder="password" />
+                        <CFormLabel htmlFor="floatingPassword">비밀번호</CFormLabel>
+                    </CFormFloating>
+
+                    <CButton
+                        onClick={conTest}
+                        className="p-button"
+                        variant="mb-3 p-1 px-3"
+                        style={{ borderRadius: '13px', borderWidth: '2px' }}>
+                        확인
+                    </CButton>
+                </CForm>
+            </div>                
+            }         
+            {(check === true && isLoggedIn) &&
+                <CContainer>
                 <CRow>
                     <CCol xs={2} md={3} style={{ background: 'linear-gradient(180deg, #FFF 0%, #00AF50 100%)', display: 'flex', flexDirection: 'column', height: '100vh' }}>
                         <div 
-                            ref={circleRef}
+                            id="profileCircle"
                             style={{
                                 width: '60%',
                                 aspectRatio: '1',
                                 backgroundColor: '#28a745',
                                 borderRadius: '50%',
-                                fontSize: `${fontSize}px`,
+                                fontSize: fontSize,
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -72,7 +155,7 @@ function MyPage(props) {
                             {localStorage.getItem("name")[0]}
                         </div>
                         <CTabs activeItemKey={activeTab} onActiveItemChange={setActiveTab}>
-                            <CTabList variant="pills" style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', }}>
+                            <CTabList variant="pills" style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', fontWeight: 'bold' }}>
                                 <CTab 
                                     itemKey={1}
                                     style={getTabStyle(1)}                                 
@@ -91,24 +174,35 @@ function MyPage(props) {
                         </CTabs>
 
                         {   (activeTab === 1)
-                            && <div style={{ display: 'block' }}>
-                                    <IoExitOutline className='mt-5' style={{ transform: 'scaleX(-1)' }}/>
+                            && <div className='mt-5' style={{ display: 'block' }}>
+                                <CButton
+                                    onClick={() => {
+                                        setActiveTab(null);
+                                    }}                                
+                                >
+                                    <IoExitOutline style={{ transform: 'scaleX(-1)' }}/>
                                     <p style={{ marginLeft: '10px' }}>회원탈퇴</p>
-                                </div>                           
+                                </CButton>                                    
+                            </div>                           
                         }                                             
                     </CCol>
 
-                    <CCol xs={8} md={8} style={{ backgroundColor: "red", padding: '20px' }}>
+                    <CCol xs={8} md={8} style={{ padding: '20px' }}>
                         { (activeTab === 1)
-                            && <p>회원 정보</p>
+                            && <MyPageInfo />
                         }
                         { (activeTab === 2)
-                            && <p>예약 정보</p>
+                            && <ReservationInfo />
+                        }
+                        { (activeTab === null)
+                            && <DeleteAccount onLogout={onLogout}/>
                         }
                     </CCol>
                 </CRow>
                 
             </CContainer>            
+            }   
+                        
         </main>
     )
 }

@@ -21,7 +21,6 @@ import SideBar from "./SideBar/SideBarPage";
 import Footer from "./Footer/FooterPage";
 import ProfileBar from "./ProfileBar/ProfileBar";
 import MyPage from "./MyPage/MyPage3";
-import ReservationInfo from "./MyPage/ReservationInfo";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,6 +48,7 @@ function App() {
     localStorage.removeItem("isLoggedIn");    
     localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
+    window.location.href = '/';
   };
 
   return (
@@ -115,7 +115,6 @@ function App() {
           <Route path="/reservation" element={<ReservationPage/>}/>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/mypage" element={<MyPage onLogout={logoutHandler}/>}/>
-          <Route path="/reservationInfo" element={<ReservationInfo/>}/>
         </Routes>
       </div>
 

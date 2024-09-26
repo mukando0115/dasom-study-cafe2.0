@@ -1,4 +1,4 @@
-import { CPopover, CButton, CAvatar, CAlert, CAlertLink } from '@coreui/react'
+import { CPopover, CButton, CAvatar, } from '@coreui/react'
 
 function ProfileBarPage(props) {
 
@@ -15,11 +15,6 @@ function ProfileBarPage(props) {
                             className="p-button mb-3"
                             onClick={() => window.location.href = '/mypage'}
                         >마이페이지
-                            {/* <hr />
-                            <CAlertLink
-                                href='/reservationInfo'>
-                                예약확인
-                            </CAlertLink> */}
                         </CButton>                        
                         <CButton  
                             className="s-button"
@@ -27,7 +22,7 @@ function ProfileBarPage(props) {
                             onClick={() => {
                                 alert(`${localStorage.getItem("name")}님 로그아웃 되었습니다`)
                                 props.onLogout();
-                                window.location.href = '/';
+                                // window.location.href = '/';
                             }}>로그아웃
                         </CButton>
                     </div>

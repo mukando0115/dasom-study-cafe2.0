@@ -301,7 +301,7 @@ u:not(.underline) {
   width: 40%;
   display: inline-block;
   vertical-align: middle;
-  text-align: center;
+  text-align: left;
   position: "relative";
   margin: 2%
 }
@@ -355,6 +355,10 @@ u:not(.underline) {
 .profile-bar {
   background-color: rgba(0, 0, 0, 0.50);
   width: 10%;
+}
+
+.delete-account {
+  padding: 2%;
 }
 
 
