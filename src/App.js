@@ -20,7 +20,7 @@ import LoginPage from "./Login/LoginPage";
 import SideBar from "./SideBar/SideBarPage";
 import Footer from "./Footer/FooterPage";
 import ProfileBar from "./ProfileBar/ProfileBar";
-import MyPage from "./MyPage/MyPage2";
+import MyPage from "./MyPage/MyPage3";
 import ReservationInfo from "./MyPage/ReservationInfo";
 
 function App() {

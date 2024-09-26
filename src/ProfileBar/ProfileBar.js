@@ -6,22 +6,23 @@ function ProfileBarPage(props) {
         <main className="profile-page">            
 
             <CPopover
-                // content={logoutButton}
+                className="profile-bar"
+                placement="bottom"
+                trigger="focus"
                 content = {
                     <div>
-                        <CAlert>
-                            <CAlertLink  
-                                href="/mypage">
-                                마이페이지
-                            </CAlertLink>
-                            <hr />
+                        <CButton
+                            className="p-button mb-3"
+                            onClick={() => window.location.href = '/mypage'}
+                        >마이페이지
+                            {/* <hr />
                             <CAlertLink
                                 href='/reservationInfo'>
                                 예약확인
-                            </CAlertLink>
-                        </CAlert>                        
+                            </CAlertLink> */}
+                        </CButton>                        
                         <CButton  
-                            className="p-button"
+                            className="s-button"
                             as="button" 
                             onClick={() => {
                                 alert(`${localStorage.getItem("name")}님 로그아웃 되었습니다`)
@@ -30,10 +31,7 @@ function ProfileBarPage(props) {
                             }}>로그아웃
                         </CButton>
                     </div>
-                }
-                placement="bottom"
-                title="내 정보"
-                trigger="focus"
+                }                
             >
                 
                 <CButton shape="rounded-pill">
