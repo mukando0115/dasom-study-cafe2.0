@@ -18,6 +18,14 @@ dasom-study-cafe>로 끝나야 합니다
 ## `npm i`  (패키지 설치)
 안 되면 `npm config set legacy-peer-deps true`를 먼저하고 npm i를 해주세요
 
+# 1. 프로덕션 버전 실행
+## `npm install -g serve`   (테스트용 서버 설치)
+## `serve -s build` (실행)
+까지 해주시면 'serve'라는 테스트용 웹서버가 구동되면서 접속 가능합니다
+## nginx 구동 시 'build'폴더 내부의 'index.html'을 사용하시면 됩니다
+.conf 내부에 location의 root는 build폴더를, index는 index.html로 하면 된다고 합니다(오류나면 수정하겠습니다)
+
+# 2. 개발 버전 실행
 ## `npm start` (실행)
 까지 해주시면 됩니당
 언제나 실행할 때에는 `npm start`를 해주세요!
