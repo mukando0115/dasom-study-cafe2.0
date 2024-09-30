@@ -29,7 +29,9 @@ function MyPage(props) {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const [pw, setPw] = useState('');
     const userId = localStorage.getItem("id");
-    const [userName, setUserName] = useState(localStorage.getItem("name")[0]); // 초기값 설정
+    // const [userName, setUserName] = useState(localStorage.getItem("name")[0]); // 초기값 설정
+    const [userName, setUserName] = useState(localStorage.getItem("name") ? localStorage.getItem("name")[0] : '');
+
 
     //active 탭 설정 변수
     const [activeTab, setActiveTab] = useState(1);
@@ -73,7 +75,7 @@ function MyPage(props) {
 
     //프로필 뱃지 생성
     useEffect(() => {
-        const name = localStorage.getItem("name");
+        const name = userName;
         if (name) {
             setUserName(name[0]);
         }
