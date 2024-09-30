@@ -312,14 +312,14 @@ u:not(.underline) {
   text-align: center; */
   width: 100%;
   margin-top: 2%;
-  height: 1000px;
+  height: 300%;
 }
 
 .mypage-form {
   margin-top: 2%;
   display: inline-block;
   text-align: left;
-  width: 40%;
+  width: 60%;
 }
 
 .password-change-form {
@@ -359,6 +359,8 @@ u:not(.underline) {
 
 .delete-account {
   padding: 2%;
+  text-align: left;
+  margin-left: 0;
 }
 
 

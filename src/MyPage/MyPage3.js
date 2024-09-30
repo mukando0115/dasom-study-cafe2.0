@@ -176,14 +176,15 @@ function MyPage(props) {
                         </CTabs>
 
                         {   (activeTab === 1)
-                            && <div className='mt-5' style={{ display: 'block' }}>
+                            && <div className='mt-5' style={{ display: 'flex', justifyContent: 'center', marginTop: 'auto', padding: '20px', }}>
                                 <CButton
+                                    style={{display: 'flex', alignItems: 'center'}}
                                     onClick={() => {
                                         setActiveTab(null);
                                     }}                                
                                 >
                                     <IoExitOutline style={{ transform: 'scaleX(-1)' }}/>
-                                    <p style={{ marginLeft: '10px' }}>회원탈퇴</p>
+                                    <p style={{ marginLeft: '10px', margin: 0 }}>회원탈퇴</p>
                                 </CButton>                                    
                             </div>                           
                         }                                             

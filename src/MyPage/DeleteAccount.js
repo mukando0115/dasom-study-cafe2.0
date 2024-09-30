@@ -90,7 +90,7 @@ function DeleteAccount(props) {
                                 color='danger'
                                 textColor='white'
                                 className={`mb-3 border-top-danger border-top-3`}
-                                style={{ maxWidth: '18rem' }}
+                                // style={{ maxWidth: '18rem' }}
                             >
                                 <CCardBody>
                                     <CCardText>
