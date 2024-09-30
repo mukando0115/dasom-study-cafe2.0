@@ -74,6 +74,9 @@ function MyPage() {
                     alert("비밀번호가 변경되었습니다.");
                     setShowNewPasswordInput(false); // 비밀번호 변경 후 창 닫기
                     setShowPasswordInput(false);
+                    setCurrentPassword('');
+                    setNewPassword('');
+                    setConfirmPassword('');
                 } else {
                     alert(res.data.message);
                 }
@@ -96,9 +99,9 @@ function MyPage() {
             {showNewPasswordInput ? (
                 // 새로운 비밀번호 설정 창이 표시
                 <div style={{ marginTop: '20px', textAlign: 'left', width: '300px' }}>
-                    <h3 style={{ color: 'green', marginBottom: '20px' }}>비밀번호 변경</h3>
+                    <p className="sub-title mb-3" style={{textAlign: 'left'}}>비밀번호 변경</p>
                     <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                        <label style={{ marginBottom: '10px', fontWeight: 'bold', color: 'green' }}>신규 비밀번호 입력</label>
+                        <label style={{ marginBottom: '10px', fontWeight: 'bold'}}>신규 비밀번호 입력</label>
                         <input
                             type="password"
                             value={newPassword}
@@ -109,7 +112,7 @@ function MyPage() {
                         />
                     </div>
                     <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                        <label style={{ marginBottom: '10px', fontWeight: 'bold', color: 'green' }}>비밀번호 재입력</label>
+                        <label style={{ marginBottom: '10px', fontWeight: 'bold',}}>비밀번호 재입력</label>
                         <input
                             type="password"
                             value={confirmPassword}
@@ -139,9 +142,9 @@ function MyPage() {
             ) : showPasswordInput ? (
                 // 현재 비밀번호 확인 창이 표시
                 <div style={{ marginTop: '20px', textAlign: 'left', width: '300px' }}>
-                    <h3 style={{ color: 'green', marginBottom: '20px' }}>비밀번호 변경</h3>
+                    <p className="sub-title mb-3" style={{textAlign: 'left'}}>비밀번호 변경</p>
                     <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                        <label style={{ marginBottom: '10px', fontWeight: 'bold', color: 'green' }}>비밀번호 입력</label>
+                        <label style={{ marginBottom: '10px', fontWeight: 'bold'}}>비밀번호 입력</label>
                         <input
                             type="password"
                             value={currentPassword}
@@ -170,8 +173,8 @@ function MyPage() {
                 </div>
             ) : (
                 // 회원 정보가 표시
-                <div>
-                    <p style={{ fontSize: '24px', fontWeight: 'bold', color: 'green' }}>회원 정보</p>
+                <div className="my-page-info">
+                    <p className="sub-title" style={{textAlign: 'left'}}>회원 정보</p>
                     <hr />
                     <div>
                         {userData && (
@@ -184,14 +187,14 @@ function MyPage() {
                                     <label>아이디</label>
                                     <input type="text" value={userData.userId} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
                                 </div>
-                                <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center' }}>
-                                    <label style={{ marginRight: '10px' }}>비밀번호</label>
-                                    <input type="password" value="*****" disabled style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+                                <div style={{ marginBottom: '15px', }}>
+                                    <label style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>비밀번호</label>
+                                    <input type="password" value="*****" disabled style={{ width: '80%', flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
                                     <Button
                                         variant="outline-success"
                                         size="sm"
                                         onClick={() => setShowPasswordInput(true)} // 클릭 시 비밀번호 변경 창이 표시됨
-                                        style={{ marginLeft: '10px' }}
+                                        style={{ marginLeft: '10px', width: '18%'}}
                                     >
                                         비밀번호 변경
                                     </Button>

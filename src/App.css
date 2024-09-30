@@ -363,6 +363,12 @@ u:not(.underline) {
   margin-left: 0;
 }
 
+.my-page-info {
+  padding: 2%;
+  text-align: left;
+  margin-left: 0;
+}
+
 
 
 

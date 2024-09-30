@@ -73,7 +73,7 @@ function DeleteAccount(props) {
                     <img src={titleImg} style={{ maxWidth: '20%', height: 'auto', marginBottom: '3%' }}/>
                     <img src={textImg} style={{ maxWidth: '70%', height: 'auto', marginBottom: '3%' }}/>
 
-                    <CForm className="mypage-form mt-5">
+                    <CForm className="mypage-form mt-5" style={{width: '55%'}}>
                         <CFormFloating className="mb-3">
                             <CFormInput
                                 type="password"
@@ -96,18 +96,20 @@ function DeleteAccount(props) {
                                     <CCardText>
                                         정말 탈퇴하시겠습니까? <br/>
                                         탈퇴 후 아이디 및 데이터를 복구할 수 없습니다. <br/>
-                                        신중히 진행하시길 바랍니다.
+                                        신중히 진행하시길 바랍니다.                                        
                                     </CCardText>
-                                    <CCardFooter className="mb-4">
-                                        <label>
+                                    <CCardText>
+                                        <label className='mt-2'>    
+                                            <b style={{marginRight: '5px'}}>                                     
+                                            유의 사항을 모두 숙지하였고 동의합니다.
+                                            </b>   
                                             <input
                                                 type="checkbox"
                                                 checked={isAgreed}
                                                 onChange={() => setIsAgreed(!isAgreed)}
                                             />
-                                            유의 사항을 모두 숙지하였고 동의합니다.
                                         </label>
-                                    </CCardFooter>
+                                    </CCardText>
                                 </CCardBody>
                             </CCard>
                         )}
