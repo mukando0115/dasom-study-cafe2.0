@@ -16,7 +16,7 @@ import { IoExitOutline } from "react-icons/io5";
 
 import MyPageInfo from "./MyPageInfo";
 import DeleteAccount from "./DeleteAccount";
-import ReservationInfo from './ReservationInfo';
+import ReservationInfo from './ReservationInfo2';
 
 import api from '../api/api';
 
