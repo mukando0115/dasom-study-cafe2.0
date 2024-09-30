@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { IoExitOutline } from "react-icons/io5";
 
-import MyPageInfo from "./MyPageInfo";
+import MyPageInfo from "./MyPageInfo2";
 import DeleteAccount from "./DeleteAccount";
 import ReservationInfo from './ReservationInfo2';
 

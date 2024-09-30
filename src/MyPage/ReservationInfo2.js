@@ -62,7 +62,7 @@ function ReservationInfo(props) {
         <main className="reservationInfo-page">
             <p className="sub-title" style={{textAlign: 'left'}}>예약 정보</p>
             {isLoggedIn && (
-                <div className="reservation-table" style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto'}}>
+                <div className="reservation-table" style={{overflowY: 'auto', scrollbarWidth: 'none', maxHeight: '400px', width: '100%', justifyContent: 'center', alignItems: 'center', margin: '0 auto'}}>
                     <CTable>
                         <CTableHead>
                             <CTableRow>
