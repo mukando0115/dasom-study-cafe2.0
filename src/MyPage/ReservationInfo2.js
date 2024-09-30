@@ -1,12 +1,18 @@
-import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell } from '@coreui/react';
+import { CButton, CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell } from '@coreui/react';
 import { useState, useEffect } from 'react';
 import api from '../api/api';
+import DatePicker from 'react-datepicker';
 
 function ReservationInfo(props) {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const userId = localStorage.getItem("id");
     
     const [tableInfo, setTableInfo] = useState([]);  
+
+    const [fetchReserve, setFetchReserve] = useState({
+        startDate: null,
+        endDate: null,
+    })
 
     // 삭제 요청할 예약 정보 변수
     const [reserveInfo, setReserveInfo] = useState({
@@ -61,11 +67,34 @@ function ReservationInfo(props) {
         getReservationInfo();
     }, [userId]);
 
+    useEffect(() => {
+        setFetchReserve((prev) => ({ ...prev, endDate: null }));
+    }, [fetchReserve.startDate]);
+
     return (
-        <main className="my-page" style={{ flexDirection: 'column', padding: '20px' }}>            
+        <main className="my-page" style={{ flexDirection: 'column', padding: '20px', }}>            
             {isLoggedIn && (
                 <div className="reservation-table">
                     <p className="sub-title" style={{textAlign: 'left'}}>예약 정보</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', }}>
+                        <DatePicker
+                        className="small-datepicker"
+                        showIcon
+                        selected={fetchReserve.startDate}
+                        onChange={(date) => setFetchReserve({...fetchReserve, startDate: date})}
+                        />
+                        ~
+                        <DatePicker
+                        className="small-datepicker"
+                        showIcon
+                        selected={fetchReserve.endDate}
+                        minDate={(fetchReserve.startDate !== null ? fetchReserve.startDate : null)}
+                        onChange={(date) => setFetchReserve({...fetchReserve, endDate: date})}
+                        />
+                        <CButton className="p-button" size="sm" style={{width: '15%',}}>
+                            조회
+                        </CButton>
+                    </div>                    
                     <div style={{
                         overflowY: 'auto', 
                         scrollbarWidth: 'none', 

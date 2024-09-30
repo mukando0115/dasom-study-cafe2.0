@@ -369,7 +369,10 @@ u:not(.underline) {
   margin-left: 0;
 }
 
-
+.small-datepicker {
+  width: 120px; 
+  font-size: 0.875rem;
+}
 
 
 
