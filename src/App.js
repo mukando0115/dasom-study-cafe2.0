@@ -38,6 +38,7 @@ function App() {
     localStorage.setItem("isLoggedIn", "1");
     // 로그인 되었을 때 State를 true로 업데이트
     setIsLoggedIn(true);
+    window.location.href = '/';
   };
 
   //로그아웃 핸들러
