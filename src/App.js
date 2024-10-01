@@ -46,7 +46,7 @@ function App() {
     localStorage.removeItem("id");
     localStorage.removeItem("name");
     localStorage.removeItem("isLoggedIn");    
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem("naver");
     setIsLoggedIn(false);
     window.location.href = '/';
   };

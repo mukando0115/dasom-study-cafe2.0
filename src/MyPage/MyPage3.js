@@ -31,6 +31,7 @@ function MyPage(props) {
     const userId = localStorage.getItem("id");
     // const [userName, setUserName] = useState(localStorage.getItem("name")[0]); // 초기값 설정
     const [userName, setUserName] = useState(localStorage.getItem("name") ? localStorage.getItem("name")[0] : '');
+    const isSNSLoggedIn = localStorage.getItem("naver");
 
 
     //active 탭 설정 변수
@@ -80,6 +81,12 @@ function MyPage(props) {
             setUserName(name[0]);
         }
     }, []);
+
+    useEffect(() => {
+        if(isSNSLoggedIn === "1") {
+            setCheck(true);
+        }
+    })
 
     useEffect(() => {       
 

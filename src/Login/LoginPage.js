@@ -86,26 +86,33 @@ function LoginPage(props) {
             });
             const data = await response.json();
     
-            if (data.success === true) {
+            if (data.success) {
                 const loginWindow = window.open(data.api_url, 'naverLogin', 'width=500,height=600');
-                
+    
+                // 메시지 수신 핸들러 등록
                 const handleLoginMessage = (event) => {
-                    if (event.origin === 'http://localhost:3000') {
-                        console.log('Received message:', event.data); // 메시지 로그 추가
-                        console.log('Access Token:', event.data.accessToken); // accessToken 확인
-                        const { accessToken } = event.data;
-                        if (accessToken) {
-                            localStorage.setItem("accessToken", accessToken);
-                            alert('네이버 로그인이 완료되었습니다.');
+                    // 출처 확인
+                    if (event.origin === 'http://localhost:5000') {
+                        const userData = event.data.userData.response;
+                        if (event.data.userData.message === 'success') {
+                            console.log('User Data:', userData);           
+                            localStorage.setItem("id", userData.id);
+                            localStorage.setItem("name", userData.name);
+                            localStorage.setItem("naver", "1");
+                            alert(`${localStorage.getItem("name")}님 로그인 되었습니다`);
+                            // handleShow();
                             props.onLogin();
-                            window.location.href = "/"; // 루트 페이지로 리다이렉션
-                        } else {
-                            console.error('Access token is undefined');
+                            window.location.href = '/';                 
                         }
                     }
                 };
     
                 window.addEventListener('message', handleLoginMessage);
+    
+                // 새 창이 닫히면 메시지 리스너 제거
+                loginWindow.onbeforeunload = () => {
+                    window.removeEventListener('message', handleLoginMessage);
+                };
             } else {
                 console.error('로그인 요청 실패:', data);
             }

@@ -13,6 +13,7 @@ function MyPage() {
     const [showNewPasswordInput, setShowNewPasswordInput] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const isSNSLoggedIn = localStorage.getItem("naver");
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -190,6 +191,7 @@ function MyPage() {
                                 <div style={{ marginBottom: '15px', }}>
                                     <label style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>비밀번호</label>
                                     <input type="password" value="*****" disabled style={{ width: '80%', flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+                                    {isSNSLoggedIn !== "1" && 
                                     <Button
                                         variant="outline-success"
                                         size="sm"
@@ -198,6 +200,7 @@ function MyPage() {
                                     >
                                         비밀번호 변경
                                     </Button>
+                                    }
                                 </div>
                                 <div style={{ marginBottom: '15px' }}>
                                     <label>전화번호</label>
