@@ -185,7 +185,7 @@ function MyPage(props) {
                             </CTabList>
                         </CTabs>
 
-                        {   (activeTab === 1)
+                        {   (activeTab === 1 && isSNSLoggedIn !== "1")
                             && <div className='mt-5' style={{ display: 'flex', justifyContent: 'center', marginTop: 'auto', padding: '20px', }}>
                                 <CButton
                                     style={{display: 'flex', alignItems: 'center'}}
