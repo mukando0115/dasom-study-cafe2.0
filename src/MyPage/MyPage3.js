@@ -82,11 +82,11 @@ function MyPage(props) {
         }
     }, []);
 
-    useEffect(() => {
-        if(isSNSLoggedIn === "1") {
-            setCheck(true);
-        }
-    })
+    // useEffect(() => {
+    //     if(isSNSLoggedIn === "1") {
+    //         setCheck(true);
+    //     }
+    // })
 
     useEffect(() => {       
 
@@ -130,6 +130,9 @@ function MyPage(props) {
                             onKeyDown={handleKeyDown}
                             placeholder="password" />
                         <CFormLabel htmlFor="floatingPassword">비밀번호</CFormLabel>
+                        { isSNSLoggedIn === "1" &&
+                            <p>소셜 회원가입 회원의 초기 비밀번호는 휴대폰번호(11자리)입니다.</p>
+                        }
                     </CFormFloating>
 
                     <CButton
