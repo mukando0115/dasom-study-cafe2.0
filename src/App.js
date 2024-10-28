@@ -20,7 +20,7 @@ import LoginPage from "./Login/LoginPage";
 import SideBar from "./SideBar/SideBarPage";
 import Footer from "./Footer/FooterPage";
 import ProfileBar from "./ProfileBar/ProfileBar";
-import MyPage from "./MyPage/MyPage3";
+import MyPage from "./MyPage/MyPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
