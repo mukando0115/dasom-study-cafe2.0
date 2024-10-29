@@ -26,7 +26,9 @@ jobs:
           npm install # npm install을 실행할 경로로 설정
 
       - name: Build # React Build
-        run: npm run build # npm run build를 실행할 경로로 설정
+        run: |
+          npm config set legacy-peer-deps true
+          npm install # npm install을 실행할 경로로 설정
 
       - name: Deploy # S3에 배포하기
         env:
