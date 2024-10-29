@@ -3,7 +3,7 @@ import api from '../api/api';
 
 import Button from 'react-bootstrap/Button';
 import { CForm, CFormFloating, CFormInput, CFormLabel } from '@coreui/bootstrap-react'
-import loginButton from './btnG_완성형.png';
+import loginButton from './btnG.png';
 
 function LoginPage(props) {
     const [form, setForm] = useState({

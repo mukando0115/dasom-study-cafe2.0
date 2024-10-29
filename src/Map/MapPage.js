@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import React from 'react';
-import image1 from './Frame 39.jpg';
+import image1 from './Frame39.jpg';
 
 // MyComponent 컴포넌트
 const MyComponent = () => {

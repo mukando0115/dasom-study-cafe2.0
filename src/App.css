@@ -114,7 +114,7 @@ p {
 .banner1 {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-image: url(../assets/img/Frame\ 8.png);
+  background-image: url(../assets/img/Frame8.png);
   background-size: 100% auto;
   position: relative;
   display : inline-block;
@@ -131,7 +131,7 @@ p {
 .banner2 {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-image: url(../assets/img/Section\ 2.png);
+  background-image: url(../assets/img/Section2.png);
   background-size: contain;
   background-repeat :no-repeat;
   margin-bottom: 5%; 
@@ -140,7 +140,7 @@ p {
 .banner3 {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-image: url(../assets/img/Section\ 3.png);
+  background-image: url(../assets/img/Section3.png);
   background-size: contain;
   background-repeat :no-repeat;
   margin-bottom: 5%; 
@@ -149,7 +149,7 @@ p {
 .banner4 {
   width: 100%;
   aspect-ratio: 16 / 10;
-  background-image: url(../assets/img/Section\ 4.png);
+  background-image: url(../assets/img/Section4.png);
   background-size: contain;
   background-repeat :no-repeat;
   margin-bottom: 5%; 

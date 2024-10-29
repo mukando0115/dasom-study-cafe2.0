@@ -1,8 +1,8 @@
 import React from 'react';
-import image1 from './고정석 기간권.jpg';
-import image2 from './부대시설.jpg';
-import image3 from './Frame 13.jpg';
-import image4 from './Frame 15.jpg';
+import image1 from './fixed.jpg';
+import image2 from './support.jpg';
+import image3 from './Frame13.jpg';
+import image4 from './Frame15.jpg';
 
 // MyComponent 컴포넌트
 const MyComponent = () => {

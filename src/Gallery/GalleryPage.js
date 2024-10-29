@@ -1,13 +1,13 @@
 import { CCarousel, CCarouselItem, CImage } from '@coreui/react';
-import image1 from './1인실(Common)_1.png';
-import image2 from './1인실(Common)_2.png';
-import image3 from './1인실(Common)_3.png';
-import image4 from './1인실(Common)_4.png';
-import image5 from './1인실(Private)_1.png';
-import image6 from './1인실(Private)_2.png';
-import image7 from './1인실(Private)_3.png';
-import image8 from './1인실(Private)_4.png';
-import image9 from './1인실(Private)_1.png';
+import image1 from './Common_1.png';
+import image2 from './Common_2.png';
+import image3 from './Common_3.png';
+import image4 from './Common_4.png';
+import image5 from './Private_1.png';
+import image6 from './Private_2.png';
+import image7 from './Private_3.png';
+import image8 from './Private_4.png';
+import image9 from './Private_1.png';
 
 
 function GalleryPage() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import image1 from './Group 35.jpg';
+import image1 from './Group35.jpg';
 
 
 // MyComponent 컴포넌트
