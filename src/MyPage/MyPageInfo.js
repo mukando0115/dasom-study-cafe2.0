@@ -13,7 +13,7 @@ function MyPage() {
     const [showNewPasswordInput, setShowNewPasswordInput] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const isSNSLoggedIn = localStorage.getItem("naver");
+    // const isSNSLoggedIn = localStorage.getItem("naver");
 
     useEffect(() => {
         if (isLoggedIn) {

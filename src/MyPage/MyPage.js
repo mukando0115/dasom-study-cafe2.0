@@ -22,7 +22,7 @@ import api from '../api/api';
 
 function MyPage(props) {
     //프로필 뱃지 설정 변수
-    const circleRef = useRef(null);
+    // const circleRef = useRef(null);
     const [fontSize, setFontSize] = useState(30);
     
     const [check, setCheck] = useState(false);

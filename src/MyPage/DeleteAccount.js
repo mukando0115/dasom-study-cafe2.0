@@ -6,7 +6,6 @@ import {
     CCard,
     CCardBody,
     CCardText,
-    CCardFooter,
 } from '@coreui/react';
 import Button from 'react-bootstrap/Button';
 

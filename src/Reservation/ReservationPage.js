@@ -7,22 +7,17 @@ import {
     CDropdownMenu, 
     CDropdownItem, 
     CButton, 
-    CCollapse,
-    CCard,
-    CCardBody,
     CForm,
     CFormInput,
     COffcanvas,
     COffcanvasBody,
-    CImage,
-    CCarousel,
 } from '@coreui/react'
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/locale/ko";
 import api from '../api/api';
 import image1 from './Frame 117.png';
-import { setHours, setMinutes } from 'date-fns';
+// import { setHours, setMinutes } from 'date-fns';
 
 function ReservationPage() {
     const hours = Array.from({ length: 12 }, (_, index) => index + 1);

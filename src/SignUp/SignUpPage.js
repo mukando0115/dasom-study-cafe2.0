@@ -36,7 +36,7 @@ function SignUpPage(props) {
     const [msg, setMsg] = useState('');
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    // const handleShow = () => setShow(true);
 
     //서버로 보낼 회원가입 데이터
     const data = {
