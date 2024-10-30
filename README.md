@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # VS Code 설치
 => https://code.visualstudio.com/
 설치 관련된 건 인터넷에 더 정확히 나와있을 것 같아서 참고바랍니다
@@ -32,3 +33,7 @@ dasom-study-cafe>로 끝나야 합니다
 
 ## 코드 파일 경로는 `/src` 밑에 있고, 폴더마다 js파일을 생성해놓았습니다
 가장 기본이 되는 메인 파일은 `App.js`입니다
+=======
+# Project_Dasom
+Project_Dasom
+>>>>>>> 51c722df6f08d4fd8dacb4004083b805fa061667
