@@ -168,21 +168,32 @@ function SignUpPage(props) {
     })
 
     //인증번호 확인 함수
-    const verifyCode = () => api.post('signUp/verifyCode', {userPhone: form.phone, code: form.verificationCode})
-    .then (res => {
-        if(res.data.success){
-            if(verificationCodes === form.verificationCode){
-                //setVerificationSuccess(true);
-                alert("인증이 완료되었습니다");
-                setCheckedPhone(true);
-                setForm(prevForm => ({ ...prevForm, verificationSent: false }));
-            }            
-        } else {
+    function verifyCode() {
+        if(verificationCodes === form.verificationCode){
+            //setVerificationSuccess(true);
+            alert("인증이 완료되었습니다");
+            setCheckedPhone(true);
+            setForm(prevForm => ({ ...prevForm, verificationSent: false }));
+        }   
+        else {
             alert("인증 번호가 일치하지 않습니다");
         }
-    }).catch(err => {
-        console.log(err);
-    })
+    }
+    // const verifyCode = () => api.post('signUp/verifyCode', {userPhone: form.phone, code: form.verificationCode})
+    // .then (res => {
+    //     if(res.data.success){
+    //         if(verificationCodes === form.verificationCode){
+    //             //setVerificationSuccess(true);
+    //         alert("인증이 완료되었습니다");
+    //         setCheckedPhone(true);
+    //         setForm(prevForm => ({ ...prevForm, verificationSent: false }));
+    //         }            
+    //     } else {
+    //         alert("인증 번호가 일치하지 않습니다");
+    //     }
+    // }).catch(err => {
+    //     console.log(err);
+    // })
 
 
     return (
