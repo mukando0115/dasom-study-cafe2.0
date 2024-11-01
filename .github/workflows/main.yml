@@ -55,10 +55,3 @@ jobs:
             echo "Deployment to S3 failed."
             exit 1
           fi
-
-      - name: Cloudfront invalidation
-        run: |
-          aws cloudfront create-invalidation \
-           --distribution-id ${{secrets.DISTRIBUTION_ID}}
-           --paths "/*"
-           
