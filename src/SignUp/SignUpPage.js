@@ -169,6 +169,7 @@ function SignUpPage(props) {
 
     //인증번호 확인 함수
     function verifyCode() {
+        console.log(verificationCodes, form.verificationCode)
         if(verificationCodes === form.verificationCode){
             //setVerificationSuccess(true);
             alert("인증이 완료되었습니다");
