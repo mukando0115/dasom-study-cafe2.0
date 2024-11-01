@@ -48,7 +48,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp --recursive --region ap-northeast-2 build s3://dasom-project-s3
+          aws s3 cp --recursive --region ap-northeast-2 build s3://dasom-study-test
           if [ $? -eq 0 ]; then
             echo "Deployment to S3 was successful."
           else
