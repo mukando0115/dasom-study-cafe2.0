@@ -26,6 +26,9 @@ function LoginPage(props) {
     //서버 전송 함수(axios post)
     const conTest = () => {
         api.post('https://si6vsdb5qc.execute-api.ap-northeast-2.amazonaws.com/prod/login', data, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
             withCredentials: true
         })
         .then((res) => {
