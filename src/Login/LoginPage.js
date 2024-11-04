@@ -24,7 +24,7 @@ function LoginPage(props) {
     };
     
     //서버 전송 함수(axios post)
-    const conTest = () => api.post('https://your-api-gateway-endpoint/login', data)
+    const conTest = () => api.post('https://si6vsdb5qc.execute-api.ap-northeast-2.amazonaws.com/prod/login', data)
     .then((res) => {
         //로그인 성공했을 때
         if(res.data.success) {        
