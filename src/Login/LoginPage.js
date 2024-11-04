@@ -24,26 +24,29 @@ function LoginPage(props) {
     };
     
     //서버 전송 함수(axios post)
-    const conTest = () => api.post('https://si6vsdb5qc.execute-api.ap-northeast-2.amazonaws.com/prod/login', data)
-    .then((res) => {
-        //로그인 성공했을 때
-        if(res.data.success) {        
-            localStorage.setItem("id", form.id);
-            localStorage.setItem("name", res.data.name);
-            alert(`${localStorage.getItem("name")}님 로그인 되었습니다`);
-            props.onLogin();
-        }
-        //로그인 실패했을 때
-        else{
-            // alert(res.data.message);
+    const conTest = () => {
+        api.post('https://si6vsdb5qc.execute-api.ap-northeast-2.amazonaws.com/prod/login', data, {
+            withCredentials: true
+        })
+        .then((res) => {
+            // 로그인 성공했을 때
+            if(res.data.success) {        
+                localStorage.setItem("id", form.id);
+                localStorage.setItem("name", res.data.name);
+                alert(`${localStorage.getItem("name")}님 로그인 되었습니다`);
+                props.onLogin();
+            }
+            // 로그인 실패했을 때
+            else {
+                alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
+                console.log(res);
+            }
+        }).catch((err) => {
             alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
-            console.log(res);
-        }
-    }).catch((err) => {
-        alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
-        console.log(err);
-    })    
-
+            console.log(err);
+        });    
+    };
+      
     const handleLoginClick = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/naverlogin', {
