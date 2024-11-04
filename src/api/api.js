@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const api = axios.create({
     // Server URL
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'https://si6vsdb5qc.execute-api.ap-northeast-2.amazonaws.com/prod/',
     headers: {
         "Content-Type": "application/json",
       },
