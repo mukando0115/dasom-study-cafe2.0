@@ -15,6 +15,7 @@ function SignUpPage(props) {
     const [validMessage, setValidMessage] = useState('');    
     const [checkedId, setCheckedId] = useState(false);
     const [checkedPhone, setCheckedPhone] = useState(false);
+    const [verificationCodes, setVerificationCodes] = useState(null);
 
     const [valid, setValid] = useState({
         pw: false,
@@ -158,6 +159,7 @@ function SignUpPage(props) {
         if(res.data.success) {
             alert('인증번호가 발송되었습니다');
             setForm(prevForm => ({ ...prevForm, verificationSent: true })); // 인증 번호 전송 후 상태 업데이트
+            setVerificationCodes(res.data.code);
         } else {
             alert("인증 번호 전송 실패" + res.data.message);
         }
@@ -166,19 +168,32 @@ function SignUpPage(props) {
     })
 
     //인증번호 확인 함수
-    const verifyCode = () => api.post('signUp/verifyCode', {userPhone: form.phone, code: form.verificationCode})
-    .then (res => {
-        if(res.data.success){
+    function verifyCode() {
+        if(verificationCodes === form.verificationCode){
             //setVerificationSuccess(true);
             alert("인증이 완료되었습니다");
             setCheckedPhone(true);
             setForm(prevForm => ({ ...prevForm, verificationSent: false }));
-        } else {
+        }   
+        else {
             alert("인증 번호가 일치하지 않습니다");
         }
-    }).catch(err => {
-        console.log(err);
-    })
+    }
+    // const verifyCode = () => api.post('signUp/verifyCode', {userPhone: form.phone, code: form.verificationCode})
+    // .then (res => {
+    //     if(res.data.success){
+    //         if(verificationCodes === form.verificationCode){
+    //             //setVerificationSuccess(true);
+    //         alert("인증이 완료되었습니다");
+    //         setCheckedPhone(true);
+    //         setForm(prevForm => ({ ...prevForm, verificationSent: false }));
+    //         }            
+    //     } else {
+    //         alert("인증 번호가 일치하지 않습니다");
+    //     }
+    // }).catch(err => {
+    //     console.log(err);
+    // })
 
 
     return (
