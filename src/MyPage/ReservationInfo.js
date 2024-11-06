@@ -35,37 +35,35 @@ function ReservationInfo(props) {
             });
     };
 
-const reqDeleteReservation = (deleteData) => {
-    // deleteData를 직접 전달
-    api.post(`reservationInfo/cancel`, deleteData)
-        .then(res => {
-            alert('예약이 성공적으로 취소되었습니다.');
-            getReservationInfo();
-        })
-        .catch(e => {
-            console.error("Error during deletion:", e);
-            alert("예약 취소에 실패했습니다. 서버에 문의하세요.");
-        });
-};
+    const reqDeleteReservation = (deleteData) => {
+        api.post(`reservationInfo/cancel`, { deleteData })
+            .then(res => {
+                alert('예약이 성공적으로 취소되었습니다.');
+                getReservationInfo();
+            })
+            .catch(e => {
+                console.error("Error during deletion:", e);
+                alert("예약 취소에 실패했습니다. 서버에 문의하세요.");
+            });
+    };
 
-const handleCancel = (info) => {
-    const confirmed = window.confirm("정말 취소하시겠습니까?");
+    const handleCancel = (info) => {
+        const confirmed = window.confirm("정말 취소하시겠습니까?");
     
-    if (confirmed) {
-        // 데이터를 올바르게 형식화
-        const formattedDeleteData = {
-            userId: userId,
-            reserveDate: new Date(info.reserveDate).toLocaleDateString('sv-SE'),
-            startTime: new Date(info.startTime).toLocaleString('sv-SE'),
-            endTime: new Date(info.endTime).toLocaleString('sv-SE'),
-            sitNum: info.sitNum,
-        };
+        if (confirmed) {
+            const formattedDeleteData = {
+                userId: userId,
+                reserveDate: new Date(info.reserveDate).toLocaleDateString('sv-SE'),
+                startTime: new Date(info.startTime).toLocaleString('sv-SE'),
+                endTime: new Date(info.endTime).toLocaleString('sv-SE'),
+                sitNum: info.sitNum,
+            };
 
-        setReserveInfo(formattedDeleteData);
-        reqDeleteReservation(formattedDeleteData);  // 변경된 부분
-        setFetchReserve({ ...fetchReserve, startDate: null, endDate: null });
-    }
-};
+            setReserveInfo(formattedDeleteData);
+            reqDeleteReservation(formattedDeleteData);
+            setFetchReserve({ ...fetchReserve, startDate: null, endDate: null });
+        }
+    };
 
 
     const handleFilter = () => {
