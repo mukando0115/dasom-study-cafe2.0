@@ -83,7 +83,7 @@ function MyPage() {
                 }
             })
             .catch(err => {
-                const errorMessage = err.message || "비밀번호 변경에 실패했습니다.";
+                const errorMessage = err.response?.data?.message || "비밀번호 변경에 실패했습니다.";
                 alert(errorMessage);
                 console.error(err);
             });
