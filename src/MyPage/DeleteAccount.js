@@ -36,7 +36,6 @@ function DeleteAccount(props) {
         api.post('/mypages/mypagePw', data)
             .then((res) => {
                 if (res.data.success) {
-                    // alert('비밀번호 일치함!');
                     const deleteData = { userId };
                     api.post('/deleteAccount', deleteData)
                         .then(res => {
@@ -61,8 +60,17 @@ function DeleteAccount(props) {
     };
 
     const handleShowWarning = () => {
-        // 회원 탈퇴 진행 버튼을 눌렀을 때 경고창을 보이게 함
         setVisible(true);
+    };
+
+    // 폼 제출 처리 함수
+    const handleSubmit = (e) => {
+        e.preventDefault(); // 기본 폼 제출 동작 방지
+        if (visible) {
+            handleAccountDelete(); // 경고창이 보이면 탈퇴 진행
+        } else {
+            handleShowWarning(); // 경고창을 표시
+        }
     };
 
     return (
@@ -72,7 +80,8 @@ function DeleteAccount(props) {
                     <img src={titleImg} style={{ maxWidth: '20%', height: 'auto', marginBottom: '3%' }}/>
                     <img src={textImg} style={{ maxWidth: '70%', height: 'auto', marginBottom: '3%' }}/>
 
-                    <CForm className="mypage-form mt-5" style={{width: '55%'}}>
+                    {/* CForm에 onSubmit을 추가하여 Enter를 눌렀을 때 폼 제출 처리 */}
+                    <CForm className="mypage-form mt-5" style={{width: '55%'}} onSubmit={handleSubmit}>
                         <CFormFloating className="mb-3">
                             <CFormInput
                                 type="password"
@@ -89,13 +98,12 @@ function DeleteAccount(props) {
                                 color='danger'
                                 textColor='white'
                                 className={`mb-3 border-top-danger border-top-3`}
-                                // style={{ maxWidth: '18rem' }}
                             >
                                 <CCardBody>
                                     <CCardText>
                                         정말 탈퇴하시겠습니까? <br/>
                                         탈퇴 후 아이디 및 데이터를 복구할 수 없습니다. <br/>
-                                        신중히 진행하시길 바랍니다.                                        
+                                        신중히 진행하시길 바랍니다.                                      
                                     </CCardText>
                                     <CCardText>
                                         <label className='mt-2'>    
@@ -113,8 +121,9 @@ function DeleteAccount(props) {
                             </CCard>
                         )}
 
+                        {/* 버튼의 onClick 대신 폼 제출을 사용하여 엔터가 눌렸을 때도 동작 */}
                         <Button
-                            onClick={visible ? handleAccountDelete : handleShowWarning} // visible에 따라 동작 변경
+                            type="submit" // 폼 제출 시 handleSubmit이 호출됨
                             className="p-button"
                             variant="mb-3 p-2 px-3"
                             style={{ borderRadius: '7px', borderWidth: '2px' }}
@@ -122,7 +131,6 @@ function DeleteAccount(props) {
                             {visible ? '회원 탈퇴 진행' : '회원 탈퇴 확인'} {/* 버튼 텍스트 변경 */}
                         </Button>
                     </CForm>
-
                 </div>
             }            
         </main>
