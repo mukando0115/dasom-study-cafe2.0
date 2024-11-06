@@ -43,7 +43,7 @@ function MyPage(props) {
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && activeTab != null) {
             event.preventDefault();
             conTest();
         }
