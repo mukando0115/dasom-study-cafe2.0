@@ -33,12 +33,12 @@ function DeleteAccount(props) {
 
     const conTest = () => {
         const data = { userId, userPw: pw };
-        api.post('mypages/mypagePw', data)
+        api.post('/mypages/mypagePw', data)
             .then((res) => {
                 if (res.data.success) {
                     // alert('비밀번호 일치함!');
                     const deleteData = { userId };
-                    api.post('http://localhost:5000/api/deleteAccount', deleteData)
+                    api.post('/deleteAccount', deleteData)
                         .then(res => {
                             if (res.data.success) {
                                 alert("회원 탈퇴가 완료되었습니다.");
