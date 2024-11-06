@@ -146,7 +146,7 @@ function LoginPage(props) {
             </Button>
 
             {/* 네이버 로그인 버튼 노출 영역 추가 */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '2%'}}>
+            {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '2%'}}>
                 <div id="naver_id_login"></div> 
                 <Button 
                     id="naverLoginButton" 
@@ -156,7 +156,7 @@ function LoginPage(props) {
                 >
                     <img src={loginButton} alt="네이버 로그인 이미지"></img>
                 </Button>
-            </div>
+            </div> */}
         </main>
     )
 }
