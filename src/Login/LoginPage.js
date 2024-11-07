@@ -51,53 +51,45 @@ function LoginPage(props) {
                 credentials: 'include',
             });
             const data = await response.json();
-    
+
             if (data.success) {
-                // 로그인 창을 열기
                 const loginWindow = window.open(data.api_url, 'naverLogin', 'width=500,height=600');
-    
-                // 팝업 창이 정상적으로 열렸는지 확인
+
                 if (!loginWindow) {
                     alert('팝업 차단이 활성화되어 있습니다. 팝업을 허용해 주세요.');
                     return;
                 }
-    
-                // 메시지 수신 핸들러 등록
+
                 const handleLoginMessage = (event) => {
-                    // 출처 확인
-                    if (event.origin === 'https://dasomstudy.site') {  // 올바른 출처 확인
+                    if (event.origin === 'https://dasomstudy.site') {
                         const userData = event.data.userData;
-    
-                        // 데이터가 올바르게 전달되었는지 확인하고 success 메시지 처리
                         if (userData && userData.message === 'success') {
                             const { id, name } = userData.response;
-                            console.log('User Data:', userData.response);
-    
-                            localStorage.setItem("id", id); // ID 저장
-                            localStorage.setItem("name", name); // 이름 저장
-                            localStorage.setItem("naver", "1"); // 네이버 로그인 상태 표시
-    
+
+                            localStorage.setItem("id", id);
+                            localStorage.setItem("name", name);
+                            localStorage.setItem("naver", "1");
+
                             alert(`${name}님 로그인 되었습니다!`);
-                            props.onLogin(); // 로그인 후 동작
-    
+                            props.onLogin();
+
                             // 팝업을 부모 창에서 닫기
                             if (loginWindow) {
-                                loginWindow.close();  // 팝업 창 닫기
+                                loginWindow.close();  // 부모 창에서 팝업을 닫습니다.
                             }
                         } else {
                             console.error('로그인 실패:', userData.message);
                         }
                     }
                 };
-    
-                // 이벤트 리스너 등록
+
                 window.addEventListener('message', handleLoginMessage);
-    
+
                 // 새 창이 닫히면 메시지 리스너 제거
                 loginWindow.onbeforeunload = () => {
                     window.removeEventListener('message', handleLoginMessage);
                 };
-    
+
             } else {
                 console.error('로그인 요청 실패:', data);
             }
