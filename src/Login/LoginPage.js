@@ -46,7 +46,10 @@ function LoginPage(props) {
 
     const handleLoginClick = async () => {
         try {
-            const response = await api.get('/naverlogin');
+            const response = await fetch('https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com/api/naverlogin', {
+                method: 'GET',
+                credentials: 'include',
+            });
             const data = await response.json();
     
             if (data.success) {
@@ -55,7 +58,7 @@ function LoginPage(props) {
                 // 메시지 수신 핸들러 등록
                 const handleLoginMessage = (event) => {
                     // 출처 확인
-                    if (event.origin === 'https://hkz9nqql2m.execute-api.ap-northeast-2.amazonaws.com') {
+                    if (event.origin === 'https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com') {
                         const userData = event.data.userData.response;
                         if (event.data.userData.message === 'success') {
                             console.log('User Data:', userData);           
