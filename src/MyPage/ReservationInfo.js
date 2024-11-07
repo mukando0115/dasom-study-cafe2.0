@@ -53,10 +53,11 @@ function ReservationInfo(props) {
         if (confirmed) {
             const formattedDeleteData = {
                 userId: userId,
-                reserveDate: new Date(info.reserveDate).toLocaleDateString('sv-SE'),
-                startTime: new Date(info.startTime).toLocaleString('sv-SE'),
-                endTime: new Date(info.endTime).toLocaleString('sv-SE'),
-                sitNum: info.sitNum,
+                id: info.id
+                // reserveDate: new Date(info.reserveDate).toLocaleDateString('sv-SE'),
+                // startTime: new Date(info.startTime).toLocaleString('sv-SE'),
+                // endTime: new Date(info.endTime).toLocaleString('sv-SE'),
+                // sitNum: info.sitNum,
             };
 
             setReserveInfo(formattedDeleteData);
@@ -64,7 +65,6 @@ function ReservationInfo(props) {
             setFetchReserve({ ...fetchReserve, startDate: null, endDate: null });
         }
     };
-
 
     const handleFilter = () => {
         const { startDate, endDate } = fetchReserve;
