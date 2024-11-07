@@ -53,11 +53,11 @@ function GalleryPage() {
                     </CCarouselItem>
                 </CCarousel>
             </div>
-            <div className="carousel-container">
+            {/* <div className="carousel-container">
                 <h2 className="carousel-title">다인실</h2>
                 <h2 className="carousel-sub-title">Study Room</h2>
                 <CImage className="d-block w-100" src={image9} alt="slide 9" />
-            </div>
+            </div> */}
         </main>
     );
 }
