@@ -46,10 +46,7 @@ function LoginPage(props) {
 
     const handleLoginClick = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/naverlogin', {
-                method: 'GET',
-                credentials: 'include',
-            });
+            const response = await api.get('/naverlogin');
             const data = await response.json();
     
             if (data.success) {
@@ -58,7 +55,7 @@ function LoginPage(props) {
                 // 메시지 수신 핸들러 등록
                 const handleLoginMessage = (event) => {
                     // 출처 확인
-                    if (event.origin === 'http://localhost:5000') {
+                    if (event.origin === 'https://hkz9nqql2m.execute-api.ap-northeast-2.amazonaws.com') {
                         const userData = event.data.userData.response;
                         if (event.data.userData.message === 'success') {
                             console.log('User Data:', userData);           
@@ -146,7 +143,7 @@ function LoginPage(props) {
             </Button>
 
             {/* 네이버 로그인 버튼 노출 영역 추가 */}
-            {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '2%'}}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '2%'}}>
                 <div id="naver_id_login"></div> 
                 <Button 
                     id="naverLoginButton" 
@@ -156,7 +153,7 @@ function LoginPage(props) {
                 >
                     <img src={loginButton} alt="네이버 로그인 이미지"></img>
                 </Button>
-            </div> */}
+            </div>
         </main>
     )
 }
