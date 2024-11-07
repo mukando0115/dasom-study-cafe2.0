@@ -61,9 +61,8 @@ function LoginPage(props) {
                 }
 
                 const handleLoginMessage = (event) => {
-                    console.log('!!!!!!!!!!!', event);
                     // 출처 확인
-                    if (event.origin === 'https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com') {
+                    if (event.origin === 'https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com/api/callback') {
                         const userData = event.data.userData.response;
                         if (event.data.userData.message === 'success') {
                             console.log('User Data:', userData);           
