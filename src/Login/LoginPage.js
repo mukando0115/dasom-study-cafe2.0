@@ -61,24 +61,16 @@ function LoginPage(props) {
                 }
 
                 const handleLoginMessage = (event) => {
-                    if (event.origin === 'https://dasomstudy.site') {
-                        const userData = event.data.userData;
-                        if (userData && userData.message === 'success') {
-                            const { id, name } = userData.response;
-
-                            localStorage.setItem("id", id);
-                            localStorage.setItem("name", name);
+                    // 출처 확인
+                    if (event.origin === 'https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com') {
+                        const userData = event.data.userData.response;
+                        if (event.data.userData.message === 'success') {
+                            console.log('User Data:', userData);           
+                            localStorage.setItem("id", userData.id);
+                            localStorage.setItem("name", userData.name);
                             localStorage.setItem("naver", "1");
-
-                            alert(`${name}님 로그인 되었습니다!`);
-                            props.onLogin();
-
-                            // 팝업을 부모 창에서 닫기
-                            if (loginWindow) {
-                                loginWindow.close();  // 부모 창에서 팝업을 닫습니다.
-                            }
-                        } else {
-                            console.error('로그인 실패:', userData.message);
+                            alert(`${localStorage.getItem("name")}님 로그인 되었습니다`);
+                            props.onLogin();       
                         }
                     }
                 };
