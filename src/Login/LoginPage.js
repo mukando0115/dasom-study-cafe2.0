@@ -74,14 +74,13 @@ function LoginPage(props) {
                         }
                     }
                 };
-
+    
                 window.addEventListener('message', handleLoginMessage);
-
+    
                 // 새 창이 닫히면 메시지 리스너 제거
                 loginWindow.onbeforeunload = () => {
                     window.removeEventListener('message', handleLoginMessage);
                 };
-
             } else {
                 console.error('로그인 요청 실패:', data);
             }
