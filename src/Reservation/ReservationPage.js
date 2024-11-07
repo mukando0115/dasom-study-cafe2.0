@@ -16,7 +16,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/locale/ko";
 import api from '../api/api';
-import image1 from './Frame117.png';
+import image1 from './reservation_map.png';
 // import { setHours, setMinutes } from 'date-fns';
 
 function ReservationPage() {
