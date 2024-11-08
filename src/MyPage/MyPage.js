@@ -43,7 +43,7 @@ function MyPage(props) {
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter' && activeTab != null) {
+        if (event.key === 'Enter') {
             event.preventDefault();
             conTest();
         }
@@ -78,9 +78,22 @@ function MyPage(props) {
     useEffect(() => {
         const name = userName;
         if (name) {
-            setUserName(name[0]);
+          setUserName(name[0]);
         }
-    }, []);
+        // 마이페이지 진입 시 Footer 숨기기
+        props.setShouldDisplayFooter(false);
+    
+        // 컴포넌트 언마운트 시 Footer 표시
+        return () => {
+          props.setShouldDisplayFooter(true);
+        };
+      }, []);
+    // useEffect(() => {
+    //     const name = userName;
+    //     if (name) {
+    //         setUserName(name[0]);
+    //     }
+    // }, []);
 
     // useEffect(() => {
     //     if(isSNSLoggedIn === "1") {
