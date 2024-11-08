@@ -201,12 +201,11 @@ function LoginPage(props) {
                     style={{
                         borderRadius: '8px',
                         borderWidth: '1px',
-                        width: '80%',
+                        width: '100%',
                         maxWidth: '300px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: '10px'
                     }}
                     onClick={handleLoginClick}
                 >
