@@ -25,6 +25,7 @@ import MyPage from "./MyPage/MyPage";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const getId = localStorage.getItem("id");
+  const [shouldDisplayFooter, setShouldDisplayFooter] = useState(true);
 
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
@@ -115,13 +116,22 @@ function App() {
           <Route path="/announcement" element={<AnnouncementPage/>}/>
           <Route path="/reservation" element={<ReservationPage/>}/>
           <Route path="/login" element={<LoginPage/>}/>
-          <Route path="/mypage" element={<MyPage onLogout={logoutHandler}/>}/>
+          <Route 
+            path="/mypage" 
+            element={<MyPage onLogout={logoutHandler} setShouldDisplayFooter={setShouldDisplayFooter} />} 
+          />
         </Routes>
       </div>
 
-      <footer className="App">
+      {shouldDisplayFooter && (
+        <footer className="App">
+          <Footer />
+        </footer>
+      )}
+
+      {/* <footer className="App">
         <Footer></Footer>
-      </footer>
+      </footer> */}
 
     </Router>
   );
