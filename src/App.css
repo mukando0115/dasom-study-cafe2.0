@@ -111,52 +111,23 @@ p {
       url("../assets/font/Pretendard-1.3.9/web/static/woff/Pretendard-ExtraLight.woff") format("woff");
 }
 
-.banner1 {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background-image: url(../assets/img/Frame8.png);
-  background-size: 100% auto;
-  background-position: center; /* 이미지 중앙 정렬 */
-  position: relative;
-  display: inline-block;
-  margin-bottom: 5%;
-  max-width: 100%;
-  background-repeat: no-repeat;
-}
-
 .main-page {
+  display: flex; /* Flexbox 사용 */
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 배너를 가운데 정렬 */
   width: 100%;
 }
 
-.banner2 {
+.banner1, .banner2, .banner3, .banner4 {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background-image: url(../assets/img/Section2.png);
+  max-width: 1200px; /* 최대 너비 설정 (필요에 따라 조정) */
+  aspect-ratio: 16 / 9; /* 모든 배너를 16:9 비율로 통일 */
   background-size: contain;
   background-position: center; /* 이미지 중앙 정렬 */
   background-repeat: no-repeat;
-  margin-bottom: 5%; 
+  margin-bottom: 5%;
 }
 
-.banner3 {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background-image: url(../assets/img/Section3.png);
-  background-size: contain;
-  background-position: center; /* 이미지 중앙 정렬 */
-  background-repeat: no-repeat;
-  margin-bottom: 5%; 
-}
-
-.banner4 {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  background-image: url(../assets/img/Section4.png);
-  background-size: contain;
-  background-position: center; /* 이미지 중앙 정렬 */
-  background-repeat: no-repeat;
-  margin-bottom: 5%; 
-}
 
 u:not(.underline) {
   /* text-decoration: underline 8px #00AF50; */
