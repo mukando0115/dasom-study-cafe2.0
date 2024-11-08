@@ -206,6 +206,7 @@ function LoginPage(props) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        padding: '10px 0'
                     }}
                     onClick={handleLoginClick}
                 >
