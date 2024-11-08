@@ -201,7 +201,7 @@ function LoginPage(props) {
                     //style={{ borderRadius: '13px', borderWidth: '2px', width: '60%' }} 
                     onClick={handleLoginClick}
                 >
-                    <img src={loginButton} alt="네이버 로그인 이미지"></img>
+                     <img src={loginButton} alt="네이버 로그인 이미지" style={{ width: '100%' }}></img>
                 </Button>
             </div>
         </main>
