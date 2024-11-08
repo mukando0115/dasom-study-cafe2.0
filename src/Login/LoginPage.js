@@ -193,17 +193,24 @@ function LoginPage(props) {
             </Button>
 
             {/* 네이버 로그인 버튼 노출 영역 추가 */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '2%'}}>
-                <div id="naver_id_login"></div> 
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                 <Button 
                     id="naverLoginButton" 
                     variant="mb-3 mt-3"
-                    //style={{ borderRadius: '13px', borderWidth: '2px', width: '60%' }} 
-                    onClick={handleLoginClick}
+                    style={{
+                        borderRadius: '8px',
+                        borderWidth: '1px',
+                        width: '80%',
+                        maxWidth: '300px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '10px'
+                        }}
+                     onClick={handleLoginClick}
                 >
-                     <img src={loginButton} alt="네이버 로그인 이미지" style={{ width: '100%' }}></img>
+                    <img src={loginButton} alt="네이버 로그인 이미지" style={{ width: '100%' }}></img>
                 </Button>
-            </div>
         </main>
     )
 }
