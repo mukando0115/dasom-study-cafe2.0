@@ -113,21 +113,38 @@ p {
 
 .main-container {
   display: flex;
-  flex-wrap: wrap; /* 배너가 화면을 넘으면 다음 줄로 자동 배치 */
-  justify-content: space-between; /* 배너들 간의 간격을 고르게 분배 */
-  gap: 30px 30px; /* 좌우 간격 30px, 세로 간격 30px */
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin: 0 auto;
-  max-width: 1200px; /* 필요에 따라 최대 너비 설정 */
+  max-width: 1200px;
 }
 
 .banner1, .banner2, .banner3, .banner4 {
   flex: 1 1 calc(50% - 15px);
-  padding-top: 56.25%; /* 16:9 비율 (9 / 16 = 0.5625) */
+  padding-top: 56.25%; /* 16:9 비율 유지 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  margin-bottom: 30px; /* 아래 간격을 30px로 설정 */
 }
+
+.banner1 {
+  background-image: url('../assets/img/Frame8.png');
+}
+
+.banner2 {
+  background-image: url('../assets/img/Section2.png');
+}
+
+.banner3 {
+  background-image: url('../assets/img/Section3.png');
+}
+
+.banner4 {
+  background-image: url('../assets/img/Section4.png');
+}
+
 
 .banner1 {
   background-image: url('../assets/img/Frame8.png');
