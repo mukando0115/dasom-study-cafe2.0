@@ -51,11 +51,15 @@ function LoginPage(props) {
                 credentials: 'include',
             });
             const data = await response.json();
-    
+
             if (data.success) {
                 const loginWindow = window.open(data.api_url, 'naverLogin', 'width=500,height=600');
-    
-                // 메시지 수신 핸들러 등록
+
+                if (!loginWindow) {
+                    alert('팝업 차단이 활성화되어 있습니다. 팝업을 허용해 주세요.');
+                    return;
+                }
+
                 const handleLoginMessage = (event) => {
                     // 출처 확인
                     if (event.origin === 'https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com') {
@@ -84,6 +88,49 @@ function LoginPage(props) {
             console.error('네이버 로그인 요청 중 오류 발생:', error);
         }
     };
+    
+    
+
+    // const handleLoginClick = async () => {
+    //     try {
+    //         const response = await fetch('https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com/api/naverlogin', {
+    //             method: 'GET',
+    //             credentials: 'include',
+    //         });
+    //         const data = await response.json();
+    
+    //         if (data.success) {
+    //             const loginWindow = window.open(data.api_url, 'naverLogin', 'width=500,height=600');
+    
+    //             // 메시지 수신 핸들러 등록
+    //             const handleLoginMessage = (event) => {
+    //                 // 출처 확인
+    //                 if (event.origin === 'https://zev4wu0r0a.execute-api.ap-northeast-2.amazonaws.com') {
+    //                     const userData = event.data.userData.response;
+    //                     if (event.data.userData.message === 'success') {
+    //                         console.log('User Data:', userData);           
+    //                         localStorage.setItem("id", userData.id);
+    //                         localStorage.setItem("name", userData.name);
+    //                         localStorage.setItem("naver", "1");
+    //                         alert(`${localStorage.getItem("name")}님 로그인 되었습니다`);
+    //                         props.onLogin();       
+    //                     }
+    //                 }
+    //             };
+    
+    //             window.addEventListener('message', handleLoginMessage);
+    
+    //             // 새 창이 닫히면 메시지 리스너 제거
+    //             loginWindow.onbeforeunload = () => {
+    //                 window.removeEventListener('message', handleLoginMessage);
+    //             };
+    //         } else {
+    //             console.error('로그인 요청 실패:', data);
+    //         }
+    //     } catch (error) {
+    //         console.error('네이버 로그인 요청 중 오류 발생:', error);
+    //     }
+    // };
     
     //화면부
     return (
