@@ -202,7 +202,7 @@ function LoginPage(props) {
                         borderRadius: '8px',
                         borderWidth: '1px',
                         width: '100%',
-                        maxWidth: '300px',
+                        maxWidth: '800px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
