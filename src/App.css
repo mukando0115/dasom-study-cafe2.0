@@ -121,27 +121,30 @@ p {
 }
 
 .banner1, .banner2, .banner3, .banner4 {
-  flex: 1 1 calc(50% - 15px); /* 배너 너비를 계산하여 간격을 포함 */
+  flex: 1 1 calc(50% - 15px);
+  padding-top: 56.25%; /* 16:9 비율 (9 / 16 = 0.5625) */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  position: relative;
 }
 
 .banner1 {
-  background-image: url(../assets/img/Frame8.png);
+  background-image: url('../assets/img/Frame8.png');
 }
 
 .banner2 {
-  background-image: url(../assets/img/Section2.png);
+  background-image: url('../assets/img/Section2.png');
 }
 
 .banner3 {
-  background-image: url(../assets/img/Section3.png);
+  background-image: url('../assets/img/Section3.png');
 }
 
 .banner4 {
-  background-image: url(../assets/img/Section4.png);
+  background-image: url('../assets/img/Section4.png');
 }
+
 
 
 u:not(.underline) {
