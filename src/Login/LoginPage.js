@@ -194,7 +194,7 @@ function LoginPage(props) {
             </Button>
 
             {/* 네이버 로그인 버튼 */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', width: '100%', maxWidth: '300px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', width: '100%', maxWidth: '800px' }}>
                 <Button 
                     id="naverLoginButton" 
                     variant="mb-3 mt-3"
