@@ -3,7 +3,7 @@ import api from '../api/api';
 
 import Button from 'react-bootstrap/Button';
 import { CForm, CFormFloating, CFormInput, CFormLabel } from '@coreui/bootstrap-react'
-import loginButton from './btnG.png';
+import loginButton from './Sign in Naver.png';
 
 function LoginPage(props) {
     const [form, setForm] = useState({
@@ -198,7 +198,7 @@ function LoginPage(props) {
                 <Button 
                     id="naverLoginButton" 
                     variant="mb-3 mt-3"
-                    style={{ borderRadius: '13px', borderWidth: '2px', width: '60%' }} 
+                    //style={{ borderRadius: '13px', borderWidth: '2px', width: '60%' }} 
                     onClick={handleLoginClick}
                 >
                     <img src={loginButton} alt="네이버 로그인 이미지"></img>
