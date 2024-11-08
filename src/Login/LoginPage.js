@@ -174,25 +174,26 @@ function LoginPage(props) {
                 </CFormLabel>
             </CForm>
 
-            {/* 버튼 */}
+            {/* 로그인 버튼 */}
             <Button 
                 onClick={conTest} 
                 className="p-button" 
-                variant="mb-3 p-1 px-3" 
-                size="" >
+                variant="mb-3 p-1 px-3">
                 로그인
             </Button>
-            <Button onClick={(e) => {
-                e.preventDefault();                
-                props.onChangePage("signUp");
-            }} 
+            
+            {/* 회원가입 버튼 */}
+            <Button 
+                onClick={(e) => {
+                    e.preventDefault();                
+                    props.onChangePage("signUp");
+                }} 
                 variant="mb-3 p-1 px-3" 
-                size="" 
-                className="s-button" >
+                className="s-button">
                 회원가입
             </Button>
 
-            {/* 네이버 로그인 버튼 노출 영역 추가 */}
+            {/* 네이버 로그인 버튼 */}
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                 <Button 
                     id="naverLoginButton" 
@@ -206,13 +207,15 @@ function LoginPage(props) {
                         alignItems: 'center',
                         justifyContent: 'center',
                         padding: '10px'
-                        }}
-                     onClick={handleLoginClick}
+                    }}
+                    onClick={handleLoginClick}
                 >
                     <img src={loginButton} alt="네이버 로그인 이미지" style={{ width: '100%' }} />
                 </Button>
+            </div>
+
         </main>
-    )
+    );
 }
 
 export default LoginPage;
