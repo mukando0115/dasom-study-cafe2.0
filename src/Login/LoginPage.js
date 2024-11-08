@@ -67,8 +67,7 @@ function LoginPage(props) {
                         if (event.data.userData.message === 'success') {
                             console.log('User Data:', userData);           
                             localStorage.setItem("id", userData.id);
-                            const decodedName = decodeURIComponent(escape(userData.name));
-                            localStorage.setItem("name", decodedName);
+                            localStorage.setItem("name", userData.name);
                             localStorage.setItem("naver", "1");
                             alert(`${localStorage.getItem("name")}님 로그인 되었습니다`);
                             props.onLogin();       
