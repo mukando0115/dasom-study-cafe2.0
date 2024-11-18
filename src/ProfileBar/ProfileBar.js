@@ -1,6 +1,7 @@
 import { CPopover, CButton, CAvatar, } from '@coreui/react'
 
 function ProfileBarPage(props) {
+    const getId = localStorage.getItem("id");
 
     return (
         <main className="profile-page">            
@@ -14,7 +15,7 @@ function ProfileBarPage(props) {
                         <CButton
                             className="p-button mb-3"
                             onClick={() => window.location.href = '/mypage'}
-                        >마이페이지
+                        >{getId === 'admin' ? '관리자 페이지' : '마이페이지'}
                         </CButton>                        
                         <CButton  
                             className="s-button"
