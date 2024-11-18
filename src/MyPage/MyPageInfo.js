@@ -14,6 +14,7 @@ function MyPage() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     // const isSNSLoggedIn = localStorage.getItem("naver");
+    const isSNSLoggedIn = localStorage.getItem("naver") || null;
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -185,10 +186,12 @@ function MyPage() {
                                     <label>이름</label>
                                     <input type="text" value={userData.name} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
                                 </div>
+                                {isSNSLoggedIn == null &&
                                 <div style={{ marginBottom: '15px' }}>
                                     <label>아이디</label>
                                     <input type="text" value={userData.userId} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
-                                </div>
+                                </div>                                
+                                }                                
                                 <div style={{ marginBottom: '15px', }}>
                                     <label style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>비밀번호</label>
                                     <input type="password" value="*****" disabled style={{ width: '80%', flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
