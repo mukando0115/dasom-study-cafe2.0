@@ -13,6 +13,7 @@ import {
 } from '@coreui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import MyPageInfo from "../MyPage/MyPageInfo"
+import UserPageInfo from "./UserPageInfo"
 
 import api from '../api/api';
 
@@ -177,6 +178,9 @@ function AdminPage(props) {
                     </CCol>
 
                     <CCol xs={8} md={8} style={{ padding: '20px' }}>
+                        { (activeTab === 1)
+                            && <UserPageInfo />
+                        }
                         { (activeTab === 2)
                             && <MyPageInfo />
                         }
