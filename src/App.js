@@ -21,6 +21,7 @@ import SideBar from "./SideBar/SideBarPage";
 import Footer from "./Footer/FooterPage";
 import ProfileBar from "./ProfileBar/ProfileBar";
 import MyPage from "./MyPage/MyPage";
+import AdminPage from './AdminPage/AdminPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -118,7 +119,13 @@ function App() {
           <Route path="/login" element={<LoginPage/>}/>
           <Route 
             path="/mypage" 
-            element={<MyPage onLogout={logoutHandler} setShouldDisplayFooter={setShouldDisplayFooter} />} 
+            element={
+              getId === 'admin' ? (
+                <AdminPage onLogout={logoutHandler} setShouldDisplayFooter={setShouldDisplayFooter} />
+              ) : (
+                <MyPage onLogout={logoutHandler} setShouldDisplayFooter={setShouldDisplayFooter} />
+              )
+            }
           />
         </Routes>
       </div>
