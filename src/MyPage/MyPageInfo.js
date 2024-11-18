@@ -176,7 +176,7 @@ function MyPage() {
             ) : (
                 // 회원 정보가 표시
                 <div className="my-page-info">
-                    <p className="sub-title" style={{textAlign: 'left'}}>회원 정보</p>
+                    <p className="sub-title" style={{textAlign: 'left'}}>{userId === 'admin' ? '관리자 정보 조회' : '회원 정보 조회'}</p>
                     <hr />
                     <div>
                         {userData && (
@@ -203,18 +203,22 @@ function MyPage() {
                                     </Button>
                                     
                                 </div>
-                                <div style={{ marginBottom: '15px' }}>
-                                    <label>전화번호</label>
-                                    <input type="text" value={userData.phone.slice(0, 3) + '-' + userData.phone.slice(3, 7) + '-' + userData.phone.slice(7)} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
-                                </div>
-                                <div style={{ marginBottom: '15px' }}>
-                                    <label>생년월일</label>
-                                    <input type="text" value={new Date(userData.birth).toLocaleDateString()} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
-                                </div>
-                                <div style={{ marginBottom: '15px' }}>
-                                    <label>가입일시</label>
-                                    <input type="text" value={new Date(userData.created_at).toLocaleString()} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
-                                </div>
+                                {userId !== 'admin' && (
+                                <>
+                                    <div style={{ marginBottom: '15px' }}>
+                                        <label>전화번호</label>
+                                        <input type="text" value={userData.phone.slice(0, 3) + '-' + userData.phone.slice(3, 7) + '-' + userData.phone.slice(7)} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+                                    </div>
+                                    <div style={{ marginBottom: '15px' }}>
+                                        <label>생년월일</label>
+                                        <input type="text" value={new Date(userData.birth).toLocaleDateString()} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+                                    </div>
+                                    <div style={{ marginBottom: '15px' }}>
+                                        <label>가입일시</label>
+                                        <input type="text" value={new Date(userData.created_at).toLocaleString()} disabled style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }} />
+                                    </div>
+                                </>
+                                )}                                
                             </div>
                         )}
                     </div>
