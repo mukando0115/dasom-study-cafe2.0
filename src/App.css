@@ -383,6 +383,14 @@ u:not(.underline) {
   font-size: 0.875rem;
 }
 
+.card .p-button {
+  width: 25%;
+  margin: 0%;
+  color: white;  
+}
+
+
+
 
 
 
